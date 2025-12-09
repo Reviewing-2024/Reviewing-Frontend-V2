@@ -15,12 +15,17 @@
     --white300: #fff;
     --white400: #fff;
     --white500: #fff;
+
+    --blue: #0066FF;
     
     // 폰트 셋팅
-    font-family: var(--mainfont-nanum), var(--mainfont-nexon);
-    font-size: 16px;
-    line-height: 1.5;
-    font-weight: 400;
+    // font-family: var(--mainfont-nanum), var(--mainfont-nexon);
+    font-family: Inter;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+    font-style: normal;
+    letter-spacing: -0.15px;
     
     // 폰트 최적화
     font-synthesis: none;
