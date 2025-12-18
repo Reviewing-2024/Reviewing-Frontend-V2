@@ -3,24 +3,24 @@
     --mainfont-nexon: "nexonLv1";
   
     --black: #000;
-    --black100: #000;
+    --black100: #1D293D; //catrgory bgc
     --black200: #000;
     --black300: #000;
     --black400: #000;
     --black500: #000;
     
     --white: #fff;
-    --white100: #fff;
+    --white100: #E2E8F0; //platform, category border
     --white200: #fff;
     --white300: #fff;
     --white400: #fff;
     --white500: #fff;
 
     --blue: #0066FF;
+    --boxshadow-blue: #BEDBFF;
     
     // 폰트 셋팅
-    // font-family: var(--mainfont-nanum), var(--mainfont-nexon);
-    font-family: Inter;
+    font-family: var(--mainfont-nanum), var(--mainfont-nexon);
     font-size: 14px;
     line-height: 20px;
     font-weight: 500;
