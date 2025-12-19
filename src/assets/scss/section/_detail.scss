@@ -1,0 +1,184 @@
+#detail {
+    display: flex;
+    padding: 32px 24px 0px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+    flex-shrink: 0;
+    align-self: stretch;
+    background: #F5F7FA;
+
+    .detail__container {
+        display: flex;
+        gap: 16px;
+
+        .detail-img-container {
+            img {
+                width: auto;
+                height: 210px;
+                border-radius: 14px;
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+
+        }
+
+        .detail-information {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .detail-information-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            flex: 1 0 0;
+            margin-bottom: 16px;
+
+            .information-platform {
+                height: 20px;
+                padding: 2px 8px;
+                border-radius: 8px;
+                color: #FFF;
+                background-color: #0F172B;
+                font-size: 10px;
+                line-height: 15px;
+                letter-spacing: 0.117px;
+                gap: 4px;
+
+            }
+
+            h1 {
+                color: #0F172B;
+                font-size: 24px;
+                font-weight: 700;
+                line-height: 33px;
+                letter-spacing: 0.07px;
+
+            }
+
+            p {
+                color: #45556C;
+            }
+
+            .information-rating {
+                
+            }
+
+        }
+
+        .information-container-btn {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                
+
+                .detail-btn {
+                    border-radius: 8px;
+                    color: #fff;
+                    background: #06F;
+                    box-shadow: 0 1px 3px 0 #DBEAFE, 0 1px 2px -1px #DBEAFE;
+                    padding: 8.5px 12px 7.5px 9px;
+                    justify-content: center;
+                    align-items: flex-start;
+
+                }
+
+                .detail-wish-btn {
+                    width: 36px;
+                    height: 36px;
+                    border-radius: 8px;
+                    border: 1px solid #06F;
+
+                    background: #FFF;
+
+
+                }
+
+            }
+
+        }
+
+    }
+
+    .review-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding-top: 25px;
+        border-top: 1px solid #E2E8F0;
+        gap: 16px;
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: self-start;
+            flex-shrink: 0;
+            align-self: stretch;
+
+            h2 {
+                color: #0F172B;
+                font-family: Inter;
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 28px; /* 140% */
+                letter-spacing: -0.449px;
+            }
+
+            @media (max-width: 768px) {
+                flex-direction: column;
+                gap: 12px;
+
+                h2 {
+                    padding: 9px;
+                }
+            }
+
+            .review-category {
+                display: flex;
+                gap: 12px;
+
+                ul {
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                    justify-content: center;
+                    
+                    button {
+                        padding: 5.5px 9.648px 4px 9px;
+                        border-radius: 16777200px;
+                        border: 1px solid #E2E8F0;
+                        background: #FFF;
+
+                    }
+                }
+
+                .review-write {
+
+                    button {
+                        display: flex;
+                        
+                        padding: 7px 12px 7px 12px;
+                        justify-content: center;
+                        align-items: flex-start;
+                        gap: 4px;
+                        border-radius: 16777200px;
+                        color: #fff;
+                        background: #06F;
+                        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 1px 2px -1px rgba(0, 0, 0, 0.10);
+                    }
+                    
+
+                }
+
+            }
+
+            .review-list {
+
+            }
+
+        }
+    }
+}
