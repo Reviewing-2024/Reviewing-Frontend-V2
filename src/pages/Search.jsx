@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import CourseItem from '../components/component/CourseItem';
+import CourseCard from '../components/component/CourseCard';
 import SearchBar from '../components/component/SearchBar';
 
 import '../assets/scss/section/_main.scss'
@@ -55,7 +55,7 @@ const Search = () => {
             <div className="search__item">
                 <div className='item__card'>
                     {course.map(course => (
-                        <CourseItem  course={course} key={course.id}/>
+                        <CourseCard  course={course} key={course.id}/>
                     ))}
                 </div>
             </div>

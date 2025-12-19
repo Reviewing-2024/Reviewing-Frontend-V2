@@ -8,9 +8,19 @@
     align-self: stretch;
     background: #F5F7FA;
 
+    @media (max-width: 768px) {
+            align-items: center;
+        }
+        
     .detail__container {
         display: flex;
         gap: 16px;
+
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            align-items: center;
+        }
 
         .detail-img-container {
             img {

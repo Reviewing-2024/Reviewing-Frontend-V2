@@ -2,14 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 
-const CourseItem = ({course}) => {
+const CourseCard = ({course}) => {
 
     return (
         <div className="course" >
             <Link className='course__container' key={course.id} to={`/courses/${course.slug}`}>
                 <div className='course-img-container'>
                     <img src={course.thumbnailImage} alt="강의 이미지" />
-                    <span>Inflearn</span>
+                    <span>{course.platform}</span>
                     <button>하트</button>
                 </div>
                 <div className='course-information-container'>
@@ -32,4 +32,4 @@ const CourseItem = ({course}) => {
     )
 }
 
-export default CourseItem
+export default CourseCard

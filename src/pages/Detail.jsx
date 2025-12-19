@@ -7,12 +7,10 @@ import { course } from '../data/course'
 
 const Detail = () => {
 
-    const slug = useParams();
-
-    console.log(slug.slug)
+    const params = useParams();
 
     let courses = course.find(function(x){
-        return x.slug == slug.slug
+        return x.slug == params.slug
       });
 
 
@@ -24,7 +22,7 @@ const Detail = () => {
         </div>
         <div className='detail-information'>
           <div className='detail-information-container'>
-            <span className='information-platform'>inflearn</span>
+            <span className='information-platform'>{courses.platform}</span>
             <h1>{courses.title}</h1>
             <p>{courses.teacher}</p>
             <span className='information-rating'>{courses.rating}</span>

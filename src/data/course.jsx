@@ -14,6 +14,8 @@ export const course = [
         wishes: 1,
         comments: "풀스택을 위한 도커와 쿠버네티스 입니다",
         wished: false,
+        platform: '인프런',
+        category: '프론트'
     },
         {
         id: 2,
@@ -25,5 +27,7 @@ export const course = [
         wishes: 2,
         comments: "2025 React 완벽 가이드 (Hooks, Redux) 입니다",
         wished: false,
+        platform: "코드잇",
+        category: '백엔드'
     }
 ];

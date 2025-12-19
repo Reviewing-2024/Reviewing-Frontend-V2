@@ -4,10 +4,9 @@ import { Link, useParams } from 'react-router-dom';
 import '../assets/scss/section/_main.scss'
 
 
-import { platforms } from '../data/platform';
-import { category } from '../data/platform';
+import { platforms, categorys } from '../data/platform';
 import SearchBar from '../components/component/SearchBar';
-import CourseItem from '../components/component/CourseItem';
+import CourseCard from '../components/component/CourseCard';
 
 import { course } from '../data/course'
 
@@ -15,6 +14,32 @@ const home = () => {
 
   const params = useParams()
 
+  const platformTitle = platforms.map(p => p.title);
+  const categoryTitle = categorys.map(c => c.title);
+  
+  let selectedPlatform = 
+    params.platform && platformTitle.includes(params.platform)
+    ? params.platform 
+    : null; 
+
+  const selectedCategory =
+    params.category
+      ? params.category
+      : params.platform && categoryTitle.includes(params.platform)
+        ? params.platform
+        : null;
+
+  const filteredCourse = course.filter(item => { 
+    const platformMatch = selectedPlatform 
+    ? item.platform === selectedPlatform 
+    : true; 
+    
+    const categoryMatch = selectedCategory 
+    ? item.category === selectedCategory 
+    : true; 
+    
+    return platformMatch && categoryMatch; 
+  });
 
 
   return (
@@ -28,6 +53,14 @@ const home = () => {
       </div>
       <div className='home__platform'>
         <ul className='platform_container'>
+          <li>
+            <Link
+              to={'/'}
+              className={!selectedPlatform ? 'active' : ''}
+            >
+              전체 플랫폼
+            </Link>
+          </li>
           {platforms.map((platform, key) => (
             <li key={key}>
               <Link
@@ -40,11 +73,19 @@ const home = () => {
           ))}
         </ul>
         <ul className='category_container'>
-          {category.map((category, key) => (
+          <li>
+            <Link
+              to={selectedPlatform ? `/${selectedPlatform}` : `/`}
+              className={!selectedCategory ? 'active' : ''}
+            >
+              전체 카테고리
+            </Link>
+          </li>
+          {categorys.map((category, key) => (
             <li key={key}>
               <Link
-                to={category.src}
-                className={params.category === category.title ? 'active' : ''}
+                to={ selectedPlatform ? `/${selectedPlatform}${category.src}` : `${category.src}`}
+                className={params.category === category.title ? 'active' : (params.platform === category.title ? 'active' : '')}
               >
                 {category.title}
               </Link>
@@ -55,8 +96,8 @@ const home = () => {
       <div className='home__item'>
         <div className='item__card'>
 
-          {course.map(course => (
-            <CourseItem  course={course} key={course.id}/>
+          {filteredCourse.map(course => (
+            <CourseCard  course={course} key={course.id}/>
           ))}
 
         </div>
