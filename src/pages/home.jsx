@@ -7,6 +7,7 @@ import '../assets/scss/section/_main.scss'
 import { platforms, categorys } from '../data/platform';
 import SearchBar from '../components/component/SearchBar';
 import CourseCard from '../components/component/CourseCard';
+import Pagination from 'react-js-pagination';
 
 import { course } from '../data/course'
 
@@ -101,6 +102,7 @@ const home = () => {
           ))}
 
         </div>
+        {/* <Pagination /> */}
       </div>
     </div>
   )
