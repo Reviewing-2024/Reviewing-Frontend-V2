@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 
 import '../assets/scss/section/_main.scss'
 
@@ -7,14 +7,22 @@ import '../assets/scss/section/_main.scss'
 import { platforms, categorys } from '../data/platform';
 import SearchBar from '../components/component/SearchBar';
 import CourseCard from '../components/component/CourseCard';
-import Pagination from 'react-js-pagination';
+import Pagination from '../components/component/Pagination';
 
 import { course } from '../data/course'
 
-const home = () => {
+
+const Home = () => {
 
   const params = useParams()
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  const page = Number(searchParams.get('page')) || 1;
+
+  const [courses, setCourses] = useState([]);
+
+
+  //플랫폼 및 카테고리 헤더 선택 영역
   const platformTitle = platforms.map(p => p.title);
   const categoryTitle = categorys.map(c => c.title);
   
@@ -30,6 +38,7 @@ const home = () => {
         ? params.platform
         : null;
 
+  //강의 필터링
   const filteredCourse = course.filter(item => { 
     const platformMatch = selectedPlatform 
     ? item.platform === selectedPlatform 
@@ -41,6 +50,18 @@ const home = () => {
     
     return platformMatch && categoryMatch; 
   });
+
+
+// 페이지네이션 설정 
+
+const ITEMS_PER_PAGE = 1;
+
+useEffect(() => {
+  const start = (page - 1) * ITEMS_PER_PAGE;
+  const end = page * ITEMS_PER_PAGE;
+
+  setCourses(filteredCourse.slice(start, end));
+}, [page, selectedPlatform, selectedCategory]);
 
 
   return (
@@ -96,16 +117,21 @@ const home = () => {
       </div>
       <div className='home__item'>
         <div className='item__card'>
-
-          {filteredCourse.map(course => (
+          {courses.map(course => (
             <CourseCard  course={course} key={course.id}/>
           ))}
-
         </div>
-        {/* <Pagination /> */}
+         <Pagination
+            currentPage={page}
+            totalItems={filteredCourse.length}
+            itemsPerPage={ITEMS_PER_PAGE}
+            onPageChange={(p) =>
+              setSearchParams({ page: p })
+            }
+          />
       </div>
     </div>
   )
 }
 
-export default home
+export default Home

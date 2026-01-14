@@ -1,0 +1,79 @@
+.login__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+
+    .login {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        max-width: 400px;
+        width: 70vw;
+        height: auto;
+        background-color: var(--white);
+        top: 180px;
+        gap: 16px;
+        padding: 33px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        z-index: 1001;
+
+        .login-cancel {
+            display:flex;
+            position: absolute;
+            top: 17px;
+            right: 20px;
+            width: 16px;
+            height: 16px;
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        .login-cancel:hover {
+            opacity: 0.6;
+        }
+
+        .login__container {
+
+
+            h2 {
+                font-weight: 700;
+                margin-bottom: 16px;
+
+            }
+
+            p {
+                font-size: 14px;
+                color: #45556C;
+
+            }
+        }
+
+        .login__btn__container {
+            padding: 24px 0;
+
+            .kakaologin-btn {
+                cursor: pointer;
+
+            }
+
+        }
+
+
+        p {
+            color: #90A1B9;
+            font-size: 11px;
+            line-height: 16.5px;
+
+        }
+    }
+
+}

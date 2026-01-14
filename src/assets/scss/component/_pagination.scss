@@ -1,0 +1,21 @@
+.pagination {
+    text-align: center;
+
+    button {
+        background-color: var(--white200);
+        padding: 13px 19px;
+        margin: 8px;
+        border-radius: 1000px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .no_active:hover {
+        background-color: var(--boxshadow-blue);
+    }
+
+    .active {
+        background-color: var(--blue);
+        color: var(--black);
+    }
+}

@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import { FaHeart, FaRegHeart } from "react-icons/fa6";
+
 
 const CourseCard = ({course}) => {
 
@@ -10,7 +12,7 @@ const CourseCard = ({course}) => {
                 <div className='course-img-container'>
                     <img src={course.thumbnailImage} alt="강의 이미지" />
                     <span>{course.platform}</span>
-                    <button>하트</button>
+                    <button><FaRegHeart /></button>
                 </div>
                 <div className='course-information-container'>
                     <div className='information-container'>

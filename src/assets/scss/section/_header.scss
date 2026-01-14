@@ -30,21 +30,15 @@
             color: var(--black);
             background-color: var(--white);
             border-radius: 8px;
+            cursor: pointer;
+            transition: 0.5s;
         }
 
-        .userbtn-register {
-            display: flex;
-            height: 36px;
-            padding: 8px 24px;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            flex: 1 0 0;
-            color: var(--white);
-            background-color: var(--blue);
-            border-radius: 100px;
-
+        .userbtn-login:hover {
+            color: var(--blue);
+            background-color: var(--boxshadow-blue);
         }
+
 
     }
 }

@@ -5,6 +5,8 @@ import '../assets/scss/section/_detail.scss'
 
 import { course } from '../data/course'
 
+import { FaHeart, FaRegHeart } from "react-icons/fa6";
+
 const Detail = () => {
 
     const params = useParams();
@@ -29,7 +31,7 @@ const Detail = () => {
           </div>
           <div className='information-container-btn'>
             <button className='detail-btn'>강의 페이지로 이동</button>
-            <button className='detail-wish-btn'>하트</button>
+            <button className='detail-wish-btn'><FaRegHeart /></button>
           </div>
         </div>
       </div>

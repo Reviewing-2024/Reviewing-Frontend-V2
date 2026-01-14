@@ -1,33 +1,27 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import Pagination from "react-js-pagination";
-require("bootstrap/less/bootstrap.less");
- 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activePage: 15
-    };
-  }
- 
-  handlePageChange(pageNumber) {
-    console.log(`active page is ${pageNumber}`);
-    this.setState({activePage: pageNumber});
-  }
- 
-  render() {
-    return (
-      <div>
-        <Pagination
-          activePage={this.state.activePage}
-          itemsCountPerPage={10}
-          totalItemsCount={450}
-          pageRangeDisplayed={5}
-          onChange={this.handlePageChange.bind(this)}
-        />
-      </div>
-    );
-  }
-}
- 
+import '../../assets/scss/component/_pagination.scss'
+
+const Pagination = ({
+  currentPage,
+  totalItems,
+  itemsPerPage,
+  onPageChange,
+}) => {
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  return (
+    <div className="pagination">
+      {Array.from({ length: totalPages }, (_, i) => (
+        <button
+          key={i}
+          onClick={() => onPageChange(i + 1)}
+          className={currentPage === i + 1 ? 'active' : 'no_active'}
+          disabled={currentPage === i + 1}
+        >
+          {i + 1}
+        </button>
+      ))}
+    </div>
+  );
+};
+
+export default Pagination;

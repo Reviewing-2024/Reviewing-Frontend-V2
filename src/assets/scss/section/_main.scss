@@ -75,6 +75,7 @@
                 color: var(--white);
                 background: var(--blue);
                 box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 1px 2px -1px rgba(0, 0, 0, 0.10);
+                cursor: pointer;
             }
 
             @media (max-width: 768px) {
@@ -98,7 +99,12 @@
             color: var(--white);
             background: linear-gradient(180deg, var(--blue) 0%, #4D94FF 100%);
             box-shadow: 0 4px 14px 0 rgba(0, 102, 255, 0.39);
-            letter-spacing: -0.15px;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+
+        .recommand-btn:hover {
+            transform: scale(1.03);
         }
     }
 
@@ -139,14 +145,14 @@
 
                 a:hover {
                     border: 1px solid var(--blue);
-                    box-shadow: 0 4px 6px -1px var(--boxshadow-blue), 0 2px 4px -2px var(--boxshadow-blue);
+                    box-shadow: 0 1px 6px -1px var(--boxshadow-blue), 0 2px 4px -2px var(--boxshadow-blue);
                 }
 
                 .active {
                     color: var(--white);
                     background: var(--blue);
                     border: 1px solid var(--blue);
-                    box-shadow: 0 4px 6px -1px var(--boxshadow-blue), 0 2px 4px -2px var(--boxshadow-blue);
+                    box-shadow: 0 3px 6px -1px var(--boxshadow-blue), 0 2px 4px -2px var(--boxshadow-blue);
                 }
 
             }
@@ -175,7 +181,7 @@
                     border: 1px solid var(--white100);
                     color: var(--black);
                     background: var(--white);
-                    transition: 0.3s;
+                    transition: 0.4s;
                 }
 
                 a:hover {
@@ -196,6 +202,7 @@
         width: 100%;
         min-height: 50vh;
         background-color: #F5F7FA;
+        padding: 32px 0;
     }
 
 }
@@ -203,14 +210,16 @@
 .item__card {
     flex-wrap: wrap;
     display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 15px;
-        padding: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    padding: 20px;
+    
 
     .course {
         min-width: 250px;
         max-width: 400px;
         width: 100%;
+        padding: 10px;
         
         @media (max-width: 635px) {
                 min-width: 100%;
@@ -332,14 +341,14 @@
         }
 
         .course__container:hover {
-            margin-top: -15px;
+            transform: translateY(-15px);
             -webkit-transition: .5s ease-in-out;
 	        transition: .5s ease-in-out;
 
             .course-img-container {
                 img {
-                    -webkit-transform: scale(1.1);
-	                transform: scale(1.1);
+                    -webkit-transform: scale(1.05);
+	                transform: scale(1.05);
 
                 }
             }
