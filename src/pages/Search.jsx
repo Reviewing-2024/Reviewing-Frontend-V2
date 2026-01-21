@@ -36,10 +36,13 @@ const Search = () => {
     //     fetchCourse();
     // }, [searchKeyword]);
 
-    console.log(searchKeyword)
+    // if (loading) return <div>로딩중..</div>;
+    // if (error) return <div>에러가 발생했습니다</div>;
 
-    if (loading) return <div>로딩중..</div>;
-    if (error) return <div>에러가 발생했습니다</div>;
+
+    let search_courses = course.filter(function(x){
+            return x.title.includes(searchKeyword)
+          });
 
 
     return (
@@ -54,7 +57,7 @@ const Search = () => {
             </div>
             <div className="search__item">
                 <div className='item__card'>
-                    {course.map(course => (
+                    {search_courses.map((course) => (
                         <CourseCard  course={course} key={course.id}/>
                     ))}
                 </div>

@@ -327,12 +327,23 @@
                     align-self: stretch;
 
 
-                    .rating {}
+                    .rating {
+
+                        span {
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 4px;
+
+                            svg {
+                                display: block;
+                            }
+                        }
+                    }
 
                     .ㅣ {
                         width: 1px;
                         height: 12px;
-                        background: #E2E8F0;
+                        background: var(--white100);
                     }
 
                     .wish {}

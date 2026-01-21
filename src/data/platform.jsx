@@ -54,3 +54,15 @@ export const categorys = [
         src: "/백엔드"
     },
 ]
+
+export const Sort_Category = [
+    {
+        title: "최신순",
+    },
+    {
+        title: "높은 평점순",
+    },
+    {
+        title: "낮은 평점순",
+    },
+]
