@@ -8,6 +8,7 @@ import Footer from './components/section/Footer';
 import Home from './pages/Home';
 import Search from './pages/Search';
 import Detail from './pages/Detail';
+import Mypage from './pages/Mypage';
 
 const App = () => {
     return (
@@ -20,6 +21,7 @@ const App = () => {
                   <Route path='/:category' element={<Home />} />
                   <Route path='/:platform/:category' element={<Home />} />
                   <Route path='/courses/:slug' element={<Detail />} />
+                  <Route path='/mypage' element={<Mypage />} />
                   <Route path='/search/:searchKeyword' element={<Search />} />
                 </Routes>
               </Main>

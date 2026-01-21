@@ -195,7 +195,6 @@ const Detail = () => {
               </div>
             </div>
 
-            {/* 하단 버튼 고정 */}
             <div className="review-modal-buttons">
               <button
                 className="btn-cancel"
