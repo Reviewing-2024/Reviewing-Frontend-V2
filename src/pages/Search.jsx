@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSearchParams  } from 'react-router-dom'
 
-import CourseItem from '../components/component/CourseItem';
+import CourseCard from '../components/component/CourseCard';
 import SearchBar from '../components/component/SearchBar';
 
 import '../assets/scss/section/_main.scss'
@@ -37,8 +37,9 @@ const Search = () => {
     //     fetchCourse();
     // }, [searchKeyword]);
 
-    if (loading) return <div>로딩중..</div>;
-    if (error) return <div>에러가 발생했습니다</div>;
+    // if (loading) return <div>로딩중..</div>;
+    // if (error) return <div>에러가 발생했습니다</div>;
+
 
     let search_courses = course.filter(function(x){
             return x.title.includes(search_keyword)
@@ -57,8 +58,8 @@ const Search = () => {
             </div>
             <div className="search__item">
                 <div className='item__card'>
-                    {course.map(course => (
-                        <CourseItem  course={course} key={course.id}/>
+                    {search_courses.map((course) => (
+                        <CourseCard  course={course} key={course.id}/>
                     ))}
                 </div>
             </div>

@@ -5,9 +5,10 @@ import Header from './components/section/Header';
 import Main from './components/section/MainSection'
 import Footer from './components/section/Footer';
 
-import Home from './pages/home';
+import Home from './pages/Home';
 import Search from './pages/Search';
 import Detail from './pages/Detail';
+import Mypage from './pages/Mypage';
 
 const App = () => {
     return (
@@ -17,6 +18,7 @@ const App = () => {
                 <Routes>
                   <Route path='/' element={<Home />} />
                   <Route path='/:platform' element={<Home />} />
+                  <Route path='/:category' element={<Home />} />
                   <Route path='/:platform/:category' element={<Home />} />
                   <Route path='/courses/:slug' element={<Detail />} />
                   <Route path='/mypage' element={<Mypage />} />
