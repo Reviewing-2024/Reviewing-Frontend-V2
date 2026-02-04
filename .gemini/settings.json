@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ]
+    },
+
+    "markitdown": {
+      "command": "markitdown-mcp"
+    },
+
+    "recraft": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@recraft-ai/mcp-recraft-server@latest"
+      ],
+      "env": {
+        "RECRAFT_API_KEY": "${RECRAFT_API_KEY}",
+        "IMAGE_STORAGE_DIRECTORY": "${IMAGE_STORAGE_DIRECTORY}"
+      }
+    }
+  }
+}
