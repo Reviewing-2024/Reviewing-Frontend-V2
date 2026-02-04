@@ -19,6 +19,7 @@ const App = () => {
                   <Route path='/:platform' element={<Home />} />
                   <Route path='/:platform/:category' element={<Home />} />
                   <Route path='/courses/:slug' element={<Detail />} />
+                  <Route path='/mypage' element={<Mypage />} />
                   <Route path='/search/:searchKeyword' element={<Search />} />
                 </Routes>
               </Main>

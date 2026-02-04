@@ -10,9 +10,13 @@ import SearchBar from '../components/component/SearchBar';
 import CourseItem from '../components/component/CourseItem';
 
 import { course } from '../data/course'
+import { useNavigate } from 'react-router-dom';
 
 const home = () => {
 
+
+
+  const navigate = useNavigate();
   const params = useParams()
 
 
@@ -37,7 +41,7 @@ const home = () => {
       </div>
       <div className='search-bar'>
         <SearchBar />
-        <button className='recommand-btn'>✨ 강의 추천받기</button>
+        <button className='recommand-btn' onClick={() => navigate('/mypage')}>✨ 강의 추천받기</button>
       </div>
       <div className='home__platform'>
         <ul className='platform_container'>

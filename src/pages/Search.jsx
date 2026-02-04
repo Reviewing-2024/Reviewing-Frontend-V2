@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useSearchParams  } from 'react-router-dom'
 
 import CourseItem from '../components/component/CourseItem';
 import SearchBar from '../components/component/SearchBar';
@@ -10,7 +10,8 @@ import { course } from '../data/course';
 
 
 const Search = () => {
-    const { searchKeyword } = useParams();
+     const [searchParams] = useSearchParams();
+      const search_keyword = (searchParams.get("s"));
     // const [course, setCourse] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -36,10 +37,12 @@ const Search = () => {
     //     fetchCourse();
     // }, [searchKeyword]);
 
-    console.log(searchKeyword)
-
     if (loading) return <div>로딩중..</div>;
     if (error) return <div>에러가 발생했습니다</div>;
+
+    let search_courses = course.filter(function(x){
+            return x.title.includes(search_keyword)
+          });
 
 
     return (

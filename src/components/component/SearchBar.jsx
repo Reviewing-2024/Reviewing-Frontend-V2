@@ -1,19 +1,23 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import '../../assets/scss/section/_main.scss'
 
 import { IoIosSearch } from 'react-icons/io';
 
 const Search = () => {
-  const [searchKeyword, setSearchKeyword] = useState('');
+  const [searchParams] = useSearchParams();
+  const [searchKeyword, setSearchKeyword] = useState(searchParams.get("s") ?? "");
   const navigate = useNavigate();
 
-  const handleSearch = () => {
-    if (searchKeyword) {
-      navigate(`/search/${searchKeyword}`);
-      setSearchKeyword('');
+
+  const handleSearch = (e) => {
+    console.log(searchKeyword)
+    if (!searchKeyword) {
+      alert('검색어를 입력해주세요.')
+      return;
     }
+    navigate(`/search?s=${searchKeyword}`);
   };
 
   return (
@@ -24,6 +28,7 @@ const Search = () => {
           className='searchinput'
           type='search'
           placeholder='강의 제목, 강사, 플랫폼을 검색해보세요'
+          value={searchKeyword}
           onChange={e => setSearchKeyword(e.target.value)}
           onKeyDown={e => {
             if (e.key === 'Enter') {

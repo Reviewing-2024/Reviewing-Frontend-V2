@@ -210,14 +210,15 @@
     .course {
         min-width: 250px;
         max-width: 400px;
-        width: 100%;
+        padding: 10px;
+
         
         @media (max-width: 635px) {
                 min-width: 100%;
             }
         
         .course__container {
-
+            max-width: 300px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
