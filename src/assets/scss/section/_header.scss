@@ -8,6 +8,10 @@
     align-items: center;
     flex-shrink: 0;
 
+    @media (max-width: 768px) {
+            padding: 0;
+        }
+
     .header-logo {
         width: 110px;
         height: 32px;

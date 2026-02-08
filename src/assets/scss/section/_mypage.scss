@@ -1,0 +1,195 @@
+#mypage {
+    background: var(--white200);
+    min-height: 100vh;
+    padding: 0 32px;
+
+    @media (max-width: 768px) {
+            padding: 0;
+        }
+
+    p {
+        padding: 40px 0 32px 0;
+        font-weight: 700;
+        font-size: 30px;
+        line-height: 1.4;
+    }
+
+    .sort-category {
+        display: flex;
+        overflow: auto;
+        max-width: 900px;
+        align-items: flex-start;
+        white-space: nowrap;
+        padding-bottom: 40px;
+
+        ul {
+            display: flex;
+            gap: 8px;
+
+            li {
+
+
+                a {
+                    display: inline-flex;
+                    padding: 8px 16px;
+                    justify-content: center;
+                    align-items: center;
+                    flex-shrink: 0;
+                    border-radius: 100px;
+                    font-weight: 700;
+                    border: 1px solid var(--white100);
+                    color: var(--black);
+                    background: var(--white);
+                    transition: 0.4s;
+                }
+
+                a:hover {
+                    border: 1px solid var(--blue);
+                    box-shadow: 0 1px 6px -1px var(--boxshadow-blue), 0 2px 4px -2px var(--boxshadow-blue);
+                }
+
+                .active {
+                    color: var(--white);
+                    background: var(--blue);
+                    border: 1px solid var(--blue);
+                    box-shadow: 0 3px 6px -1px var(--boxshadow-blue), 0 2px 4px -2px var(--boxshadow-blue);
+                }
+            }
+
+        }
+
+    }
+
+    .review-category {
+        padding-bottom: 4px;
+        margin-bottom: 24px;
+        border-bottom: 1px solid var(--white100);
+
+        ul {
+            display: flex;
+
+
+            li {
+
+
+
+                button {
+                    position: relative;
+                    overflow: visible;
+                    padding: 8px 16px;
+                    display: inline-flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: #62748E;
+                    background: var(--white200);
+                    font-weight: 600;
+                    cursor: pointer;
+
+                    .underline {
+                        position: absolute;
+                        bottom: -5px;
+                        left: 0;
+                        width: 100%;
+                        height: 2px;
+                        background: var(--blue);
+                    }
+                }
+
+                button:hover {
+                    color: var(--black);
+                }
+
+
+                .active {
+                    font-weight: 600;
+                    color: var(--blue);
+                }
+
+            }
+
+        }
+
+    }
+
+    .user_review {
+
+        .user_review_container {
+            display: flex;
+            margin-bottom: 10px;
+            background: var(--white);
+            padding: 16px 20px;
+            gap: 16px;
+            border-radius: 10px;
+            width: 100%;
+
+            .course_img {
+                width: 80px;
+                min-height: 60px;
+                flex-shrink: 0;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 10px;
+                    object-fit: cover;
+                    
+                }
+
+            }
+
+            .course_information {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+
+                .course_text {
+                    display: flex;
+                    gap: 6px;
+                    flex: 1;
+                    min-width: 0;
+
+                    span {
+                        height: 20px;
+                        padding: 2px 8px;
+                        border-radius: 8px;
+                        color: var(--black100);
+                        font-size: 10px;
+                        line-height: 15px;
+                        letter-spacing: 0.117px;
+                        gap: 4px;
+                        border: 1px solid var(--black100);
+                        white-space: nowrap
+                    }
+
+                    h3 {
+                        font-weight: 700;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                }
+
+                .review_management {
+                    display: flex;
+                    margin-left: auto;
+                    gap: 10px;
+                    flex-shrink: 0;
+
+                    span {
+                        height: 20px;
+                        padding: 2px 8px;
+                        border-radius: 8px;
+                        color: var(--black100);
+                        font-size: 10px;
+                        line-height: 15px;
+                        letter-spacing: 0.117px;
+                        gap: 4px;
+                        border: 1px solid var(--black100);
+                    }
+                }
+
+            }
+        }
+    }
+}

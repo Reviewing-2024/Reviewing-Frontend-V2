@@ -121,7 +121,7 @@ const Detail = () => {
         </div>
         <div className='review-list'>
           <div className='review-caerd'>
-
+                
           </div>
         </div>
       </div>
@@ -164,8 +164,6 @@ const Detail = () => {
 
               <div className="modal-input-group">
                 <label>파일 첨부</label>
-
-                {/* 드랍존 느낌만 */}
                 <label className="file-dropzone">
                   <input
                     type="file"

@@ -17,7 +17,17 @@ export const course = [
         comments: "풀스택을 위한 도커와 쿠버네티스 입니다",
         wished: false,
         platform: '인프런',
-        category: '프론트'
+        category: '프론트',
+        userReviews: [
+            {
+                id: 1,
+                reviewer: "김철수",
+                rating: 5.0,
+                content: "강의 내용이 정말 알차고 실무에 도움이 많이 됩니다!",
+                timestamp: "2024-01-15 10:30:00",
+                isApproved: true
+            }
+        ]
     },
     {
         id: 2,
@@ -30,7 +40,17 @@ export const course = [
         comments: "2025 React 완벽 가이드 (Hooks, Redux) 입니다",
         wished: false,
         platform: "코드잇",
-        category: '백엔드'
+        category: '백엔드',
+                userReviews: [
+            {
+                id: 2,
+                reviewer: "박영희",
+                rating: 4.5,
+                content: "도커와 쿠버네티스를 쉽게 이해할 수 있었어요. 다만, 몇몇 부분은 설명이 조금 더 필요할 것 같아요.",
+                timestamp: "2024-01-20 14:00:00",
+                isApproved: false
+            },
+        ]
     },
     {
         id: 3,
