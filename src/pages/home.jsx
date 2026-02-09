@@ -75,9 +75,9 @@ useEffect(() => {
       </div>
       <div className='search-bar'>
         <SearchBar />
-        <button className='recommand-btn' onClick={() => navigate('/mypage')}>✨ 강의 추천받기</button>
+        <button className='recommand-btn' onClick={() => navigate('/mypage/review')}>✨ 강의 추천받기</button>
       </div>
-      <div className='home__platform'>
+      <nav className='home__platform'>
         <ul className='platform_container'>
           <li>
             <Link
@@ -118,7 +118,7 @@ useEffect(() => {
             </li>
           ))}
         </ul>
-      </div>
+      </nav>
       <div className='home__item'>
         <div className='item__card'>
           {courses.map(course => (

@@ -28,8 +28,8 @@ const Mypage = () => {
 
   return (
     <div id='mypage' role='mypage'>
-      <p>마이페이지</p>
-      <div className='sort-category'>
+      <p className='mypage-title'>마이페이지</p>
+      <nav className='sort-category'>
         <ul>
           {mypage_Sort_Category.map((categoryItem, key) => (
             <li key={key}>
@@ -42,7 +42,7 @@ const Mypage = () => {
             </li>
           ))}
         </ul>
-      </div>
+      </nav>
       <div>
         <div className='review-category'>
           <ul>

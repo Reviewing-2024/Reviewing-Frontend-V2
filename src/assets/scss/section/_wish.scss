@@ -1,0 +1,95 @@
+#wish {
+    background: var(--white200);
+    min-height: 100vh;
+    padding: 0 32px;
+
+    @media (max-width: 768px) {
+        padding: 0;
+    }
+
+    .mypage-title {
+        padding: 40px 0 32px 0;
+        font-weight: 700;
+        font-size: 30px;
+        line-height: 1.4;
+    }
+
+    .sort-category {
+        display: flex;
+        overflow: auto;
+        max-width: 900px;
+        align-items: flex-start;
+        white-space: nowrap;
+        padding-bottom: 40px;
+
+        ul {
+            display: flex;
+            gap: 8px;
+
+            li {
+
+
+                a {
+                    display: inline-flex;
+                    padding: 8px 16px;
+                    justify-content: center;
+                    align-items: center;
+                    flex-shrink: 0;
+                    border-radius: 100px;
+                    font-weight: 700;
+                    border: 1px solid var(--white100);
+                    color: var(--black);
+                    background: var(--white);
+                    transition: 0.4s;
+                }
+
+                a:hover {
+                    border: 1px solid var(--blue);
+                    box-shadow: 0 1px 6px -1px var(--boxshadow-blue), 0 2px 4px -2px var(--boxshadow-blue);
+                }
+
+                .active {
+                    color: var(--white);
+                    background: var(--blue);
+                    border: 1px solid var(--blue);
+                    box-shadow: 0 3px 6px -1px var(--boxshadow-blue), 0 2px 4px -2px var(--boxshadow-blue);
+                }
+            }
+
+        }
+
+    }
+
+    div {
+
+        .wishlist_count {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 16px;
+
+            svg {
+                width: 20px;
+                height: 20px;
+                color: var(--blue);
+
+            }
+
+            span {
+                color: var(--black200);
+            }
+        }
+
+        .home__item {
+
+            .item__card {
+                padding: 0;
+            }
+        }
+
+    }
+
+
+
+}

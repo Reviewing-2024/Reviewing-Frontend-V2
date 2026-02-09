@@ -210,22 +210,19 @@
 .item__card {
     flex-wrap: wrap;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 15px;
     padding: 20px;
     
 
     .course {
-        min-width: 250px;
-        max-width: 400px;
         width: 100%;
-        
+
         @media (max-width: 635px) {
-                min-width: 100%;
+                max-width:100%;
             }
         
         .course__container {
-            max-width: 300px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -237,6 +234,10 @@
             -webkit-transition: .5s ease-in-out;
 	        transition: .5s ease-in-out;
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 1px 2px -1px rgba(0, 0, 0, 0.10);
+
+            @media (max-width: 635px) {
+                max-width:100%;
+            }
 
             .course-img-container {
                 position: relative;
