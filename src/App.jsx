@@ -11,6 +11,7 @@ import Detail from './pages/Detail';
 import Mypage from './pages/Mypage';
 import Wish from './pages/Wish';
 import Profile from './pages/Profile';
+import LoginRedirect from './pages/LoginRedirect';
 
 const App = () => {
     return (
@@ -27,6 +28,7 @@ const App = () => {
                   <Route path='/mypage/wish' element={<Wish />} />
                   <Route path='/mypage/profile' element={<Profile />} />
                   <Route path='/search/:searchKeyword' element={<Search />} />
+                  <Route path="/login/redirect" element={<LoginRedirect />} />
                 </Routes>
               </Main>
             <Footer />

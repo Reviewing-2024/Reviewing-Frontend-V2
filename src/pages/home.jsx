@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams, useNavigate } from 'react-router-dom';
 
 import '../assets/scss/section/_main.scss'
 
@@ -10,12 +10,9 @@ import CourseCard from '../components/component/CourseCard';
 import Pagination from '../components/component/Pagination';
 
 import { course } from '../data/course'
-import { useNavigate } from 'react-router-dom';
 
 
 const Home = () => {
-
-
 
   const navigate = useNavigate();
   const params = useParams()
