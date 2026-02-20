@@ -1,4 +1,4 @@
-import '../../assets/scss/component/_pagination.scss'
+import '../../asserts/scss/component/_pagination.scss'
 
 const Pagination = ({
   currentPage,

@@ -19,7 +19,9 @@ const LoginRedirect = () => {
         headers: { Accept: "application/json" },
       });
 
+
       const accessToken = res.headers.authorization;
+      const username = res.data.data.name
 
 
       if (!accessToken) {
@@ -28,7 +30,7 @@ const LoginRedirect = () => {
         return;
       }
 
-      login(accessToken);
+      login(accessToken, username);
       navigate("/");
     };
 

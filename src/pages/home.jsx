@@ -1,36 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams, useSearchParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 
-import '../assets/scss/section/_main.scss'
+import '../asserts/scss/section/_main.scss'
 
-
-import { platforms, categorys } from '../data/platform';
 import SearchBar from '../components/component/SearchBar';
 import CourseCard from '../components/component/CourseCard';
 import Pagination from '../components/component/Pagination';
 
-import { course } from '../data/course'
 
 
 const Home = () => {
-
-  const navigate = useNavigate();
-  const params = useParams()
+  const params = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const page = Number(searchParams.get('page')) || 1;
-
   const [courses, setCourses] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
+  const [platform, setPlatform] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [subCategory, setSubCategory] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
+  const page = searchParams.get('page') || 1;
+  const ITEMS_PER_PAGE = 12;
 
   //플랫폼 및 카테고리 헤더 선택 영역
-  const platformTitle = platforms.map(p => p.title);
-  const categoryTitle = categorys.map(c => c.title);
-  
-  let selectedPlatform = 
+  const platformTitle = platform.map(p => p.englishName);
+  const categoryTitle = category.map(c => c.slug);
+  const subCategoryTitle = subCategory.map(s => s.slug)
+
+  const selectedPlatform =
     params.platform && platformTitle.includes(params.platform)
-    ? params.platform 
-    : null; 
+      ? params.platform
+      : null;
 
   const selectedCategory =
     params.category
@@ -39,30 +42,144 @@ const Home = () => {
         ? params.platform
         : null;
 
-  //강의 필터링
-  const filteredCourse = course.filter(item => { 
-    const platformMatch = selectedPlatform 
-    ? item.platform === selectedPlatform 
-    : true; 
-    
-    const categoryMatch = selectedCategory 
-    ? item.category === selectedCategory 
-    : true; 
-    
-    return platformMatch && categoryMatch; 
-  });
+
+  const selectedSubCategory =
+    searchParams.get("sub") && subCategoryTitle.includes(searchParams.get("sub"))
+      ? searchParams.get("sub")
+      : null;
 
 
-// 페이지네이션 설정 
 
-const ITEMS_PER_PAGE = 1;
+  //platform 요청
 
-useEffect(() => {
-  const start = (page - 1) * ITEMS_PER_PAGE;
-  const end = page * ITEMS_PER_PAGE;
+  useEffect(() => {
+    const fetchplatform = async () => {
+      try {
+        setLoading(true);
+        setError(null);
 
-  setCourses(filteredCourse.slice(start, end));
-}, [page, selectedPlatform, selectedCategory]);
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/api/v1/platforms`
+        );
+        setPlatform(res.data.data);
+
+      } catch (e) {
+        setError(e);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchplatform();
+
+  }, []);
+
+
+  //selectedPlatform가 있을시 category요청
+
+  useEffect(() => {
+    if (!selectedPlatform) {
+      setCategory([]);
+      setSubCategory([])
+      return;
+    }
+
+    const fetchcategory = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/api/v1/categories`,
+          {
+            params: {
+              platformName: selectedPlatform
+            }
+          }
+        );
+
+        setCategory(res.data.data);
+
+      } catch (e) {
+        setError(e);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchcategory();
+
+  }, [selectedPlatform]);
+
+  //selectedCategory가 있을시 subcategory 요청
+
+  useEffect(() => {
+    if (!selectedPlatform || !selectedCategory) {
+      setSubCategory([]);
+      return;
+    }
+
+    const fetchsubcategory = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/api/v1/subcategories`,
+          {
+            params: {
+              platformName: selectedPlatform,
+              ...(selectedCategory && { categorySlug: selectedCategory })
+            }
+          }
+        );
+
+        setSubCategory(res.data.data);
+
+      } catch (e) {
+        setError(e);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchsubcategory();
+
+  }, [selectedPlatform, selectedCategory]);
+
+
+  //강의 요청
+  useEffect(() => {
+
+    const fetchCourses = async () => {
+
+      try {
+
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/courses`, {
+          params: {
+          ...(selectedPlatform && { platform: selectedPlatform }),
+          ...(selectedCategory && { category: selectedCategory }),
+          ...(selectedSubCategory && { subCategories: selectedSubCategory }),
+          sort: 'createdAt',
+          page: page,
+          size: ITEMS_PER_PAGE,
+        }
+        });
+
+        setCourses(response.data.data.content);
+        setTotalItems(response.data.data.page.totalElements);
+      } catch (error) {
+        console.error("강의 불러오기 실패:", error);
+      }
+
+    };
+
+    fetchCourses();
+
+  }, [page, ITEMS_PER_PAGE, selectedPlatform, selectedCategory, selectedSubCategory]);
+
+   if (error) return <div>에러가 발생했습니다</div>;
+
 
 
   return (
@@ -72,7 +189,7 @@ useEffect(() => {
       </div>
       <div className='search-bar'>
         <SearchBar />
-        <button className='recommand-btn' onClick={() => navigate('/mypage/review')}>✨ 강의 추천받기</button>
+        <button className='recommand-btn' >✨ 강의 추천받기</button>
       </div>
       <nav className='home__platform'>
         <ul className='platform_container'>
@@ -84,52 +201,83 @@ useEffect(() => {
               전체 플랫폼
             </Link>
           </li>
-          {platforms.map((platform, key) => (
+          {platform.map((platform, key) => (
             <li key={key}>
               <Link
-                to={platform.src}
-                className={params.platform === platform.title ? 'active' : ''}
+                to={`/${platform.englishName}`}
+                className={selectedPlatform === platform.englishName ? 'active' : ''}
               >
-                {platform.title}
+                {platform.koreanName}
               </Link>
             </li>
           ))}
         </ul>
-        <ul className='category_container'>
-          <li>
-            <Link
-              to={selectedPlatform ? `/${selectedPlatform}` : `/`}
-              className={!selectedCategory ? 'active' : ''}
-            >
-              전체 카테고리
-            </Link>
-          </li>
-          {categorys.map((category, key) => (
-            <li key={key}>
+        {selectedPlatform && (
+          <ul className='category_container'>
+            <li>
               <Link
-                to={ selectedPlatform ? `/${selectedPlatform}${category.src}` : `${category.src}`}
-                className={params.category === category.title ? 'active' : (params.platform === category.title ? 'active' : '')}
+                to={selectedPlatform ? `/${selectedPlatform}` : `/`}
+                className={!selectedCategory ? 'active' : ''}
               >
-                {category.title}
+                전체 카테고리
               </Link>
             </li>
-          ))}
-        </ul>
+            {loading ? (
+              <li>카테고리 불러오는 중...</li>
+            ) : (category.map((category, key) => (
+              <li key={key}>
+                <Link
+                  to={selectedPlatform ? `/${selectedPlatform}/${category.slug}` : `${category.slug}`}
+                  className={selectedCategory === category.slug ? 'active' : (params.platform === category.slug ? 'active' : '')}
+                >
+                  {category.name}
+                </Link>
+              </li>
+            ))
+            )}
+          </ul>
+        )}
+
+        {selectedCategory && (
+          <ul className='sub_category_container'>
+            <li>
+              <Link
+                to={selectedCategory ? `/${selectedPlatform}/${selectedCategory}` : `/`}
+                className={!selectedSubCategory ? 'active' : ''}
+              >
+                전체
+              </Link>
+            </li>
+            {loading ? (
+              <li>서브카테고리 불러오는 중...</li>
+            ) : (subCategory.map((subCategory, key) => (
+              <li key={key}>
+                <Link
+                  to={`?sub=${subCategory.slug}`}
+                  className={selectedSubCategory === subCategory.slug ? 'active' : ''}
+                >
+                  {subCategory.name}
+                </Link>
+              </li>
+            ))
+            )}
+          </ul>
+        )}
       </nav>
       <div className='home__item'>
         <div className='item__card'>
           {courses.map(course => (
-            <CourseCard  course={course} key={course.id}/>
+            <CourseCard course={course} key={course.id} />
           ))}
         </div>
-         <Pagination
-            currentPage={page}
-            totalItems={filteredCourse.length}
-            itemsPerPage={ITEMS_PER_PAGE}
-            onPageChange={(p) =>
-              setSearchParams({ page: p })
-            }
-          />
+        <Pagination
+          currentPage={page}
+          totalItems={totalItems}
+          itemsPerPage={ITEMS_PER_PAGE}
+          onPageChange={(p) =>
+            setSearchParams({ page: p })
+          }
+        />
       </div>
     </div>
   )

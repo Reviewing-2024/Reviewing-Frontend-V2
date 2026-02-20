@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import '../../assets/scss/section/_main.scss'
+import '../../asserts/scss/section/_main.scss'
 
 import { IoIosSearch } from 'react-icons/io';
 

@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 
 import { mypage_Sort_Category } from '../data/mypagedata'
 import { CiCamera } from "react-icons/ci";
-import '../assets/scss/section/_profile.scss'
+import '../asserts/scss/section/_profile.scss'
 
 const Profile = () => {
   const { sortCategory } = useParams()
@@ -56,7 +56,7 @@ const Profile = () => {
                   className="field__input"
                   type="text"
                   placeholder="닉네임을 입력하세요"
-                  defaultValue="기존 닉네임"
+                  defaultValue="닉네임"
                 />
               </div>
 
@@ -68,7 +68,7 @@ const Profile = () => {
                   id="email"
                   className="field__input"
                   type="email"
-                  defaultValue="기존 이메일"
+                  defaultValue="이메일"
                   disabled
                 />
                 <p className="field__help">이메일은 변경할 수 없습니다.</p>

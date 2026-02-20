@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { mypage_Sort_Category, mypage_Review_Category } from '../data/mypagedata'
 import { PiDotsThreeOutlineFill } from "react-icons/pi";
 
-import '../assets/scss/section/_mypage.scss'
+import '../asserts/scss/section/_mypage.scss'
 
 import { course } from '../data/course';
 

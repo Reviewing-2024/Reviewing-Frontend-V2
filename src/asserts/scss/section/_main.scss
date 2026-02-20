@@ -116,12 +116,12 @@
         flex-direction: column;
         gap: 16px;
         padding-bottom: 40px;
+        max-width: 1920px;
 
         .platform_container {
             display: flex;
             overflow: auto;
             gap: 8px;
-            max-width: 900px;
             align-items: flex-start;
             white-space: nowrap;
 
@@ -159,12 +159,12 @@
 
         }
 
-        .category_container {
+        .category_container, .sub_category_container {
             display: flex;
             overflow: auto;
             gap: 8px;
-            max-width: 900px;
             align-items: flex-start;
+            white-space: nowrap;
 
             li {
 
@@ -302,7 +302,12 @@
                     align-self: stretch;
 
                     h3 {
-                        display: flex;
+                        text-overflow: ellipsis;
+                        overflow: hidden;      
+                        display: -webkit-box;
+                        -webkit-line-clamp: 2;
+                        -webkit-box-orient: vertical;
+                        max-height: 2.9em;
                         padding: 0px 40px 30px 0;
                         align-items: center;
                         align-self: stretch;
@@ -352,14 +357,14 @@
         }
 
         .course__container:hover {
-            transform: translateY(-15px);
+            transform: translateY(-10px);
             -webkit-transition: .5s ease-in-out;
 	        transition: .5s ease-in-out;
 
             .course-img-container {
                 img {
-                    -webkit-transform: scale(1.05);
-	                transform: scale(1.05);
+                    -webkit-transform: scale(1.04);
+	                transform: scale(1.04);
 
                 }
             }

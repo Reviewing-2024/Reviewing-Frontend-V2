@@ -1,39 +1,104 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import "../../asserts/scss/section/_layout.scss";
+import "../../asserts/scss/section/_header.scss";
 
-import '../../assets/scss/section/_layout.scss'
-import '../../assets/scss/section/_header.scss'
-
-import Login from './Login';
-import { useAuth } from '../../context/AuthContext';
-
-
+import Login from "./Login";
+import { useAuth } from "../../context/AuthContext";
+import { IoIosArrowDown } from "react-icons/io";
 
 const Header = () => {
-  const { isLogin, logout } = useAuth();
-  const [logintogle, setLogintogle] = useState(false)
+  const { isLogin, username, logout } = useAuth();
+  const navigate = useNavigate();
 
-  const closeLoginForm = () => {
-    setLogintogle(false);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    if (!userMenuOpen) return;
+
+    const onMouseDown = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setUserMenuOpen(false);
+      }
+    };
+
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") setUserMenuOpen(false);
+    };
+
+    window.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [userMenuOpen]);
+
+  const handleLogout = () => {
+    setUserMenuOpen(false);
+    logout();
   };
 
 
   return (
-    <div id='header' role='banner'>
+    <div id="header" role="banner">
       <div className="header__content">
-        <a className='header-logo' href="/">
-          <img className='logo'  src='/img/NavLogo.png' />
+        <a className="header-logo" href="/">
+          <img className="logo" src="/img/NavLogo.png" alt="Reviewing" />
         </a>
-        <div className='header__content__userbtn'>
-          { isLogin ? (
-            <button className='userbtn-login' onClick={logout}>로그아웃</button>
+
+        <div className="header__content__userbtn">
+          {isLogin ? (
+            <div className="user-menu" ref={menuRef}>
+              <button
+                type="button"
+                className={`userbtn-login-togle ${userMenuOpen ? "is-open" : ""}`}
+                onClick={() => setUserMenuOpen((v) => !v)}
+                aria-haspopup="menu"
+                aria-expanded={userMenuOpen}
+              >
+                <div className="avatar" aria-hidden="true">
+                  <span className="avatar__text">S</span>
+                </div>
+
+                <span className="userbtn-name">{username}</span>
+                <IoIosArrowDown />
+              </button>
+
+              {userMenuOpen && (
+                <div className="user-dropdown" role="menu">
+                  <a className="user-dropdown__item" role="menuitem" onClick={() => navigate('/mypage/review')}>
+                    마이페이지
+                  </a>
+                  <button
+                    type="button"
+                    className="user-dropdown__item danger"
+                    onClick={handleLogout}
+                    role="menuitem"
+                  >
+                    로그아웃
+                  </button>
+                </div>
+              )}
+            </div>
           ) : (
-            <button className='userbtn-login' onClick={() => setLogintogle(true)}>로그인</button>
+            <button
+              type="button"
+              className="userbtn-login"
+              onClick={() => setLoginModalOpen(true)}
+            >
+              로그인
+            </button>
           )}
         </div>
       </div>
-      {!isLogin && logintogle && <Login onClose={() => setLogintogle(false)} />}
+
+      {!isLogin && loginModalOpen && <Login onClose={() => setLoginModalOpen(false)} />}
     </div>
   );
-}
+};
 
 export default Header;

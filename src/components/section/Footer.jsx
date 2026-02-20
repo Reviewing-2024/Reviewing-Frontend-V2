@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-import '../../assets/scss/section/_layout.scss'
-import '../../assets/scss/section/_footer.scss'
+import '../../asserts/scss/section/_layout.scss'
+import '../../asserts/scss/section/_footer.scss'
 
 const Footer = () => {
     return (

@@ -5,7 +5,7 @@ import { mypage_Sort_Category, mypage_Review_Category } from '../data/mypagedata
 import { PiDotsThreeOutlineFill } from "react-icons/pi";
 import { FaHeart, FaRegHeart, FaThumbsDown, FaThumbsUp } from "react-icons/fa6";
 
-import '../assets/scss/section/_wish.scss'
+import '../asserts/scss/section/_wish.scss'
 
 import { course } from '../data/course';
 import CourseCard from '../components/component/CourseCard';

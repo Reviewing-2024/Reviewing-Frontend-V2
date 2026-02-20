@@ -1,9 +1,9 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
-import kakaoBtn from '../../assets/img/kakao_login_medium_narrow.png';
+import kakaoBtn from '../../asserts/img/kakao_login_medium_narrow.png';
 import { FaXmark } from "react-icons/fa6";
-import '../../assets/scss/section/_login.scss'
+import '../../asserts/scss/section/_login.scss'
 
 const Login = ({ onClose }) => {
 

@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import axios from 'axios';
 
-import '../assets/scss/section/_detail.scss'
+import '../asserts/scss/section/_detail.scss'
 
 import { course } from '../data/course'
 import { Sort_Category } from '../data/platform'
@@ -16,14 +17,40 @@ const Detail = () => {
   const [current_category, setCurrent_category] = useState('최신순');
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [newReview, setNewReview] = useState({});
+  const [courses, setCourses] = useState([]);
 
   const params = useParams();
 
-  let courses = course.find(function (x) {
-    return x.slug == params.slug
-  });
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  })
+
+  //강의 조회
+  useEffect(() => {
+
+    const fetchCourses = async () => {
+
+      try {
+
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/api/v1/courses/${params.platform}/${params.slug}`
+        );
+
+        setCourses(response.data.data);
+
+      } catch (error) {
+        console.error("강의 불러오기 실패:", error);
+      }
+
+    };
+    
+
+    fetchCourses();
+
+  }, []);
 
 
+// 리뷰 작성 폼 함수
   const handleCreateReview = async () => {
     const token = localStorage.getItem("Authorization");
     if (!token) {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom';
 
-import '../../assets/scss/section/_layout.scss'
+import '../../asserts/scss/section/_layout.scss'
 
 const MainSection = (props) => {
 

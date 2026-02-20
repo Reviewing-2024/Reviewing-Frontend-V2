@@ -1,8 +1,8 @@
-import img from '../assets/img/noImage.jpg'
-import img1 from '../assets/img/ex1.jpg'
-import img2 from '../assets/img/ex2.jpg'
-import img3 from '../assets/img/ex3.jpg'
-import img4 from '../assets/img/ex4.jpg'
+import img from '../asserts/img/noImage.jpg'
+import img1 from '../asserts/img/ex1.jpg'
+import img2 from '../asserts/img/ex2.jpg'
+import img3 from '../asserts/img/ex3.jpg'
+import img4 from '../asserts/img/ex4.jpg'
 
 
 export const course = [

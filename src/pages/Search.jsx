@@ -4,7 +4,7 @@ import { useSearchParams  } from 'react-router-dom'
 import CourseCard from '../components/component/CourseCard';
 import SearchBar from '../components/component/SearchBar';
 
-import '../assets/scss/section/_main.scss'
+import '../asserts/scss/section/_main.scss'
 
 import { course } from '../data/course';
 

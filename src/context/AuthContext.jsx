@@ -4,41 +4,71 @@ import axios from "axios";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
+
   const [isLogin, setIsLogin] = useState(false);
+  const [username, setUsername] = useState(null);
 
   useEffect(() => {
+
     const token = localStorage.getItem("accessToken");
+    const savedUsername = localStorage.getItem("username");
+
     setIsLogin(!!token);
+    setUsername(savedUsername);
+
   }, []);
 
-  const login = (token) => {
+
+  const login = (token, username) => {
+
     localStorage.setItem("accessToken", token);
+    localStorage.setItem("username", username);
+
     setIsLogin(true);
+    setUsername(username);
+
   };
 
+
   const logout = async () => {
+
     try {
+
       const api = axios.create({
         baseURL: import.meta.env.VITE_API_BASE_URL,
         withCredentials: true,
       });
 
-      await api.post("/api/v1/auth/logout", null, {
-        headers: { Accept: "application/json" },
-      });
+      await api.post("/api/v1/auth/logout");
+
     } catch (e) {
+
       console.error("logout api failed:", e);
+
     } finally {
+
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("username");
+
       setIsLogin(false);
+      setUsername(null);
+
     }
+
   };
 
+
   return (
-    <AuthContext.Provider value={{ isLogin, login, logout }}>
+    <AuthContext.Provider value={{
+      isLogin,
+      username,
+      login,
+      logout
+    }}>
       {children}
     </AuthContext.Provider>
   );
+
 };
 
 export const useAuth = () => useContext(AuthContext);

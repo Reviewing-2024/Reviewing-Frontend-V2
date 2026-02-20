@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import HalfStar from './HalfStar';
-import '../../assets/scss/component/_star_ratinginput.scss';
+import '../../asserts/scss/component/_star_ratinginput.scss';
 
 const StarRatingInput = ({ value = 0, onChange }) => {
   const [hover, setHover] = useState(value);
