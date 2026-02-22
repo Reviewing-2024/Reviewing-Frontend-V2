@@ -16,13 +16,14 @@ const Home = () => {
 
   const [courses, setCourses] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [platform, setPlatform] = useState([]);
   const [category, setCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const page = searchParams.get('page') || 1;
+  const page = Number(searchParams.get('page')) || 1;
   const ITEMS_PER_PAGE = 12;
 
   //플랫폼 및 카테고리 헤더 선택 영역
@@ -168,6 +169,7 @@ const Home = () => {
 
         setCourses(response.data.data.content);
         setTotalItems(response.data.data.page.totalElements);
+        setTotalPages(response.data.data.page.totalPages);
       } catch (error) {
         console.error("강의 불러오기 실패:", error);
       }
@@ -273,10 +275,15 @@ const Home = () => {
         <Pagination
           currentPage={page}
           totalItems={totalItems}
+          totalPages = {totalPages -1}
           itemsPerPage={ITEMS_PER_PAGE}
-          onPageChange={(p) =>
-            setSearchParams({ page: p })
-          }
+         onPageChange={(p) => {
+            const newParams = new URLSearchParams(searchParams);
+
+            newParams.set("page", p);
+
+            setSearchParams(newParams);
+          }}
         />
       </div>
     </div>
