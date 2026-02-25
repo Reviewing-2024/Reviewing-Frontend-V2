@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { href, useParams } from 'react-router-dom'
 import axios from 'axios';
 
 import '../asserts/scss/section/_detail.scss'
@@ -8,22 +8,32 @@ import { course } from '../data/course'
 import { Sort_Category } from '../data/platform'
 
 import StarRatingInput from '../components/component/StarRatingInput'
+import Image from '../components/component/Image';
 
 import { FaHeart, FaRegHeart, FaThumbsDown, FaThumbsUp, FaXmark } from "react-icons/fa6";
 import { FiUpload } from "react-icons/fi";
 
 const Detail = () => {
 
-  const [current_category, setCurrent_category] = useState('최신순');
+  const [current_category, setCurrent_category] = useState('LATEST');
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [newReview, setNewReview] = useState({});
   const [courses, setCourses] = useState([]);
+  const [reviews, setReviews] = useState([]);
+  const [createReviewloading, setCreateReviewloading] = useState(false);
 
   const params = useParams();
+  const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  })
+  }, [])
+
+  //강의 url이동
+  const handleOpenNewTab = (url) => {
+    window.open(url, "_blank", "noopener, noreferrer");
+  };
+
 
   //강의 조회
   useEffect(() => {
@@ -43,38 +53,27 @@ const Detail = () => {
       }
 
     };
-    
+
 
     fetchCourses();
 
   }, []);
 
-
-// 리뷰 작성 폼 함수
+  // 리뷰 작성 폼 함수
   const handleCreateReview = async () => {
-    const token = localStorage.getItem("Authorization");
-    if (!token) {
-      alert("로그인이 필요합니다.");
-      return;
-    }
 
-    if (likedloading) return;
-
-    setReviewloadinging(true);
-
+    setCreateReviewloading(true);
 
     const formData = new FormData();
     formData.append(
       "reviewRequestDto",
       new Blob(
-        [
-          JSON.stringify({
-            rating: newReview.rating,
-            contents: newReview.contents,
-          }),
-        ],
-        { type: "application/json" },
-      ),
+        [JSON.stringify({
+          rating: newReview.rating,
+          content: newReview.contents,
+        })],
+        { type: "application/json" }
+      )
     );
     if (newReview.file) {
       formData.append("certificationFile", newReview.file);
@@ -82,23 +81,55 @@ const Detail = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/reviews/${course.id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/reviews/${courses.id}`,
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
+            Authorization: accessToken,
           },
         },
       );
+
       setShowReviewModal(false);
       setNewReview({});
-      window.location.reload();
-      alert(`소중한 리뷰를 작성해 주셔서 감사합니다! ☺️\n작성하신 리뷰는 관리자가 신속히 검토하겠습니다!\n진행 상황은 마이페이지에서 확인하실 수 있습니다.`);
+      alert(`소중한 리뷰를 작성해 주셔서 감사합니다! ☺️ \n
+            작성하신 리뷰는 관리자가 신속히 검토하겠습니다! \n
+            진행 상황은 마이페이지에서 확인하실 수 있습니다.`);
     } catch (error) {
       let errorMessage = "리뷰 작성 중 문제가 발생했습니다.";
+      alert(errorMessage)
     }
   };
+
+  //유저 리뷰 조회
+  useEffect(() => {
+    if (!courses?.id) return;
+
+    const fetchRivew = async () => {
+
+      try {
+
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/reviews/${courses.id}`, {
+          params: {
+            sort: current_category,
+            page: 0,
+            size: 10,
+          }
+        });
+
+        setReviews(response.data.data);
+
+
+      } catch (error) {
+        console.error("강의 불러오기 실패:", error);
+      }
+
+    };
+
+    fetchRivew();
+
+  }, [courses?.id, current_category]);
 
 
 
@@ -106,7 +137,7 @@ const Detail = () => {
     <section id='detail'>
       <div className='detail__container'>
         <div className='detail-img-container'>
-          <img src={courses.thumbnailImage} alt="이미지" />
+          <Image course={courses} />
         </div>
         <div className='detail-information'>
           <div className='detail-information-container'>
@@ -116,7 +147,7 @@ const Detail = () => {
             <span className='information-rating'>{courses.rating}</span>
           </div>
           <div className='information-container-btn'>
-            <button className='detail-btn'>강의 페이지로 이동</button>
+            <button className='detail-btn' onClick={() => { handleOpenNewTab(courses.url) }} >강의 페이지로 이동</button>
             <button className='detail-wish-btn'><FaRegHeart /></button>
           </div>
         </div>
@@ -132,8 +163,8 @@ const Detail = () => {
               {Sort_Category.map((sort_category, key) => (
                 <li key={key}>
                   <button
-                    onClick={() => setCurrent_category(sort_category.title)}
-                    className={current_category === sort_category.title ? 'active' : ''}
+                    onClick={() => setCurrent_category(sort_category.sort)}
+                    className={current_category === sort_category.sort ? 'active' : ''}
                   >
                     {sort_category.title}
                   </button>
@@ -148,7 +179,7 @@ const Detail = () => {
         </div>
         <div className='review-list'>
           <div className='review-caerd'>
-                
+
           </div>
         </div>
       </div>
@@ -211,11 +242,11 @@ const Detail = () => {
 
               <div className="review-modal-notice">
                 <li>
-                    <ul>• 강의 수강을 증명할 수 있는 자료를 첨부해주세요.</ul>
-                    <ul>&nbsp; (예: 강의 수강 화면 캡처, 수강 증명서 등)</ul>
-                    <ul>• 무관한 내용이나 부적절한 파일은 승인이 거절될 수 있습니다.</ul>
-                    <ul>• 첨부 자료는 리뷰 승인 목적으로만 사용되며 안전하게 보호됩니다.</ul>
-                    <ul>• 리뷰와 관련 없는 개인정보나 민감한 정보를 포함하지 않도록 주의해주세요.</ul>
+                  <ul>• 강의 수강을 증명할 수 있는 자료를 첨부해주세요.</ul>
+                  <ul>&nbsp; (예: 강의 수강 화면 캡처, 수강 증명서 등)</ul>
+                  <ul>• 무관한 내용이나 부적절한 파일은 승인이 거절될 수 있습니다.</ul>
+                  <ul>• 첨부 자료는 리뷰 승인 목적으로만 사용되며 안전하게 보호됩니다.</ul>
+                  <ul>• 리뷰와 관련 없는 개인정보나 민감한 정보를 포함하지 않도록 주의해주세요.</ul>
                 </li>
               </div>
             </div>

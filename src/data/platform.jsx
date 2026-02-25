@@ -58,11 +58,14 @@ export const categorys = [
 export const Sort_Category = [
     {
         title: "최신순",
+        sort: 'LATEST'
     },
     {
         title: "높은 평점순",
+        sort: 'HIGH_RATING'
     },
     {
         title: "낮은 평점순",
+        sort: 'LOW_RATING'
     },
 ]

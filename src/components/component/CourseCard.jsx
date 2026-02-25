@@ -2,8 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import { FaHeart, FaRegHeart, FaThumbsDown, FaThumbsUp } from "react-icons/fa6";
-import noimg from '../../asserts/img/noImage.jpg'
-
+import Image from './Image';
 
 const CourseCard = ({ course }) => {
 
@@ -11,18 +10,7 @@ const CourseCard = ({ course }) => {
         <div className="course" >
             <Link className='course__container' key={course.id} to={`/courses/${course.platform}/${course.slug}`}>
                 <div className='course-img-container'>
-
-                    {
-                        course.thumbnailImage ? (
-                            <img src={course.thumbnailImage} alt={course.title} />
-                        ) : course.thumbnailVideo ? (
-                            <video muted autoPlay loop>
-                                <source src={course.thumbnailVideo} type="video/mp4" alt={course.title} />
-                            </video>
-                        ) : (
-                            <img src={noimg} alt={course.title} />
-                        )
-                    }
+                    <Image course={course} />
                     <span>{course.platform}</span>
                     <button><FaRegHeart /></button>
                 </div>
