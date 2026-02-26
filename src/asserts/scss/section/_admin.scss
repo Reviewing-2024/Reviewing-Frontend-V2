@@ -1,0 +1,81 @@
+#admin {
+    background: var(--white200);
+    min-height: 100vh;
+    padding: 0 32px;
+
+    @media (max-width: 768px) {
+            padding: 0;
+        }
+
+    .admin-title {
+        padding: 40px 0 32px 0;
+        font-weight: 700;
+        font-size: 30px;
+        line-height: 1.4;
+    }
+
+    .admin-sort-category {
+        display: flex;
+        overflow: auto;
+        white-space: nowrap;
+        padding: 4px;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        background-color: var(--white);
+        border: 1px solid var(--white100);
+
+        ul {
+            display: flex;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+
+            li {
+                width: 100%;
+                 flex: 1;
+                z-index: 1;
+
+                a {
+                    display: flex;
+                    height: 2.5rem;
+                    font-weight: 600;
+                    justify-content: center;
+                    align-items: center; 
+                    border-radius: 10px;
+                }
+
+                a:hover {
+               
+                }
+
+                .active {
+                
+            
+                }
+            }
+
+        }
+        ul::before {
+            content: "";
+            position: absolute;
+            height: 100%;
+            width: calc(100% / 3);
+            background: var(--black300);
+            border-radius: 8px;
+            transition: 0.3s ease;
+        }
+        .tab-PENDING::before {
+            transform: translateX(0%);
+        }
+
+        .tab-APPROVED::before {
+            transform: translateX(100%);
+        }
+
+        .tab-REJECTED::before {
+            transform: translateX(200%);
+        }
+
+    }
+    
+}

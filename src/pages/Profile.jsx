@@ -9,9 +9,13 @@ const Profile = () => {
   const { sortCategory } = useParams()
   const [current_category, setCurrent_category] = useState('profile')
 
+  const username = localStorage.getItem('username')
+
   useEffect(() => {
-    if (sortCategory) setCurrent_category(sortCategory)
-    else setCurrent_category('profile')
+    if (sortCategory) 
+      setCurrent_category(sortCategory)
+    else 
+      setCurrent_category('profile')
   }, [sortCategory])
 
   return (
@@ -56,7 +60,7 @@ const Profile = () => {
                   className="field__input"
                   type="text"
                   placeholder="닉네임을 입력하세요"
-                  defaultValue="닉네임"
+                  defaultValue={username}
                 />
               </div>
 

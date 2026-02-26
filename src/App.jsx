@@ -12,6 +12,7 @@ import Mypage from './pages/Mypage';
 import Wish from './pages/Wish';
 import Profile from './pages/Profile';
 import LoginRedirect from './pages/LoginRedirect';
+import Admin from './pages/Admin';
 
 const App = () => {
     return (
@@ -29,6 +30,7 @@ const App = () => {
                   <Route path='/mypage/profile' element={<Profile />} />
                   <Route path='/search/:searchKeyword' element={<Search />} />
                   <Route path="/login/redirect" element={<LoginRedirect />} />
+                  <Route path='/admin/:sortCategory' element={<Admin />} />
                 </Routes>
               </Main>
             <Footer />

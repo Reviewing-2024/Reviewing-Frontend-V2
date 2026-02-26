@@ -53,8 +53,10 @@ const Header = () => {
         <div className="header__content__userbtn">
           {isLogin ? (
             <div className="user-menu" ref={menuRef}>
+              <button className="admin-btn"  onClick={() => navigate('/admin/PENDING')} >
+                관리자
+              </button>
               <button
-                type="button"
                 className={`userbtn-login-togle ${userMenuOpen ? "is-open" : ""}`}
                 onClick={() => setUserMenuOpen((v) => !v)}
                 aria-haspopup="menu"
@@ -70,11 +72,14 @@ const Header = () => {
 
               {userMenuOpen && (
                 <div className="user-dropdown" role="menu">
-                  <a className="user-dropdown__item" role="menuitem" onClick={() => navigate('/mypage/review')}>
+                  <a  
+                    className="user-dropdown__item" 
+                    role="menuitem" 
+                    onClick={() => navigate('/mypage/review')}
+                  >
                     마이페이지
                   </a>
                   <button
-                    type="button"
                     className="user-dropdown__item danger"
                     onClick={handleLogout}
                     role="menuitem"

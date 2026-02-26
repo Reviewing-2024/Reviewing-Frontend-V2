@@ -75,7 +75,6 @@
                 color: var(--white);
                 background: var(--blue);
                 box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 1px 2px -1px rgba(0, 0, 0, 0.10);
-                cursor: pointer;
             }
 
             @media (max-width: 768px) {
@@ -99,7 +98,6 @@
             color: var(--white);
             background: linear-gradient(180deg, var(--blue) 0%, #4D94FF 100%);
             box-shadow: 0 4px 14px 0 rgba(0, 102, 255, 0.39);
-            cursor: pointer;
             transition: 0.5s;
         }
 

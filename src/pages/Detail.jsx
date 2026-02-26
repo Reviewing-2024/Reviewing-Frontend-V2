@@ -80,7 +80,7 @@ const Detail = () => {
     }
 
     try {
-      const response = await axios.post(
+       await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/api/v1/reviews/${courses.id}`,
         formData,
         {

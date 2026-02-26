@@ -2,7 +2,6 @@
     display: flex;
     width: 100%;
     max-width: 1920px;
-    // max-width: 1280px;
     height: 64px;
     padding: 0 32px;
     justify-content: space-between;
@@ -35,7 +34,6 @@
             color: var(--black);
             background-color: var(--white);
             border-radius: 8px;
-            cursor: pointer;
             transition: 0.5s;
         }
 
@@ -47,50 +45,65 @@
         .user-menu {
             position: relative;
             display: inline-flex;
-        }
+            gap: 20px;
 
-        .userbtn-login-togle {
-            display: flex;
-            gap: 10px;
-            padding: 5px 10px;
-            border-radius: 999px;
-            align-items: center;
-            background-color: var(--white);
-            box-shadow: 0 0 3px #999;
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            cursor: pointer;
-
-            .avatar {
-                width: 25px;
-                height: 25px;
-                border-radius: 999px;
-                background: #eaf2ff;
-                display: grid;
-                place-items: center;
-                border: 1px solid #dbeafe;
-
-                .avatar__text {
-                    font-size: 11px;
-                    font-weight: 800;
-                    color: var(--blue);
-                    line-height: 1;
+            .admin-btn {
+                background-color: #fff;
+                color: var(--black200);
+                padding: 8px 16px;
+                border-radius: 10px;
+                
+                &:hover {
+                    background-color: var(--black300);
+                    color: var(--black);
                 }
             }
 
-            .userbtn-name {
-                font-size: 13px;
-                font-weight: 700;
-                color: #111;
-            }
 
-            .chev {
-                font-size: 16px;
-                transition: transform 0.15s ease;
-            }
 
-            &.is-open {
+            .userbtn-login-togle {
+                display: flex;
+                gap: 10px;
+                padding: 5px 10px;
+                border-radius: 999px;
+                align-items: center;
+                background-color: var(--white);
+                box-shadow: 0 0 3px #999;
+                border: 1px solid rgba(0, 0, 0, 0.06);
+                cursor: pointer;
+
+                .avatar {
+                    width: 25px;
+                    height: 25px;
+                    border-radius: 999px;
+                    background: #eaf2ff;
+                    display: grid;
+                    place-items: center;
+                    border: 1px solid #dbeafe;
+
+                    .avatar__text {
+                        font-size: 11px;
+                        font-weight: 800;
+                        color: var(--blue);
+                        line-height: 1;
+                    }
+                }
+
+                .userbtn-name {
+                    font-size: 13px;
+                    font-weight: 700;
+                    color: #111;
+                }
+
                 .chev {
-                    transform: rotate(180deg);
+                    font-size: 16px;
+                    transition: transform 0.15s ease;
+                }
+
+                &.is-open {
+                    .chev {
+                        transform: rotate(180deg);
+                    }
                 }
             }
         }
@@ -123,7 +136,7 @@
                 cursor: pointer;
 
                 &:hover {
-                    background: #f3f4f6;
+                    background: var(--black300);
                 }
 
                 &.danger {
@@ -135,8 +148,5 @@
                 }
             }
         }
-
-
-
     }
 }

@@ -32,3 +32,20 @@ export const mypage_Review_Category = [
     },
 ]
 
+export const admin_sort_Category =[
+    {
+        title: "승인 대기 중",
+        src: "/PENDING",
+        slug: "PENDING"
+    },
+    {
+        title: "승인",
+        src: "/APPROVED",
+        slug: "APPROVED"
+    },
+    {
+        title: "거절",
+        src: "/REJECTED",
+        slug: "REJECTED"
+    },
+]

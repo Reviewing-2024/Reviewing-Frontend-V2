@@ -225,7 +225,7 @@ const Home = () => {
               </Link>
             </li>
             {loading ? (
-              <li>카테고리 불러오는 중...</li>
+              <li> </li>
             ) : (category.map((category, key) => (
               <li key={key}>
                 <Link
@@ -251,7 +251,7 @@ const Home = () => {
               </Link>
             </li>
             {loading ? (
-              <li>서브카테고리 불러오는 중...</li>
+              <li> </li>
             ) : (subCategory.map((subCategory, key) => (
               <li key={key}>
                 <Link

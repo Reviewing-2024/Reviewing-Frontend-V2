@@ -5,8 +5,10 @@ import '../../asserts/scss/section/_layout.scss'
 
 const MainSection = (props) => {
 
-   const location = useLocation();
-   const isMyPage = location.pathname.startsWith('/mypage');
+  const location = useLocation();
+  const isMyPage = ['/mypage', '/admin'].some(path =>
+    location.pathname.startsWith(path)
+  );
 
   return (
     <main id={isMyPage ? 'mypage_main' : 'main'} role="main">
