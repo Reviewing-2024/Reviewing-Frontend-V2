@@ -1,56 +1,83 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import '../asserts/scss/section/_admin.scss'
 
 import { admin_sort_Category } from '../data/mypagedata'
+import AdminReviewCard from '../components/component/AdminReviewCard';
 
 const Admin = () => {
-  const { sortCategory } = useParams();
   const accessToken = localStorage.getItem("accessToken");
 
   const [response, setResponse] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  //혹시 모를때 대비해서 키테고리 선택 자동으로 골라주기
-  const current_category = sortCategory || "PENDING";
+  const [current_category, setCurrent_category] = useState('PENDING');
 
 
   //요청들어온 리뷰 조회
-  useEffect(() => {
+const fetchResponse = async () => {
+  try {
+    setLoading(true);
 
-    const fetchResponse = async () => {
-
-      try {
-        setError(null);
-        setLoading(true);
-
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/admin/reviews`, {
-          params: {
-            state: current_category,
-            page: 0,
-            size: 10,
-          },
-          headers: {
-            Authorization: accessToken,
-          },
-        }
-      );
-
-        setResponse(response.data.data.reviews.content);
-
-      } catch (error) {
-        console.error("강의 불러오기 실패:", error);
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/admin/reviews`,
+      {
+        params: {
+          state: current_category,
+          page: 0,
+          size: 10,
+        },
+        headers: {
+          Authorization: accessToken,
+        },
       }
+    );
 
-      setLoading(false);
+    setResponse(res.data.data.reviews.content);
+
+  } catch (error) {
+    console.error(error);
+  }
+
+  setLoading(false);
+};
+
+useEffect(() => {
+  fetchResponse();
+}, [current_category]);
+
+  const handleApprove = async (id) => {
+
+  await axios.patch(
+    `${import.meta.env.VITE_API_BASE_URL}/api/v1/admin/reviews/${id}/approve`,
+    {},
+    {
+      headers: {
+        Authorization: accessToken,
+      },
+    }
+  );
+
+  fetchResponse();
+};
+
+const handleReject = async (id) => {
+
+  await axios.patch(
+    `${import.meta.env.VITE_API_BASE_URL}/api/v1/admin/reviews/${id}/reject`,
+    {
       
-    };
+    },
+    {
+      headers: {
+        Authorization: accessToken,
+      },
+    }
+  );
 
-    fetchResponse();
-  }, [sortCategory]);
+  fetchResponse();
+};
 
   if (error) return <div>에러가 발생했습니다</div>;
 
@@ -64,12 +91,12 @@ const Admin = () => {
         <ul className={`tab-${current_category}`}>
           {admin_sort_Category.map((categoryItem, key) => (
             <li key={key}>
-              <Link
-                to={`/admin/${categoryItem.slug}`}
+              <button
+                onClick={()=>setCurrent_category(categoryItem.slug)}
                 className={current_category === categoryItem.slug ? 'active' : ''}
               >
                 {categoryItem.title}
-              </Link>
+              </button>
             </li>
           ))}
         </ul>
@@ -78,7 +105,18 @@ const Admin = () => {
         <div> </div>
         :
         <div className='user_review_container'>
-          리뷰
+          <div className="review-list">
+
+            {response.map((review) => (
+              <AdminReviewCard
+                key={review.id}
+                review={review}
+                onApprove={handleApprove}
+                onReject={handleReject}
+              />
+            ))}
+
+          </div>
 
         </div>
       }

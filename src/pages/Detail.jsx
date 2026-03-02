@@ -11,7 +11,9 @@ import StarRatingInput from '../components/component/StarRatingInput'
 import Image from '../components/component/Image';
 
 import { FaHeart, FaRegHeart, FaThumbsDown, FaThumbsUp, FaXmark } from "react-icons/fa6";
+import { FaStar } from "react-icons/fa";
 import { FiUpload } from "react-icons/fi";
+import ReviewCard from '../components/component/ReviewCard';
 
 const Detail = () => {
 
@@ -80,7 +82,7 @@ const Detail = () => {
     }
 
     try {
-       await axios.post(
+      await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/api/v1/reviews/${courses.id}`,
         formData,
         {
@@ -93,9 +95,7 @@ const Detail = () => {
 
       setShowReviewModal(false);
       setNewReview({});
-      alert(`소중한 리뷰를 작성해 주셔서 감사합니다! ☺️ \n
-            작성하신 리뷰는 관리자가 신속히 검토하겠습니다! \n
-            진행 상황은 마이페이지에서 확인하실 수 있습니다.`);
+      alert(`소중한 리뷰를 작성해 주셔서 감사합니다! ☺️ \n작성하신 리뷰는 관리자가 신속히 검토하겠습니다! \n진행 상황은 마이페이지에서 확인하실 수 있습니다.`);
     } catch (error) {
       let errorMessage = "리뷰 작성 중 문제가 발생했습니다.";
       alert(errorMessage)
@@ -118,20 +118,19 @@ const Detail = () => {
           }
         });
 
-        setReviews(response.data.data);
+        setReviews(response.data.data.content);
 
 
       } catch (error) {
         console.error("강의 불러오기 실패:", error);
       }
 
+
     };
 
     fetchRivew();
 
   }, [courses?.id, current_category]);
-
-
 
   return (
     <section id='detail'>
@@ -144,7 +143,14 @@ const Detail = () => {
             <span className='information-platform'>{courses.platform}</span>
             <h1>{courses.title}</h1>
             <p>{courses.teacher}</p>
-            <span className='information-rating'>{courses.rating}</span>
+              <div className="review-stars">
+                {[...Array(5)].map((_, index) => (
+                  <FaStar
+                    key={index}
+                  />
+                ))}
+                <span className='information-rating'> {courses.rating}</span>
+              </div>
           </div>
           <div className='information-container-btn'>
             <button className='detail-btn' onClick={() => { handleOpenNewTab(courses.url) }} >강의 페이지로 이동</button>
@@ -178,9 +184,12 @@ const Detail = () => {
           </div>
         </div>
         <div className='review-list'>
-          <div className='review-caerd'>
-
-          </div>
+          {reviews.map((review) => (
+            <ReviewCard
+              key={review.id}
+              review={review}
+            />
+          ))}
         </div>
       </div>
       {showReviewModal && (

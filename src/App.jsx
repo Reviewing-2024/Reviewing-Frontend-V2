@@ -30,7 +30,7 @@ const App = () => {
                   <Route path='/mypage/profile' element={<Profile />} />
                   <Route path='/search/:searchKeyword' element={<Search />} />
                   <Route path="/login/redirect" element={<LoginRedirect />} />
-                  <Route path='/admin/:sortCategory' element={<Admin />} />
+                  <Route path='/admin' element={<Admin />} />
                 </Routes>
               </Main>
             <Footer />
