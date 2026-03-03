@@ -1,16 +1,16 @@
 #admin {
     background: var(--white200);
     min-height: 100vh;
-    padding: 0 32px;
+    padding: 0 32px 32px 32px;
 
     @media (max-width: 768px) {
-        padding: 0;
+         padding: 0 0 32px 0;
     }
 
     .admin-title {
         padding: 40px 0 32px 0;
         font-weight: 700;
-        font-size: 30px;
+        font-size: 3rem;
         line-height: 1.4;
     }
 
@@ -38,7 +38,7 @@
                 button {
                     all: unset;
                     display: flex;
-                    height: 2.5rem;
+                    height: 3.5rem;
                     font-weight: 600;
                     justify-content: center;
                     align-items: center;
@@ -105,8 +105,10 @@
 
 
                     h3 {
-                        font-size: 18px;
+                        font-size: 1.8rem;
                         font-weight: 900;
+                        max-width: 450px;
+                        white-space: normal;
                     }
 
                     button {
@@ -153,7 +155,7 @@
 
                 .review-content {
                     margin: 12px 0;
-                    font-size: 16px;
+                    font-size: 1.6rem;
                     min-height: 40px;
                 }
 
@@ -173,25 +175,27 @@
             .review-card-right {
                 display: flex;
                 flex-direction: column;
-                gap: 8px;
+                gap: 10px;
                 padding-left: 24px;
                 border-left: 1px solid var(--black300);
                 justify-content: center;
-                max-width: 10rem;
+                max-width: 18rem;
+
+                button {
+                    font-weight: 700;
+                    padding: 8px 12px;
+                    border-radius: 8px;
+                }
 
                 .approve-btn {
                     background: var(--blue);
                     color: var(--white);
                     border: none;
-                    padding: 8px 12px;
-                    border-radius: 8px;
                 }
 
                 .reject-btn {
                     background: var(--white);
-                    border: 1px solid var(--black300);
-                    padding: 8px 12px;
-                    border-radius: 8px;
+                    border: 1px solid var(--white100);
                 }
 
                 .review-APPROVED {

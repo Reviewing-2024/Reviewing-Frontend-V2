@@ -5,7 +5,7 @@ import "../../asserts/scss/section/_header.scss";
 
 import Login from "./Login";
 import { useAuth } from "../../context/AuthContext";
-import { IoIosArrowDown } from "react-icons/io";
+import { RiArrowDropDownLine } from "react-icons/ri";
 
 const Header = () => {
   const { isLogin, username, logout } = useAuth();
@@ -67,7 +67,7 @@ const Header = () => {
                 </div>
 
                 <span className="userbtn-name">{username}</span>
-                <IoIosArrowDown />
+                <RiArrowDropDownLine />
               </button>
 
               {userMenuOpen && (

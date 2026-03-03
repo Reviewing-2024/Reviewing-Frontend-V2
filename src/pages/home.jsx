@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
+import { RiArrowDropDownLine } from "react-icons/ri";
+
 import '../asserts/scss/section/_main.scss'
 
 import SearchBar from '../components/component/SearchBar';
 import CourseCard from '../components/component/CourseCard';
 import Pagination from '../components/component/Pagination';
+
+import { main_Sort_Category } from '../data/platform';
 
 
 
@@ -22,7 +26,9 @@ const Home = () => {
   const [subCategory, setSubCategory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [current_category, setCurrent_category] = useState('createdAt');
 
+  const handleChange = (e) => setCurrent_category(e.target.value);
   const page = Number(searchParams.get('page')) || 1;
   const ITEMS_PER_PAGE = 12;
 
@@ -158,13 +164,13 @@ const Home = () => {
 
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/courses`, {
           params: {
-          ...(selectedPlatform && { platform: selectedPlatform }),
-          ...(selectedCategory && { category: selectedCategory }),
-          ...(selectedSubCategory && { subCategories: selectedSubCategory }),
-          sort: 'createdAt',
-          page: page,
-          size: ITEMS_PER_PAGE,
-        }
+            ...(selectedPlatform && { platform: selectedPlatform }),
+            ...(selectedCategory && { category: selectedCategory }),
+            ...(selectedSubCategory && { subCategories: selectedSubCategory }),
+            sort: current_category,
+            page: page,
+            size: ITEMS_PER_PAGE,
+          }
         });
 
         setCourses(response.data.data.content);
@@ -178,9 +184,9 @@ const Home = () => {
 
     fetchCourses();
 
-  }, [page, ITEMS_PER_PAGE, selectedPlatform, selectedCategory, selectedSubCategory]);
+  }, [page, ITEMS_PER_PAGE, selectedPlatform, selectedCategory, selectedSubCategory, current_category]);
 
-   if (error) return <div>에러가 발생했습니다</div>;
+  if (error) return <div>에러가 발생했습니다</div>;
 
 
 
@@ -267,6 +273,20 @@ const Home = () => {
         )}
       </nav>
       <div className='home__item'>
+        <div className='sort-category-dropdown'>
+          <select  value={current_category} onChange={handleChange}>
+            {main_Sort_Category.map((sort_category) => (
+                <option 
+                  key={sort_category.sort}
+                  value={sort_category.sort}
+                  className='home-dropdown__item'
+                >
+                 {sort_category.title}
+                </option >
+            ))}
+          </select>
+          <RiArrowDropDownLine />
+        </div>
         <div className='item__card'>
           {courses.map(course => (
             <CourseCard course={course} key={course.id} />
@@ -275,9 +295,9 @@ const Home = () => {
         <Pagination
           currentPage={page}
           totalItems={totalItems}
-          totalPages = {totalPages -1}
+          totalPages={totalPages - 1}
           itemsPerPage={ITEMS_PER_PAGE}
-         onPageChange={(p) => {
+          onPageChange={(p) => {
             const newParams = new URLSearchParams(searchParams);
 
             newParams.set("page", p);

@@ -1,16 +1,16 @@
 #mypage {
     background: var(--white200);
     min-height: 100vh;
-    padding: 0 32px;
+    padding: 0 32px 32px 32px;
 
     @media (max-width: 768px) {
-            padding: 0;
+            padding: 0 0 32px 0;
         }
 
     .mypage-title {
         padding: 40px 0 32px 0;
         font-weight: 700;
-        font-size: 30px;
+        font-size: 3rem;
         line-height: 1.4;
     }
 
@@ -152,7 +152,7 @@
                         padding: 2px 8px;
                         border-radius: 8px;
                         color: var(--black100);
-                        font-size: 10px;
+                        font-size: 1rem;
                         line-height: 15px;
                         letter-spacing: 0.117px;
                         gap: 4px;
@@ -180,7 +180,7 @@
                         padding: 2px 8px;
                         border-radius: 8px;
                         color: var(--black100);
-                        font-size: 10px;
+                        font-size: 1rem;
                         line-height: 15px;
                         letter-spacing: 0.117px;
                         gap: 4px;

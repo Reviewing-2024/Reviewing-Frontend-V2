@@ -54,7 +54,7 @@
                     border-radius: 8px;
                     color: var(--white);
                     background-color: #0F172B;
-                    font-size: 10px;
+                    font-size: 1rem;
                     line-height: 15px;
                     letter-spacing: 0.117px;
                     gap: 4px;
@@ -63,13 +63,13 @@
 
                 h1 {
                     color: #0F172B;
-                    font-size: 24px;
+                    font-size: 2.4rem;
                     font-weight: 700;
                     line-height: 33px;
                     letter-spacing: 0.07px;
 
                     @media (max-width: 768px) {
-                        font-size: 16px;
+                        font-size: 1.6rem;
                     }
 
                 }
@@ -84,7 +84,7 @@
                     align-items: center;
 
                     svg {
-                    font-size: 15px;
+                    font-size: 1.5rem;
                     gap: 3px;
                     color: #FDC700;
 
@@ -93,7 +93,7 @@
                     .information-rating {
                         font-family: Inter;
                         font-weight: 700;
-                        font-size: 16px;
+                        font-size: 1.6rem;
                         font-style: Bold;
                         leading-trim: NONE;
                         line-height: 24px;
@@ -118,7 +118,6 @@
 
                 .detail-btn {
                     border-radius: 8px;
-                    font-size: 14px;
                     color: var(--white);
                     background: var(--blue);
                     box-shadow: 0 1px 3px 0 #DBEAFE, 0 1px 2px -1px #DBEAFE;
@@ -166,7 +165,7 @@
             h2 {
                 color: #0F172B;
                 font-family: Inter;
-                font-size: 20px;
+                font-size: 2rem;
                 font-style: normal;
                 font-weight: 700;
                 line-height: 28px;
@@ -197,7 +196,7 @@
                         border-radius: 16777200px;
                         border: 1px solid var(--white100);
                         background-color: var(--white);
-                        font-size: 12px;
+                        font-size: 1.2rem;
                     }
 
                     .active {
@@ -223,7 +222,7 @@
                         border-radius: 16777200px;
                         color: var(--white);
                         background: var(--blue);
-                        font-size: 12px;
+                        font-size: 1.2rem;
                         font-weight: 700;
                         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 1px 2px -1px rgba(0, 0, 0, 0.10);
                     }
@@ -296,7 +295,7 @@
         border: 0;
         background: transparent;
         border-radius: 10px;
-        font-size: 22px;
+        font-size: 2.2rem;
         line-height: 1;
 
         &:hover {
@@ -306,7 +305,7 @@
 
     .review-modal-title {
         margin: 4px 0 6px;
-        font-size: 20px;
+        font-size: 2rem;
         font-weight: 800;
         text-align: center;
     }
@@ -315,7 +314,7 @@
         margin: 8px 0;
         text-align: center;
         color: #6b7280;
-        font-size: 15px;
+        font-size: 1.5rem;
     }
 
     .review-modal-body {
@@ -331,7 +330,6 @@
 
         label {
             display: block;
-            font-size: 14px;
             font-weight: 700;
             margin-bottom: 8px;
         }
@@ -343,7 +341,6 @@
             border: 1px solid var(--white100);
             border-radius: 12px;
             padding: 14px;
-            font-size: 14px;
             outline: none;
             background: var(--white);
 
@@ -397,7 +394,7 @@
             place-items: center;
             background: var(--white);
             border: 1px solid #e5e7eb;
-            font-size: 18px;
+            font-size: 1.8rem;
             transition: 0.5s;
         }
 
@@ -413,14 +410,14 @@
         .file-name {
             margin-top: 4px;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 1.3rem;
         }
     }
 
     .review-modal-notice {
         margin-top: 10px;
         color: #6b7280;
-        font-size: 12.5px;
+        font-size: 1.25rem;
         line-height: 1.55;
 
         ul {
@@ -440,7 +437,7 @@
             height: 48px;
             border-radius: 14px;
             font-weight: 800;
-            font-size: 15px;
+            font-size: 1.5rem;
         }
 
         .btn-cancel {

@@ -69,3 +69,18 @@ export const Sort_Category = [
         sort: 'LOW_RATING'
     },
 ]
+
+export const main_Sort_Category = [
+    {
+        title: "추천순",
+        sort: 'createdAt'
+    },
+    {
+        title: "별점 높은순",
+        sort: 'rating'
+    },
+    {
+        title: "리뷰 많은순",
+        sort: 'reviews'
+    },
+]

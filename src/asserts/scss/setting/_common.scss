@@ -1,9 +1,14 @@
-body {
-    background-color: var(--white);
-    color: var(--black);
-    overflow-x: hidden;
+html {
+  font-size: 62.5%;
+}
 
-    button {
-        cursor: pointer;
-    }
+body {
+  background-color: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+  font-size: 1.4rem;
+}
+
+button {
+  cursor: pointer;
 }

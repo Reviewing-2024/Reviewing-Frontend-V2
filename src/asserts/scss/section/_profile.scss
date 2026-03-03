@@ -1,16 +1,16 @@
 #profile {
     background: var(--white200);
     min-height: 100vh;
-    padding: 0 32px;
+    padding: 0 32px 32px 32px;
 
     @media (max-width: 768px) {
-        padding: 0;
+        padding: 0 0 32px 0;
     }
 
     .mypage-title {
         padding: 40px 0 32px 0;
         font-weight: 700;
-        font-size: 30px;
+        font-size: 3rem;
         line-height: 1.4;
     }
 
@@ -142,7 +142,6 @@
                     gap: 8px;
 
                     .field__label {
-                        font-size: 14px;
                         font-weight: 800;
                         color: var(--black);
                     }
@@ -170,7 +169,7 @@
                     }
 
                     .field__help {
-                        font-size: 12px;
+                        font-size: 1.2rem;
                         color: #9ca3af;
                         margin: 0;
                     }
@@ -217,7 +216,7 @@
                 border-radius: 1000px;
                 transition: 0.5s;
                 font-weight: 100;
-                font-size: 12px;
+                font-size: 1.2rem;
                 padding: 8px 18px;
 
                 &:hover {
