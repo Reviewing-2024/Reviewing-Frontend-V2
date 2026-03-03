@@ -50,8 +50,7 @@
                 margin-bottom: 16px;
 
                 .information-platform {
-                    height: 20px;
-                    padding: 2px 8px;
+                    padding: 3px 12px;
                     border-radius: 8px;
                     color: var(--white);
                     background-color: #0F172B;
@@ -69,13 +68,45 @@
                     line-height: 33px;
                     letter-spacing: 0.07px;
 
+                    @media (max-width: 768px) {
+                        font-size: 16px;
+                    }
+
                 }
 
                 p {
                     color: #45556C;
                 }
 
-                .information-rating {}
+                .information-stars {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    svg {
+                    font-size: 15px;
+                    gap: 3px;
+                    color: #FDC700;
+
+                    }
+                    
+                    .information-rating {
+                        font-family: Inter;
+                        font-weight: 700;
+                        font-size: 16px;
+                        font-style: Bold;
+                        leading-trim: NONE;
+                        line-height: 24px;
+                        letter-spacing: -0.31px;
+                        color: #000;
+                        margin-left: 8px;
+
+
+                    }
+
+                }
+
+                
 
             }
 
@@ -87,11 +118,11 @@
 
                 .detail-btn {
                     border-radius: 8px;
-                    font-weight: 700;
+                    font-size: 14px;
                     color: var(--white);
                     background: var(--blue);
                     box-shadow: 0 1px 3px 0 #DBEAFE, 0 1px 2px -1px #DBEAFE;
-                    padding: 8.5px 12px 7.5px 9px;
+                    padding: 9px 12px 8px 9px;
                     justify-content: center;
                     align-items: flex-start;
                     transition: 0.8s;

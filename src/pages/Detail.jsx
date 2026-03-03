@@ -143,13 +143,13 @@ const Detail = () => {
             <span className='information-platform'>{courses.platform}</span>
             <h1>{courses.title}</h1>
             <p>{courses.teacher}</p>
-              <div className="review-stars">
+              <div className="information-stars">
                 {[...Array(5)].map((_, index) => (
                   <FaStar
                     key={index}
                   />
                 ))}
-                <span className='information-rating'> {courses.rating}</span>
+                <div className='information-rating'> {courses.rating}</div>
               </div>
           </div>
           <div className='information-container-btn'>

@@ -1,0 +1,152 @@
+.reject-modal {
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  &__container {
+    background: #fff;
+    border-radius: 12px;
+    padding: 28px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 900;
+    margin: 0 0 6px 0;
+    color: #111;
+  }
+
+  &__subtitle {
+    font-size: 13px;
+    color: #888;
+    margin: 0;
+  }
+
+  &__close-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #999;
+    padding: 2px 6px;
+    line-height: 1;
+
+    &:hover {
+      color: #555;
+    }
+  }
+
+  &__reason-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  &__reason-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 4px 0;
+  }
+
+  &__dot {
+    font-size: 12px;
+    color: #111;
+    line-height: 1;
+    width: 16px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  &__reason-label {
+    color: #555;
+    font-weight: 700;
+
+
+    &--selected {
+      color: #111;
+      font-weight: 600;
+    }
+  }
+
+  &__textarea {
+    width: 100%;
+    min-height: 80px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #333;
+    background-color: #ddd;
+    resize: vertical;
+    outline: none;
+    box-sizing: border-box;
+    margin-bottom: 8px;
+    font-family: inherit;
+
+    &:focus {
+      border-color: var(--black);
+    }
+  }
+
+  &__footer {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  &__cancel-btn {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #555;
+
+    &:hover {
+      background: #f5f5f5;
+    }
+  }
+
+  &__confirm-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #f06fa4;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background: #e05590;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}

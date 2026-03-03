@@ -335,7 +335,14 @@
                         span {
                             display: inline-flex;
                             align-items: center;
-                            gap: 4px;
+                            gap: 5px;
+                            font-family: Inter;
+                            font-weight: 700;
+                            font-size: 15px;
+                            font-style: Bold;
+                            leading-trim: NONE;
+                            line-height: 24px;
+                            letter-spacing: -0.31px;
 
                             svg {
                                 display: block;
@@ -345,11 +352,16 @@
 
                     .ㅣ {
                         width: 1px;
-                        height: 12px;
+                        min-height: 12px;
                         background: var(--white100);
                     }
 
-                    .wish {}
+                    .wish {
+                        svg {
+                            display: block;
+                            color: var(--black200);
+                        }
+                    }
                 }
             }
         }

@@ -111,7 +111,7 @@
 
                     button {
                         color: #6B7280;
-                        padding: 8px;
+                        padding: 8px 9px;
                         background-color: var(--white);
                         border: 1px solid #E5E7EB;
                         border-radius: 15px;
@@ -121,6 +121,16 @@
                     .move-btn:hover {
                         background: #F9FAFB;
                         border-color: #D1D5DB;
+                    }
+
+                    @media (max-width: 768px) {
+                        align-items: flex-start;
+                        flex-direction: column;
+                        
+                        button {
+                            margin: 4px 0 8px 0;
+                        }
+
                     }
                 }
 
@@ -167,7 +177,7 @@
                 padding-left: 24px;
                 border-left: 1px solid var(--black300);
                 justify-content: center;
-                max-width: 200px;
+                max-width: 10rem;
 
                 .approve-btn {
                     background: var(--blue);
