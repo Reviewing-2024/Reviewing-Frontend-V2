@@ -193,6 +193,32 @@
                     padding: 8px 12px;
                     border-radius: 8px;
                 }
+
+                .review-APPROVED {
+                    padding: 4px 8px;
+                    border: 1px solid #BEDBFF;
+                    background-color: #DBEAFE;
+                    color: var(--blue);
+                    font-weight: 700;
+                    border-radius: 8px;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+
+                }
+
+                .review-REJECT {
+                    padding: 4px 8px;
+                    border: 1px solid #E2E8F0;
+                    background-color: #F1F5F9;
+                    color: #45556C;
+                    font-weight: 700;
+                    border-radius: 8px;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+
+                }
             }
 
         }

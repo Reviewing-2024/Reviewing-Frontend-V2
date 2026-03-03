@@ -64,9 +64,9 @@ const AdminReviewCard = ({ review, onApprove, onReject, current_category }) => {
               </button>
             </>
           ) : current_category === "APPROVED" ? (
-            <div>승인됨</div>
+            <div className="review-APPROVED">승인됨</div>
           ) : (
-            <div>승인 안됨</div>
+            <div className="review-REJECT">거절됨</div>
           )}
         </div>
       </div>
