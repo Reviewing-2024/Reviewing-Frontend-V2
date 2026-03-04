@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -17,6 +17,7 @@ import { main_Sort_Category } from '../data/platform';
 const Home = () => {
   const params = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
+  const dropdownRef = useRef(null);
 
   const [courses, setCourses] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -26,7 +27,8 @@ const Home = () => {
   const [subCategory, setSubCategory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [current_category, setCurrent_category] = useState('createdAt');
+  const [current_category, setCurrent_category] = useState( {title: "추천순", sort: 'createdAt'});
+  const [sort_category_open, setSort_category_open] = useState(false);
 
   const handleChange = (e) => setCurrent_category(e.target.value);
   const page = Number(searchParams.get('page')) || 1;
@@ -167,7 +169,7 @@ const Home = () => {
             ...(selectedPlatform && { platform: selectedPlatform }),
             ...(selectedCategory && { category: selectedCategory }),
             ...(selectedSubCategory && { subCategories: selectedSubCategory }),
-            sort: current_category,
+            sort: current_category.sort,
             page: page,
             size: ITEMS_PER_PAGE,
           }
@@ -185,6 +187,18 @@ const Home = () => {
     fetchCourses();
 
   }, [page, ITEMS_PER_PAGE, selectedPlatform, selectedCategory, selectedSubCategory, current_category]);
+
+  
+  useEffect(() => {
+  const handleClickOutside = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setOpen(false);
+    }
+  };
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => document.removeEventListener("mousedown", handleClickOutside);
+}, []);
+
 
   if (error) return <div>에러가 발생했습니다</div>;
 
@@ -273,19 +287,33 @@ const Home = () => {
         )}
       </nav>
       <div className='home__item'>
-        <div className='sort-category-dropdown'>
-          <select  value={current_category} onChange={handleChange}>
-            {main_Sort_Category.map((sort_category) => (
-                <option 
+        <div className="sort-category-dropdown" ref={dropdownRef}>
+          <button
+            className="dropdown-button"
+            onClick={() => setSort_category_open(!sort_category_open)}
+          >
+            {current_category.title}
+            <RiArrowDropDownLine />
+          </button>
+
+          {sort_category_open && (
+            <ul className="dropdown-menu">
+              {main_Sort_Category.map((sort_category) => (
+                <li
                   key={sort_category.sort}
-                  value={sort_category.sort}
-                  className='home-dropdown__item'
+                  onClick={() => {
+                    setCurrent_category(sort_category);
+                    setSort_category_open(false);
+                  }}
+                  className={`home-dropdown__item ${
+                    current_category.sort === sort_category.sort ? "active" : ""
+                  }`}
                 >
-                 {sort_category.title}
-                </option >
-            ))}
-          </select>
-          <RiArrowDropDownLine />
+                  {sort_category.title}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
         <div className='item__card'>
           {courses.map(course => (

@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import '../../asserts/scss/section/_admin.scss'
+
 import { FiExternalLink } from "react-icons/fi";
+import { FaCheck } from "react-icons/fa6";
+import { IoMdClose } from "react-icons/io";
+
 import RejectModal from "./RejectModal";
 
 const AdminReviewCard = ({ review, onApprove, onReject, current_category }) => {
@@ -54,13 +58,13 @@ const AdminReviewCard = ({ review, onApprove, onReject, current_category }) => {
                 className="approve-btn"
                 onClick={() => onApprove(review.id)}
               >
-                ✓ 승인
+                <FaCheck /> 승인
               </button>
               <button
                 className="reject-btn"
                 onClick={() => setIsRejectModalOpen(true)}
               >
-                ✕ 거절
+                <IoMdClose /> 거절
               </button>
             </>
           ) : current_category === "APPROVED" ? (

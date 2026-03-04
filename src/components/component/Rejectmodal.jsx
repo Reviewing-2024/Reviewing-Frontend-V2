@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import "../../asserts/scss/component/_Rejectmodal.scss"; // 경로는 프로젝트 구조에 맞게 조정
+import "../../asserts/scss/component/_Rejectmodal.scss";
+
+import { IoMdClose } from "react-icons/io";
 
 const REJECT_REASONS = [
   { id: "inappropriate", label: "강의 리뷰 내용이 적절하지 않아요." },
@@ -43,7 +45,7 @@ const RejectModal = ({ isOpen, onClose, onConfirm }) => {
             </p>
           </div>
           <button className="reject-modal__close-btn" onClick={handleClose}>
-            ✕
+            <IoMdClose />
           </button>
         </div>
 

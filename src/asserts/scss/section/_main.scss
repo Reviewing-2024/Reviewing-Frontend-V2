@@ -157,7 +157,8 @@
 
         }
 
-        .category_container, .sub_category_container {
+        .category_container,
+        .sub_category_container {
             display: flex;
             overflow: auto;
             gap: 8px;
@@ -196,37 +197,66 @@
 
     }
 
-    .home__item,.search__item {
+    .home__item,
+    .search__item {
+        display: flex;
+        flex-direction: column;
         width: 100%;
         min-height: 50vh;
         background-color: #F5F7FA;
         padding: 32px 20px;
 
         .sort-category-dropdown {
+            position: relative;
             display: flex;
             justify-content: end;
-            position: relative;   
-
-            select {
-                background-color: var(--white200);
-                padding: 0.8rem 3rem 0.8rem 1.2rem;
-                font-weight: 700;
-                color: #45556C;
-            }
-
-            svg {
-                position: absolute;
-                right: 8px;
-                top: 10px;
-                font-size: 2rem;
-                color: #45556C;
-            }
-
-            
         }
-    }
 
+        .dropdown-button {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 30px;
+            right: 0;
+            width: 200px;
+            padding: 10px;
+            background: #f8f8f8;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+            list-style: none;
+            margin: 0;
+            z-index: 100;
+        }
+
+        .home-dropdown__item {
+            padding: 12px 20px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.15s ease;
+            border-radius: 10px;
+        }
+
+        .home-dropdown__item:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .home-dropdown__item.active {
+            font-weight: 600;
+        }
+
+
+    }
 }
+
 
 
 .item__card {
@@ -235,15 +265,15 @@
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 15px;
     padding: 20px 0;
-    
+
 
     .course {
         width: 100%;
 
         @media (max-width: 635px) {
-                max-width:100%;
-            }
-        
+            max-width: 100%;
+        }
+
         .course__container {
             display: flex;
             flex-direction: column;
@@ -254,11 +284,11 @@
             background-color: var(--white);
             overflow: hidden;
             -webkit-transition: .5s ease-in-out;
-	        transition: .5s ease-in-out;
+            transition: .5s ease-in-out;
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 1px 2px -1px rgba(0, 0, 0, 0.10);
 
             @media (max-width: 635px) {
-                max-width:100%;
+                max-width: 100%;
             }
 
             .course-img-container {
@@ -301,7 +331,7 @@
                     border-radius: 100px;
                     background: var(--white);
                     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 1px 2px -1px rgba(0, 0, 0, 0.10);
-                                        
+
                 }
 
 
@@ -313,7 +343,7 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 16px;
-                
+
 
                 .information-container {
                     display: flex;
@@ -325,7 +355,7 @@
 
                     h3 {
                         text-overflow: ellipsis;
-                        overflow: hidden;      
+                        overflow: hidden;
                         display: -webkit-box;
                         -webkit-line-clamp: 2;
                         -webkit-box-orient: vertical;
@@ -393,12 +423,12 @@
         .course__container:hover {
             transform: translateY(-10px);
             -webkit-transition: .5s ease-in-out;
-	        transition: .5s ease-in-out;
+            transition: .5s ease-in-out;
 
             .course-img-container {
                 img {
                     -webkit-transform: scale(1.04);
-	                transform: scale(1.04);
+                    transform: scale(1.04);
 
                 }
             }
