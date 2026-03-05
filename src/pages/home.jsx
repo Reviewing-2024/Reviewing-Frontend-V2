@@ -53,9 +53,8 @@ const Home = () => {
 
 
   const selectedSubCategory =
-    searchParams.get("sub") && subCategoryTitle.includes(searchParams.get("sub"))
-      ? searchParams.get("sub")
-      : null;
+    searchParams.getAll('sub')
+    .filter(sub => subCategoryTitle.includes(sub));
 
 
 
@@ -168,7 +167,7 @@ const Home = () => {
           params: {
             ...(selectedPlatform && { platform: selectedPlatform }),
             ...(selectedCategory && { category: selectedCategory }),
-            ...(selectedSubCategory && { subCategories: selectedSubCategory }),
+            ...(selectedSubCategory.length > 0 && { subCategories: selectedSubCategory }),
             sort: current_category.sort,
             page: page,
             size: ITEMS_PER_PAGE,
@@ -188,17 +187,27 @@ const Home = () => {
 
   }, [page, ITEMS_PER_PAGE, selectedPlatform, selectedCategory, selectedSubCategory, current_category]);
 
-  
-  useEffect(() => {
-  const handleClickOutside = (e) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-      setOpen(false);
-    }
-  };
-  document.addEventListener("mousedown", handleClickOutside);
-  return () => document.removeEventListener("mousedown", handleClickOutside);
-}, []);
 
+  const handleSubToggle = (slug) => {
+  const prev = searchParams.getAll("sub");
+
+  let next;
+
+  if (prev.includes(slug)) {
+    next = prev.filter(s => s !== slug); // 제거
+  } else {
+    next = [...prev, slug]; // 추가
+  }
+
+  const params = new URLSearchParams(searchParams);
+  params.delete("sub");
+
+  next.forEach(s => params.append("sub", s));
+
+  params.set("page", 1); // 필터 변경 시 페이지 초기화
+
+  setSearchParams(params);
+};
 
   if (error) return <div>에러가 발생했습니다</div>;
 
@@ -274,12 +283,17 @@ const Home = () => {
               <li> </li>
             ) : (subCategory.map((subCategory, key) => (
               <li key={key}>
-                <Link
-                  to={`?sub=${subCategory.slug}`}
-                  className={selectedSubCategory === subCategory.slug ? 'active' : ''}
+                <button
+                  type="button"
+                  onClick={() => handleSubToggle(subCategory.slug)}
+                  className={
+                    selectedSubCategory.includes(subCategory.slug)
+                      ? "active"
+                      : ""
+                  }
                 >
                   {subCategory.name}
-                </Link>
+                </button>
               </li>
             ))
             )}

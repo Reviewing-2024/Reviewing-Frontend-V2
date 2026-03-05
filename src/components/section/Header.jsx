@@ -75,7 +75,10 @@ const Header = () => {
                   <a  
                     className="user-dropdown__item" 
                     role="menuitem" 
-                    onClick={() => navigate('/mypage/review')}
+                    onClick={() => {
+                      navigate('/mypage/review');
+                      setUserMenuOpen(false)
+                    }}
                   >
                     마이페이지
                   </a>
