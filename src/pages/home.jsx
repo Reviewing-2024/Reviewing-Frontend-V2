@@ -142,7 +142,11 @@ const Home = () => {
           }
         );
 
-        setSubCategory(res.data.data);
+        const filterRes = res.data.data.filter(
+          (sub) => sub.slug !== selectedCategory
+        )
+
+        setSubCategory(filterRes);
 
       } catch (e) {
         setError(e);
@@ -188,23 +192,22 @@ const Home = () => {
   }, [page, ITEMS_PER_PAGE, selectedPlatform, selectedCategory, selectedSubCategory, current_category]);
 
 
+  //서브 카테고리 다중선택 토글
   const handleSubToggle = (slug) => {
   const prev = searchParams.getAll("sub");
 
   let next;
 
   if (prev.includes(slug)) {
-    next = prev.filter(s => s !== slug); // 제거
+    next = prev.filter(s => s !== slug);
   } else {
-    next = [...prev, slug]; // 추가
+    next = [...prev, slug];
   }
 
   const params = new URLSearchParams(searchParams);
   params.delete("sub");
 
   next.forEach(s => params.append("sub", s));
-
-  params.set("page", 1); // 필터 변경 시 페이지 초기화
 
   setSearchParams(params);
 };
