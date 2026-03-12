@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import '../../asserts/scss/component/_reviewCard.scss';
 
 import { FaStar } from "react-icons/fa";
@@ -15,6 +15,8 @@ const ReviewCard = ({ review }) => {
     createdAt,
   } = review;
 
+  const [likes_togle, setLikes_togle] = useState(false);
+  const [dislikes_togle, setDislikes_togle] = useState(false);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -70,14 +72,20 @@ const ReviewCard = ({ review }) => {
 
         <div className="reviewCard-actions">
 
-          <button className="reviewCard-action-btn">
+          <button 
+            className={likes_togle ? 'reviewCard-action-btn likes-btn' : 'likes_active'} 
+            onClick={() => setLikes_togle(!likes_togle)}  
+          >
             <FiThumbsUp />
             <span>{likes}</span>
           </button>
 
 
-          <button className="reviewCard-action-btn">
-            <FiThumbsDown />
+          <button 
+            className={dislikes_togle ? 'reviewCard-action-btn dislikes-btn' : 'dislikes_active'}
+              onClick={() => setDislikes_togle(!dislikes_togle)}
+          >
+            <FiThumbsDown /> 
             <span>{dislikes}</span>
           </button>
 

@@ -277,7 +277,7 @@ const Home = () => {
             <li>
               <Link
                 to={selectedCategory ? `/${selectedPlatform}/${selectedCategory}` : `/`}
-                className={!selectedSubCategory ? 'active' : ''}
+                className={selectedSubCategory.length === 0 ? 'active' : ''}
               >
                 전체
               </Link>

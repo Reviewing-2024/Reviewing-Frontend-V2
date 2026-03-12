@@ -23,7 +23,9 @@ const Admin = () => {
           headers: { Authorization: accessToken },
         }
       );
+
       setResponse(res.data.data.reviews.content);
+      
     } catch (error) {
       console.error(error);
       // if (error == 401) {

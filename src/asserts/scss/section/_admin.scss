@@ -154,9 +154,10 @@
 
 
                 .review-content {
-                    margin: 12px 0;
+                    margin: 24px 0;
                     font-size: 1.6rem;
                     min-height: 40px;
+                    white-space: pre-wrap;
                 }
 
                 .review-imgalt {
@@ -182,20 +183,33 @@
                 max-width: 18rem;
 
                 button {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 6px;
+                    
                     font-weight: 700;
                     padding: 8px 12px;
                     border-radius: 8px;
+
+                    svg {
+                        vertical-align:middle;
+                    }
                 }
 
                 .approve-btn {
                     background: var(--blue);
                     color: var(--white);
                     border: none;
+                    
+        
                 }
 
                 .reject-btn {
                     background: var(--white);
                     border: 1px solid var(--white100);
+
+     
                 }
 
                 .review-APPROVED {
