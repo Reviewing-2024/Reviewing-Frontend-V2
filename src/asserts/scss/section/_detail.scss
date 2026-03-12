@@ -139,6 +139,12 @@
                     border: 1px solid var(--blue);
                     background: var(--white);
                     color: var(--blue);
+                    transition: 0.3s;
+
+                    &:hover {
+                        transform: scale(1.1);
+                        background-color: #DBEAFE;
+                    }
                 }
 
             }

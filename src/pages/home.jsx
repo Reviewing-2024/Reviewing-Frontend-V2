@@ -29,6 +29,7 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [current_category, setCurrent_category] = useState( {title: "추천순", sort: 'createdAt'});
   const [sort_category_open, setSort_category_open] = useState(false);
+  
 
   const handleChange = (e) => setCurrent_category(e.target.value);
   const page = Number(searchParams.get('page')) || 1;
@@ -188,6 +189,7 @@ const Home = () => {
     };
 
     fetchCourses();
+    console.log(courses)
 
   }, [page, ITEMS_PER_PAGE, selectedPlatform, selectedCategory, selectedSubCategory, current_category]);
 

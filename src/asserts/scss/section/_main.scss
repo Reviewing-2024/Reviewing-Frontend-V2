@@ -327,10 +327,28 @@
                     justify-content: center;
                     align-items: center;
                     border-radius: 100px;
+                    color: #90A1B9;
                     background: var(--white);
                     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 1px 2px -1px rgba(0, 0, 0, 0.10);
-
                 }
+
+                .course-wishes,
+                .active {
+                    transition: transform 0.15s ease;
+                }
+
+                .active {
+                    
+                    svg {
+                        color: var(--blue);
+                    }
+                }
+
+                .course-wishes:active,
+                .active:active {
+                transform: scale(0.85);
+                }
+                
 
 
             }
@@ -382,15 +400,17 @@
                     align-self: stretch;
 
 
-                    .rating {
-
+                    .rating-container {
+                        
                         span {
+                            gap: 10px;
+                        }
+                        .rating {
                             display: inline-flex;
                             align-items: center;
                             gap: 5px;
                             font-family: Inter;
                             font-weight: 700;
-                            font-size: 1.5rem;
                             font-style: Bold;
                             leading-trim: NONE;
                             line-height: 24px;
@@ -399,6 +419,19 @@
                             svg {
                                 display: block;
                             }
+
+                            .comments {
+                                color: #90A1B9;
+                                font-family: Inter;
+                                font-weight: 400;
+                                font-size: 1.2rem;
+                                font-style: Regular;
+                                leading-trim: NONE;
+                                line-height: 20px;
+                                letter-spacing: -0.15px;
+                            }
+
+                           
                         }
                     }
 
@@ -409,9 +442,20 @@
                     }
 
                     .wish {
-                        svg {
-                            display: block;
-                            color: #000;
+                       span {
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 5px;
+                            font-family: Inter;
+                            font-weight: 700;
+                            font-style: Bold;
+                            leading-trim: NONE;
+                            line-height: 24px;
+                            letter-spacing: -0.31px;
+
+                            svg {
+                                display: block;
+                            }
                         }
                     }
                 }

@@ -23,6 +23,7 @@ const Detail = () => {
   const [courses, setCourses] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [createReviewloading, setCreateReviewloading] = useState(false);
+  const [wishes_togle, setWishes_togle] = useState(false);
 
   const params = useParams();
   const accessToken = localStorage.getItem("accessToken");
@@ -154,7 +155,9 @@ const Detail = () => {
           </div>
           <div className='information-container-btn'>
             <button className='detail-btn' onClick={() => { handleOpenNewTab(courses.url) }} >강의 페이지로 이동</button>
-            <button className='detail-wish-btn'><FaRegHeart /></button>
+            <button className='detail-wish-btn' onClick={()=>setWishes_togle(!wishes_togle)}>
+              {wishes_togle ? <FaHeart/> : <FaRegHeart />}
+            </button>
           </div>
         </div>
       </div>
