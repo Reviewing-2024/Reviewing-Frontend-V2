@@ -10,8 +10,8 @@ import SearchBar from '../components/component/SearchBar';
 import CourseCard from '../components/component/CourseCard';
 import Pagination from '../components/component/Pagination';
 
-import { main_Sort_Category } from '../data/platform';
-
+import { main_Sort_Category } from '../data/platform.js';
+import { handleApiError } from '../data/apierror.js'
 
 
 const Home = () => {
@@ -183,13 +183,12 @@ const Home = () => {
         setTotalItems(response.data.data.page.totalElements);
         setTotalPages(response.data.data.page.totalPages);
       } catch (error) {
-        console.error("강의 불러오기 실패:", error);
+        handleApiError(error);
       }
 
     };
 
     fetchCourses();
-    console.log(courses)
 
   }, [page, ITEMS_PER_PAGE, selectedPlatform, selectedCategory, selectedSubCategory, current_category]);
 

@@ -6,7 +6,7 @@ import SearchBar from '../components/component/SearchBar';
 
 import '../asserts/scss/section/_main.scss'
 
-import { course } from '../data/course';
+import { course } from '../data/course.js';
 
 
 const Search = () => {

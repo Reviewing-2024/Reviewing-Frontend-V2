@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import '../asserts/scss/section/_admin.scss'
-import { admin_sort_Category } from '../data/mypagedata'
+import { admin_sort_Category } from '../data/mypagedata.js'
+import { handleApiError } from '../data/apierror.js'
 import AdminReviewCard from '../components/component/AdminReviewCard';
 
 const Admin = () => {
@@ -27,16 +28,18 @@ const Admin = () => {
       setResponse(res.data.data.reviews.content);
       
     } catch (error) {
-      console.error(error);
-      // if (error == 401) {
-        
-      // }
+
+      handleApiError(error);
+
     }
+
     setLoading(false);
+
   };
 
   useEffect(() => {
     fetchResponse();
+    
   }, [current_category]);
 
 

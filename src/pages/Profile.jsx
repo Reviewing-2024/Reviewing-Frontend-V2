@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
-import { mypage_Sort_Category } from '../data/mypagedata'
+import { mypage_Sort_Category } from '../data/mypagedata.js'
 import { CiCamera } from "react-icons/ci";
 import '../asserts/scss/section/_profile.scss'
 

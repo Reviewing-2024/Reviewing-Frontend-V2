@@ -4,15 +4,15 @@ import axios from 'axios';
 
 import '../asserts/scss/section/_detail.scss'
 
-import { course } from '../data/course'
-import { Sort_Category } from '../data/platform'
+import { Sort_Category } from '../data/platform.js'
+import { handleApiError } from '../data/apierror.js'
 
 import StarRatingInput from '../components/component/StarRatingInput'
 import Image from '../components/component/Image';
 
 import { FaHeart, FaRegHeart, FaThumbsDown, FaThumbsUp, FaXmark } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa";
-import { FiUpload } from "react-icons/fi";
+import { FiUpload, FiExternalLink } from "react-icons/fi";
 import ReviewCard from '../components/component/ReviewCard';
 
 const Detail = () => {
@@ -98,8 +98,7 @@ const Detail = () => {
       setNewReview({});
       alert(`소중한 리뷰를 작성해 주셔서 감사합니다! ☺️ \n작성하신 리뷰는 관리자가 신속히 검토하겠습니다! \n진행 상황은 마이페이지에서 확인하실 수 있습니다.`);
     } catch (error) {
-      let errorMessage = "리뷰 작성 중 문제가 발생했습니다.";
-      alert(errorMessage)
+      handleApiError(error)
     }
   };
 
@@ -154,8 +153,16 @@ const Detail = () => {
               </div>
           </div>
           <div className='information-container-btn'>
-            <button className='detail-btn' onClick={() => { handleOpenNewTab(courses.url) }} >강의 페이지로 이동</button>
-            <button className='detail-wish-btn' onClick={()=>setWishes_togle(!wishes_togle)}>
+            <button 
+              className='detail-btn' 
+              onClick={() => { handleOpenNewTab(courses.url) }} 
+            >
+              강의 페이지로 이동 <FiExternalLink />
+            </button>
+            <button 
+              className='detail-wish-btn' 
+              onClick={()=>setWishes_togle(!wishes_togle)}
+            >
               {wishes_togle ? <FaHeart/> : <FaRegHeart />}
             </button>
           </div>

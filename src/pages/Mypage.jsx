@@ -6,7 +6,7 @@ import { PiDotsThreeOutlineFill } from "react-icons/pi";
 
 import '../asserts/scss/section/_mypage.scss'
 
-import { course } from '../data/course';
+import { course } from '../data/course.js';
 
 const Mypage = () => {
 

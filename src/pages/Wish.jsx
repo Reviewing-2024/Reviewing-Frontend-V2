@@ -7,7 +7,7 @@ import { FaHeart, FaRegHeart, FaThumbsDown, FaThumbsUp } from "react-icons/fa6";
 
 import '../asserts/scss/section/_wish.scss'
 
-import { course } from '../data/course';
+import { course } from '../data/course.js';
 import CourseCard from '../components/component/CourseCard';
 import Pagination from '../components/component/Pagination';
 
