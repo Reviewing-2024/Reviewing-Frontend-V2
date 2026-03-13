@@ -39,8 +39,6 @@ const Detail = () => {
 
 
   //강의 조회
-  useEffect(() => {
-
     const fetchCourses = async () => {
 
       try {
@@ -57,10 +55,11 @@ const Detail = () => {
 
     };
 
+    useEffect(() => {
 
-    fetchCourses();
+      fetchCourses();
 
-  }, []);
+    }, []);
 
   // 리뷰 작성 폼 함수
   const handleCreateReview = async () => {
@@ -132,6 +131,31 @@ const Detail = () => {
 
   }, [courses?.id, current_category]);
 
+  //wish 추가 및 삭제
+    const handleWish = async (id, wishes) => {
+
+    const url = `${import.meta.env.VITE_API_BASE_URL}/api/v1/courses/${id}/wish`;
+
+    const config = {
+        headers: { Authorization: accessToken }
+    };
+    
+    try {
+         if (wishes == 0) {
+            await axios.post(url, {}, config);
+        } else {
+            await axios.delete(url, config);
+        }
+        } catch (error) {
+
+            handleApiError(error);
+            
+        }
+
+        fetchCourses();
+
+    }; 
+
   return (
     <section id='detail'>
       <div className='detail__container'>
@@ -155,15 +179,15 @@ const Detail = () => {
           <div className='information-container-btn'>
             <button 
               className='detail-btn' 
-              onClick={() => { handleOpenNewTab(courses.url) }} 
+              onClick={() => { handleOpenNewTab(courses.url); }} 
             >
               강의 페이지로 이동 <FiExternalLink />
             </button>
             <button 
-              className='detail-wish-btn' 
-              onClick={()=>setWishes_togle(!wishes_togle)}
+              className={courses.wishes == 1 ? 'active' : 'detail-wish-btn'}
+              onClick={()=>{handleWish(courses.id, courses.wishes)}}
             >
-              {wishes_togle ? <FaHeart/> : <FaRegHeart />}
+              {courses.wishes == 1 ? <FaHeart/> : <FaRegHeart />}
             </button>
           </div>
         </div>

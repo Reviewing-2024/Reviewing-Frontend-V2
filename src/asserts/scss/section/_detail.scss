@@ -132,19 +132,20 @@
 
                 }
 
-                .detail-wish-btn {
+                .detail-wish-btn,.active {
                     width: 36px;
                     height: 36px;
                     border-radius: 8px;
                     border: 1px solid var(--blue);
                     background: var(--white);
                     color: var(--blue);
-                    transition: 0.3s;
+                    transition: transform 0.15s ease;
 
-                    &:hover {
-                        transform: scale(1.1);
-                        background-color: #DBEAFE;
-                    }
+                }
+
+                .detail-wish-btn:active,
+                .active:active {
+                transform: scale(0.85);
                 }
 
             }
