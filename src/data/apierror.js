@@ -10,11 +10,11 @@ export const handleApiError = (error) => {
 
   switch (code) {
 
-  case 401:
-    alert(message);
-    break;
+    case 401:
+        alert(message);
+        break;
 
-  default:
-    alert(message || "예기치 못한 오류가 발생하였습니다.");
-}
+    default:
+        alert(message || "예기치 못한 오류가 발생하였습니다.");
+    }
 };

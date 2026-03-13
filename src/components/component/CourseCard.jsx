@@ -1,11 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios';
+
+import { handleApiError } from '../../data/apierror';
 
 import { FaHeart, FaRegHeart, FaThumbsDown, FaThumbsUp } from "react-icons/fa6";
 import Image from './Image';
 
 const CourseCard = ({ course }) => {
-      const [wishes_togle, setWishes_togle] = useState(false);
+    const accessToken = localStorage.getItem("accessToken");
+
+
+    const handleWish = async (id, wishes) => {
+
+    const url = `${import.meta.env.VITE_API_BASE_URL}/api/v1/courses/${id}/wish`;
+
+    const config = {
+        headers: { Authorization: accessToken }
+    };
+    
+    try {
+         if (wishes == 0) {
+            await axios.post(url, {}, config);
+        } else {
+            await axios.delete(url, config);
+        }
+        } catch (error) {
+
+            handleApiError(error);
+            
+        }
+
+    }; 
 
     return (
         <div className="course" >
@@ -14,14 +40,14 @@ const CourseCard = ({ course }) => {
                     <Image course={course} />
                     <span>{course.platform}</span>
                     <button 
-                        className={wishes_togle ? 'active' : 'course-wishes'}
+                        className={course.wishes == 1 ? 'active' : 'course-wishes'}
                         onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            setWishes_togle(!wishes_togle);
+                            handleWish(course.id, course.wishes);
                         }}
                     >
-                        {wishes_togle ? <FaHeart/> : <FaRegHeart />}
+                        {course.wishes == 1 ? <FaHeart/> : <FaRegHeart />}
                     </button>
                 </div>
                 <div className='course-information-container'>
