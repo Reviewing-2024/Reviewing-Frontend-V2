@@ -5,7 +5,7 @@
     padding: 20px;
 
     background: var(--white);
-    border: 1px solid #E5E7EB;
+    border: 1px solid var(--white300);
     border-radius: 12px;
 
     margin-bottom: 16px;
@@ -26,7 +26,7 @@
 
     border-radius: 50%;
 
-    background: #F3F4F6;
+    background: var(--black300);
 
     display: flex;
     align-items: center;
@@ -63,11 +63,11 @@
         }
 
         .star {
-            color: #E5E7EB;
+            color: var(--white300);
         }
 
         .star.active {
-            color: #FDC700;
+            color: var(--yellow);
         }
     }
 
@@ -98,12 +98,12 @@
         padding: 4px 10px;
 
         border-radius: 999px;
-        border: 1px solid #E5E7EB;
+        border: 1px solid var(--white300);
 
-        background: white;
+        background: var(--white);
 
         font-size: 1.3rem;
-        color: #6B7280;
+        color: var(--gray300);
 
         cursor: pointer;
 
@@ -120,20 +120,20 @@
         }
 
     .likes_active {
-        border: 1px solid #BEDBFF;
+        border: 1px solid var(--boxshadow-blue);
         color: var(--blue);
 
         &:hover {
-            background-color: #DBEAFE;
+            background-color: var(--blue100);
         }
     }
 
     .dislikes_active {
-        border: 1px solid #45556C;
-        color: #45556C;
+        border: 1px solid var(--black200);
+        color: var(--black200);
 
         svg {
-            color: #45556C;
+            color: var(--black200);
         }
 
         &:hover {

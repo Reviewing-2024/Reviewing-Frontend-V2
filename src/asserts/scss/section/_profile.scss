@@ -90,7 +90,7 @@
                     display: grid;
                     place-items: center;
                     position: relative;
-                    border: 1px solid #dbeafe;
+                    border: 1px solid var(--blue100);
 
                     .avatar__text {
                         font-size: 40px;
@@ -162,8 +162,8 @@
                         }
 
                         &:disabled {
-                            background: #f3f4f6;
-                            color: #6b7280;
+                            background: var(--black300);
+                            color: var(--gray300);
                             cursor: not-allowed;
                         }
                     }

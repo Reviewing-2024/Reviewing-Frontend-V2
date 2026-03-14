@@ -292,8 +292,7 @@ const Home = () => {
                   onClick={() => handleSubToggle(subCategory.slug)}
                   className={
                     selectedSubCategory.includes(subCategory.slug)
-                      ? "active"
-                      : ""
+                      ? "active" : ""
                   }
                 >
                   {subCategory.name}

@@ -48,7 +48,7 @@
             gap: 20px;
 
             .admin-btn {
-                background-color: #fff;
+                background-color: var(--white);
                 color: var(--black200);
                 padding: 8px 16px;
                 border-radius: 10px;
@@ -79,7 +79,7 @@
                     background: #eaf2ff;
                     display: grid;
                     place-items: center;
-                    border: 1px solid #dbeafe;
+                    border: 1px solid var(--blue100);
 
                     .avatar__text {
                         font-size: 1.1rem;

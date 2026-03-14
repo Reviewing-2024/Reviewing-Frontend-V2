@@ -112,10 +112,10 @@
                     }
 
                     button {
-                        color: #6B7280;
+                        color: var(--gray300);
                         padding: 8px 9px;
                         background-color: var(--white);
-                        border: 1px solid #E5E7EB;
+                        border: 1px solid var(--white300);
                         border-radius: 15px;
                         transition: 0.3s;
                     }
@@ -139,7 +139,7 @@
 
                 .review-meta {
                     margin: 8px 0;
-                    color: #62748E;
+                    color: var(--gray200);
                     gap: 10px;
 
                     .review-meta-memberName {
@@ -161,7 +161,7 @@
                 }
 
                 .review-imgalt {
-                    color: #62748E;
+                    color: var(--gray200);
                     margin-bottom: 6px;
                 }
 
@@ -214,8 +214,8 @@
 
                 .review-APPROVED {
                     padding: 4px 8px;
-                    border: 1px solid #BEDBFF;
-                    background-color: #DBEAFE;
+                    border: 1px solid var(--boxshadow-blue);
+                    background-color: var(--blue100);
                     color: var(--blue);
                     font-weight: 700;
                     border-radius: 8px;
@@ -227,9 +227,9 @@
 
                 .review-REJECT {
                     padding: 4px 8px;
-                    border: 1px solid #E2E8F0;
+                    border: 1px solid var(--white100);
                     background-color: #F1F5F9;
-                    color: #45556C;
+                    color: var(--black200);
                     font-weight: 700;
                     border-radius: 8px;
                     align-items: center;
