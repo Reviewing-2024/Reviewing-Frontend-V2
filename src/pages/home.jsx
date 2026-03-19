@@ -9,6 +9,7 @@ import '../asserts/scss/section/_main.scss'
 import SearchBar from '../components/component/SearchBar';
 import CourseCard from '../components/component/CourseCard';
 import Pagination from '../components/component/Pagination';
+import SkeletonList from '../components/component/SkeletonCard.jsx'
 
 import { useAuth } from "../context/AuthContext";
 import { main_Sort_Category } from '../data/platform.js';
@@ -28,6 +29,7 @@ const Home = () => {
   const [category, setCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [scrollLoading, setScrollLoading] = useState(false);
   const [error, setError] = useState(null);
   const [current_category, setCurrent_category] = useState( {title: "추천순", sort: 'createdAt'});
   const [sort_category_open, setSort_category_open] = useState(false);
@@ -35,6 +37,23 @@ const Home = () => {
   const page = Number(searchParams.get('page')) || 1;
   const ITEMS_PER_PAGE = 12;
 
+  //스크롤 사이트 상단으로 올리기 
+  useEffect(() => {
+    setScrollLoading(true);
+
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+
+      const timer = setTimeout(() => {
+        setScrollLoading(false);
+      }, 600);
+
+      return () => clearTimeout(timer);
+    }, [page])
+  
   //플랫폼 및 카테고리 헤더 선택 영역
   const platformTitle = platform.map(p => p.englishName);
   const categoryTitle = category.map(c => c.slug);
@@ -333,16 +352,21 @@ const Home = () => {
             </ul>
           )}
         </div>
-        <div className='item__card'>
-          {courses.map(course => (
-            <CourseCard course={course} key={course.id} />
-          ))}
-        </div>
+        {scrollLoading
+          ? 
+          <SkeletonList /> 
+          : 
+          <div className='item__card'>
+            {courses.map(course => (
+              <CourseCard course={course} key={course.id} />
+                
+            ))}
+          </div>
+        }
+
         <Pagination
           currentPage={page}
-          totalItems={totalItems}
           totalPages={totalPages - 1}
-          itemsPerPage={ITEMS_PER_PAGE}
           onPageChange={(p) => {
             const newParams = new URLSearchParams(searchParams);
 

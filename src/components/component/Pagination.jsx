@@ -2,24 +2,19 @@ import '../../asserts/scss/component/_pagination.scss'
 
 const Pagination = ({
   currentPage,
-  totalItems,
-  itemsPerPage,
   onPageChange,
   totalPages
 }) => {
 
   const maxVisible = 5;
 
-  let startPage = Math.max(
-    1,
-    currentPage - Math.floor(maxVisible / 2)
-  );
+  let startPage = Math.floor(
+    (currentPage - 1) / maxVisible) * maxVisible + 1;
 
   let endPage = startPage + maxVisible - 1;
 
   if (endPage > totalPages) {
     endPage = totalPages;
-    startPage = Math.max(1, endPage - maxVisible + 1);
   }
 
   const pages = [];
@@ -38,7 +33,7 @@ const Pagination = ({
       </button>
 
       <button
-        onClick={() => onPageChange(currentPage - 1)}
+        onClick={() => onPageChange(startPage - 5)}
         disabled={currentPage === 1}
       >
         ◀
@@ -59,7 +54,7 @@ const Pagination = ({
       ))}
 
       <button
-        onClick={() => onPageChange(currentPage + 1)}
+        onClick={() => onPageChange(endPage + 1)}
         disabled={currentPage === totalPages}
       >
         ▶
