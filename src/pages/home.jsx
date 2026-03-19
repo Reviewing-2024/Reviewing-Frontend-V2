@@ -10,12 +10,14 @@ import SearchBar from '../components/component/SearchBar';
 import CourseCard from '../components/component/CourseCard';
 import Pagination from '../components/component/Pagination';
 
+import { useAuth } from "../context/AuthContext";
 import { main_Sort_Category } from '../data/platform.js';
 import { handleApiError } from '../data/apierror.js'
 
 
 const Home = () => {
   const params = useParams();
+  const {logout} = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const dropdownRef = useRef(null);
 
@@ -30,8 +32,6 @@ const Home = () => {
   const [current_category, setCurrent_category] = useState( {title: "추천순", sort: 'createdAt'});
   const [sort_category_open, setSort_category_open] = useState(false);
   
-
-  const handleChange = (e) => setCurrent_category(e.target.value);
   const page = Number(searchParams.get('page')) || 1;
   const ITEMS_PER_PAGE = 12;
 
@@ -183,7 +183,8 @@ const Home = () => {
         setTotalItems(response.data.data.page.totalElements);
         setTotalPages(response.data.data.page.totalPages);
       } catch (error) {
-        handleApiError(error);
+        
+        handleApiError(error,{logout});
       }
 
     };

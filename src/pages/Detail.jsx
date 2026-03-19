@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { href, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import axios from 'axios';
 
 import '../asserts/scss/section/_detail.scss'
 
 import { Sort_Category } from '../data/platform.js'
 import { handleApiError } from '../data/apierror.js'
+import { useAuth } from "../context/AuthContext";
 
 import StarRatingInput from '../components/component/StarRatingInput'
 import Image from '../components/component/Image';
@@ -23,8 +24,8 @@ const Detail = () => {
   const [courses, setCourses] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [createReviewloading, setCreateReviewloading] = useState(false);
-  const [wishes_togle, setWishes_togle] = useState(false);
 
+  const {logout} = useAuth();
   const params = useParams();
   const accessToken = localStorage.getItem("accessToken");
 
@@ -97,7 +98,7 @@ const Detail = () => {
       setNewReview({});
       alert(`소중한 리뷰를 작성해 주셔서 감사합니다! ☺️ \n작성하신 리뷰는 관리자가 신속히 검토하겠습니다! \n진행 상황은 마이페이지에서 확인하실 수 있습니다.`);
     } catch (error) {
-      handleApiError(error)
+      handleApiError(error, {logout})
     }
   };
 
@@ -148,7 +149,7 @@ const Detail = () => {
         }
         } catch (error) {
 
-            handleApiError(error);
+          handleApiError(error, {logout})
             
         }
 

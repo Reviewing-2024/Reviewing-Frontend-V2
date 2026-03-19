@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import '../asserts/scss/section/_admin.scss'
-import { admin_sort_Category } from '../data/mypagedata.js'
-import { handleApiError } from '../data/apierror.js'
+
 import AdminReviewCard from '../components/component/AdminReviewCard';
+
+import { admin_sort_Category } from '../data/mypagedata.js'
+import { useAuth } from '../context/AuthContext.jsx';
+import { handleApiError } from '../data/apierror.js';
 
 const Admin = () => {
   const accessToken = localStorage.getItem("accessToken");
+  const {logout} = useAuth();
+
   const [response, setResponse] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -29,7 +34,7 @@ const Admin = () => {
       
     } catch (error) {
 
-      handleApiError(error);
+      handleApiError(error, {logout})
 
     }
 
