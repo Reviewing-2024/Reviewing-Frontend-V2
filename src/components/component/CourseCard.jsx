@@ -3,16 +3,18 @@ import { Link } from 'react-router-dom'
 import axios from 'axios';
 
 import { handleApiError } from '../../data/apierror';
+import { useAuth } from '../../context/AuthContext';
 
 import { FaHeart, FaRegHeart, FaThumbsDown, FaThumbsUp } from "react-icons/fa6";
 import Image from './Image';
 
 const CourseCard = ({ course }) => {
     const accessToken = localStorage.getItem("accessToken");
+    const {logout} = useAuth();
 
 
     //wish 추가 및 삭제
-    const handleWish = async (id, wishes) => {
+    const handleWish = async (id, wished) => {
 
     const url = `${import.meta.env.VITE_API_BASE_URL}/api/v1/courses/${id}/wish`;
 
@@ -21,14 +23,14 @@ const CourseCard = ({ course }) => {
     };
     
     try {
-         if (wishes == 0) {
+         if (wished == false) {
             await axios.post(url, {}, config);
         } else {
             await axios.delete(url, config);
         }
         } catch (error) {
 
-            handleApiError(error);
+            handleApiError(error, {logout})
             
         }
 
@@ -41,14 +43,14 @@ const CourseCard = ({ course }) => {
                     <Image course={course} />
                     <span>{course.platform}</span>
                     <button 
-                        className={course.wishes == 1 ? 'active' : 'course-wishes'}
+                        className={course.wished ? 'active' : 'course-wishes'}
                         onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            handleWish(course.id, course.wishes);
+                            handleWish(course.id, course.wished);
                         }}
                     >
-                        {course.wishes == 1 ? <FaHeart/> : <FaRegHeart />}
+                        {course.wished ? <FaHeart/> : <FaRegHeart />}
                     </button>
                 </div>
                 <div className='course-information-container'>

@@ -133,7 +133,7 @@ const Detail = () => {
   }, [courses?.id, current_category]);
 
   //wish 추가 및 삭제
-    const handleWish = async (id, wishes) => {
+    const handleWish = async (id, wished) => {
 
     const url = `${import.meta.env.VITE_API_BASE_URL}/api/v1/courses/${id}/wish`;
 
@@ -142,7 +142,7 @@ const Detail = () => {
     };
     
     try {
-         if (wishes == 0) {
+         if (wished == false) {
             await axios.post(url, {}, config);
         } else {
             await axios.delete(url, config);
@@ -185,10 +185,10 @@ const Detail = () => {
               강의 페이지로 이동 <FiExternalLink />
             </button>
             <button 
-              className={courses.wishes == 1 ? 'active' : 'detail-wish-btn'}
-              onClick={()=>{handleWish(courses.id, courses.wishes)}}
+              className={courses.wished ? 'active' : 'detail-wish-btn'}
+              onClick={()=>{handleWish(courses.id, courses.wished)}}
             >
-              {courses.wishes == 1 ? <FaHeart/> : <FaRegHeart />}
+              {courses.wished ? <FaHeart/> : <FaRegHeart />}
             </button>
           </div>
         </div>
