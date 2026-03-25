@@ -53,6 +53,17 @@ const Home = () => {
 
       return () => clearTimeout(timer);
     }, [page])
+
+    //플랫폼, 카테고리 선택시 스켈레톤ui 
+    useEffect(() => {
+    setScrollLoading(true);
+
+      const timer = setTimeout(() => {
+        setScrollLoading(false);
+      }, 300);
+
+      return () => clearTimeout(timer);
+    }, [platform, category, subCategory, current_category])
   
   //플랫폼 및 카테고리 헤더 선택 영역
   const platformTitle = platform.map(p => p.englishName);
