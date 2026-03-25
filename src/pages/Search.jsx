@@ -9,6 +9,8 @@ import SkeletonList from '../components/component/SkeletonCard.jsx';
 
 import '../asserts/scss/section/_main.scss'
 
+import { useAuth } from "../context/AuthContext";
+
 
 const Search = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -18,6 +20,7 @@ const Search = () => {
     const [scrollLoading, setScrollLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    const {logout} = useAuth();
     const page = Number(searchParams.get('page')) || 1;
     const ITEMS_PER_PAGE = 12;
 
@@ -57,8 +60,10 @@ const Search = () => {
             setCourse(res.data.data.content);
             setTotalPages(res.data.data.page.totalPages);
 
-        } catch (e) {
-            setError(e);
+        } catch (error) {
+
+            handleApiError(error,{logout});
+            
         }
 
     };
