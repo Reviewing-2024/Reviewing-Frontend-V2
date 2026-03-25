@@ -1,49 +1,72 @@
-import React, { useState } from 'react'
-import { useSearchParams  } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import axios from 'axios';
 
 import CourseCard from '../components/component/CourseCard';
 import SearchBar from '../components/component/SearchBar';
+import Pagination from '../components/component/Pagination.jsx';
+import SkeletonList from '../components/component/SkeletonCard.jsx';
 
 import '../asserts/scss/section/_main.scss'
 
-import { course } from '../data/course.js';
-
 
 const Search = () => {
-     const [searchParams] = useSearchParams();
-      const search_keyword = (searchParams.get("s"));
-    // const [course, setCourse] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const search_keyword = (searchParams.get("s"));
+    const [course, setCourse] = useState([]);
+    const [totalPages, setTotalPages] = useState(0);
+    const [scrollLoading, setScrollLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    const page = Number(searchParams.get('page')) || 1;
+    const ITEMS_PER_PAGE = 12;
 
-    // const fetchCourse = async () => {
-    //     try {
-    //         setError(null);
-    //         setUsers(null);
-    //         setLoading(true);
+    //스크롤 사이트 상단으로 올리기 
+    useEffect(() => {
+        setScrollLoading(true);
 
-    //         const res = await axios.get(
-    //             'https://jsonplaceholder.typicode.com/users'
-    //         );
-    //         setCourse(res.data);
-    //     } catch (e) {
-    //         setError(e);
-    //     }
-    //     setLoading(false);
-    // };
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
 
-    // useEffect(() => {
-    //     fetchCourse();
-    // }, [searchKeyword]);
+        const timer = setTimeout(() => {
+            setScrollLoading(false);
+        }, 600);
 
-    // if (loading) return <div>로딩중..</div>;
-    // if (error) return <div>에러가 발생했습니다</div>;
+        return () => clearTimeout(timer);
+    }, [page])
 
 
-    let search_courses = course.filter(function(x){
-            return x.title.includes(search_keyword)
-          });
+    //강의 조회
+    const fetchCourse = async () => {
+        try {
+            setError(null);
+
+            const res = await axios.get(
+                `${import.meta.env.VITE_API_BASE_URL}/api/v1/search`,
+                {
+                    params: {
+                        keyword: search_keyword,
+                        page: page,
+                        size: ITEMS_PER_PAGE
+                    }
+                }
+            );
+            setCourse(res.data.data.content);
+            setTotalPages(res.data.data.page.totalPages);
+
+        } catch (e) {
+            setError(e);
+        }
+
+    };
+
+    useEffect(() => {
+        fetchCourse();
+    }, [search_keyword, page]);
+
 
 
     return (
@@ -57,12 +80,30 @@ const Search = () => {
                 <button className='recommand-btn'>✨ 강의 추천받기</button>
             </div>
             <div className="search__item">
-                <div className='item__card'>
-                    {search_courses.map((course) => (
-                        <CourseCard  course={course} key={course.id}/>
-                    ))}
-                </div>
+                {scrollLoading
+                    ?
+                    <SkeletonList />
+                    :
+                    <div className='item__card'>
+                        {course.map(course => (
+                            <CourseCard course={course} key={course.id} />
+
+                        ))}
+                    </div>
+                }
+                <Pagination
+                    currentPage={page}
+                    totalPages={totalPages - 1}
+                    onPageChange={(p) => {
+                        const newParams = new URLSearchParams(searchParams);
+
+                        newParams.set("page", p);
+
+                        setSearchParams(newParams);
+                    }}
+                />
             </div>
+
         </section>
 
 

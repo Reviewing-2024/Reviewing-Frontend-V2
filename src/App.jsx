@@ -22,13 +22,12 @@ const App = () => {
                 <Routes>
                   <Route path='/' element={<Home />} />
                   <Route path='/:platform' element={<Home />} />
-                  <Route path='/:category' element={<Home />} />
                   <Route path='/:platform/:category' element={<Home />} />
                   <Route path='/courses/:platform/:slug' element={<Detail />} />
                   <Route path='/mypage/review' element={<Mypage />} />
                   <Route path='/mypage/wish' element={<Wish />} />
                   <Route path='/mypage/profile' element={<Profile />} />
-                  <Route path='/search/:searchKeyword' element={<Search />} />
+                  <Route path='/search' element={<Search />} />
                   <Route path="/login/redirect" element={<LoginRedirect />} />
                   <Route path='/admin' element={<Admin />} />
                 </Routes>
