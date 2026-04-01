@@ -65,7 +65,7 @@ const Home = () => {
       }, 300);
 
       return () => clearTimeout(timer);
-    }, [platform, category, subCategory, current_category])
+    }, [platform, category, subCategory, current_category.sort])
   
   //플랫폼 및 카테고리 헤더 선택 영역
   const platformTitle = platform.map(p => p.englishName);
@@ -218,12 +218,13 @@ const Home = () => {
         
         handleApiError(error,{logout});
       }
-
+      
     };
 
     fetchCourses();
+    console.log(courses)
 
-  }, [page, ITEMS_PER_PAGE, selectedPlatform, selectedCategory, selectedSubCategory, current_category]);
+  }, [page, ITEMS_PER_PAGE, selectedPlatform, selectedCategory, JSON.stringify(selectedSubCategory), current_category.sort]);
 
 
   //서브 카테고리 다중선택 토글
@@ -247,7 +248,6 @@ const Home = () => {
 };
 
   if (error) return <div>에러가 발생했습니다</div>;
-
 
 
   return (
