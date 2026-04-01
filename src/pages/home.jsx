@@ -10,6 +10,7 @@ import SearchBar from '../components/component/SearchBar';
 import CourseCard from '../components/component/CourseCard';
 import Pagination from '../components/component/Pagination';
 import SkeletonList from '../components/component/SkeletonCard.jsx'
+import RecommendModal from '../components/component/RecommendModal.jsx';
 
 import { useAuth } from "../context/AuthContext";
 import { main_Sort_Category } from '../data/platform.js';
@@ -33,6 +34,7 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [current_category, setCurrent_category] = useState( {title: "추천순", sort: 'createdAt'});
   const [sort_category_open, setSort_category_open] = useState(false);
+  const [recommend_modal, setRecommend_modal] = useState(false);
   
   const page = Number(searchParams.get('page')) || 1;
   const ITEMS_PER_PAGE = 12;
@@ -255,8 +257,13 @@ const Home = () => {
       </div>
       <div className='search-bar'>
         <SearchBar />
-        <button className='recommand-btn' >✨ 강의 추천받기</button>
+        <button className='recommand-btn' onClick={()=> setRecommend_modal(true)} >
+          ✨ 강의 추천받기
+        </button>
       </div>
+      {recommend_modal && (
+        <RecommendModal  onClose={() => setRecommend_modal(false)} />
+      )}
       <nav className='home__platform'>
         <ul className='platform_container'>
           <li>
