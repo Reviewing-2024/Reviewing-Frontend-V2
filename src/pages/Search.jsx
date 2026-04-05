@@ -10,6 +10,7 @@ import SkeletonList from '../components/component/SkeletonCard.jsx';
 import '../asserts/scss/section/_main.scss'
 
 import { useAuth } from "../context/AuthContext";
+import RecommendModal from '../components/component/RecommendModal.jsx';
 
 
 const Search = () => {
@@ -19,6 +20,7 @@ const Search = () => {
     const [totalPages, setTotalPages] = useState(0);
     const [scrollLoading, setScrollLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [recommend_modal, setRecommend_modal] = useState(false);
 
     const {logout} = useAuth();
     const page = Number(searchParams.get('page')) || 1;
@@ -82,8 +84,13 @@ const Search = () => {
             </div>
             <div className='search-bar'>
                 <SearchBar />
-                <button className='recommand-btn'>✨ 강의 추천받기</button>
+                <button className='recommand-btn' onClick={()=> setRecommend_modal(true)} >
+                    ✨ 강의 추천받기
+                </button>
             </div>
+            {recommend_modal && (
+                <RecommendModal  onClose={() => setRecommend_modal(false)} />
+            )}
             <div className="search__item">
                 {scrollLoading
                     ?
