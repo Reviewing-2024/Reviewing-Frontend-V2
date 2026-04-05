@@ -8,7 +8,7 @@ import { useAuth } from '../../context/AuthContext';
 import { FaHeart, FaRegHeart, FaThumbsDown, FaThumbsUp } from "react-icons/fa6";
 import Image from './Image';
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ course, onAction }) => {
     const accessToken = localStorage.getItem("accessToken");
     const {logout} = useAuth();
 
@@ -28,6 +28,7 @@ const CourseCard = ({ course }) => {
         } else {
             await axios.delete(url, config);
         }
+        onAction();
         } catch (error) {
 
             handleApiError(error, {logout})

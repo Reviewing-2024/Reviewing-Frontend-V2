@@ -194,8 +194,6 @@ const Home = () => {
 
 
   //강의 요청
-  useEffect(() => {
-
     const fetchCourses = async () => {
 
       try {
@@ -221,8 +219,9 @@ const Home = () => {
       
     };
 
+  useEffect(() => {
+
     fetchCourses();
-    console.log(courses)
 
   }, [page, ITEMS_PER_PAGE, selectedPlatform, selectedCategory, JSON.stringify(selectedSubCategory), current_category.sort]);
 
@@ -376,7 +375,7 @@ const Home = () => {
           : 
           <div className='item__card'>
             {courses.map(course => (
-              <CourseCard course={course} key={course.id} />
+              <CourseCard course={course} key={course.id} onAction={fetchCourses} />
                 
             ))}
           </div>

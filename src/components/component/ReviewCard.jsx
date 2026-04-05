@@ -1,22 +1,17 @@
 import React, { useState } from "react";
 import '../../asserts/scss/component/_reviewCard.scss';
+import axios from 'axios';
 
 import { FaStar } from "react-icons/fa";
 import { FiThumbsUp, FiThumbsDown, FiUser } from "react-icons/fi";
 
-const ReviewCard = ({ review }) => {
+import { handleApiError } from '../../data/apierror';
+import { useAuth } from '../../context/AuthContext';
 
-  const {
-    memberName,
-    content,
-    rating,
-    likes,
-    dislikes,
-    createdAt,
-  } = review;
+const ReviewCard = ({ review, onAction }) => {
 
-  const [likes_togle, setLikes_togle] = useState(false);
-  const [dislikes_togle, setDislikes_togle] = useState(false);
+  const accessToken = localStorage.getItem("accessToken");
+  const {logout} = useAuth();
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -28,6 +23,55 @@ const ReviewCard = ({ review }) => {
     }).replace(/\. /g, "-").replace(".", "");
   };
 
+
+  //좋아요 기능
+  const handleLike = async ( id, liked ) => {
+
+    const url = `${import.meta.env.VITE_API_BASE_URL}/api/v1/reviews/${id}/like`;
+
+    const config = {
+        headers: { Authorization: accessToken }
+    };
+    
+    try {
+         if (liked == false) {
+            await axios.post(url, {}, config);
+        } else {
+            await axios.delete(url, config);
+        }
+        onAction();
+        } catch (error) {
+
+            handleApiError(error, {logout})
+            
+        }
+
+    }; 
+
+
+    // 싫어요 기능
+    const handleDislike = async ( id, disliked ) => {
+
+    const url = `${import.meta.env.VITE_API_BASE_URL}/api/v1/reviews/${id}/dislike`;
+
+    const config = {
+        headers: { Authorization: accessToken }
+    };
+    
+    try {
+         if (disliked == false) {
+            await axios.post(url, {}, config);
+        } else {
+            await axios.delete(url, config);
+        }
+        onAction();
+        } catch (error) {
+
+            handleApiError(error, {logout})
+            
+        }
+
+    }; 
 
   return (
     <div className="review-card">
@@ -44,14 +88,14 @@ const ReviewCard = ({ review }) => {
           <div className="reviewCard-user">
 
             <span className="reviewCard-name">
-              {memberName}
+              {review.memberName}
             </span>
 
             <div className="reviewCard-stars">
               {[...Array(5)].map((_, index) => (
                 <FaStar
                   key={index}
-                  className={index < rating ? "star active" : "star"}
+                  className={index < review.rating ? "star active" : "star"}
                 />
               ))}
             </div>
@@ -59,7 +103,7 @@ const ReviewCard = ({ review }) => {
           </div>
 
         <div className="reviewCard-date">
-            {formatDate(createdAt)}
+            {formatDate(review.createdAt)}
         </div>
           
 
@@ -67,26 +111,26 @@ const ReviewCard = ({ review }) => {
 
 
         <div className="reviewCard-content">
-          {content}
+          {review.content}
         </div>
 
         <div className="reviewCard-actions">
 
           <button 
-            className={likes_togle ? 'reviewCard-action-btn likes-btn' : 'likes_active'} 
-            onClick={() => setLikes_togle(!likes_togle)}  
+            className={review.liked ? 'likes_active' : 'reviewCard-action-btn likes-btn'} 
+            onClick={() => handleLike(review.id, review.liked)}  
           >
             <FiThumbsUp />
-            <span>{likes}</span>
+            <span>{review.likes}</span>
           </button>
 
 
           <button 
-            className={dislikes_togle ? 'reviewCard-action-btn dislikes-btn' : 'dislikes_active'}
-              onClick={() => setDislikes_togle(!dislikes_togle)}
+            className={review.disliked ? 'dislikes_active' : 'reviewCard-action-btn dislikes-btn'}
+              onClick={() => handleDislike(review.id, review.disliked)}
           >
             <FiThumbsDown /> 
-            <span>{dislikes}</span>
+            <span>{review.dislikes}</span>
           </button>
 
         </div>

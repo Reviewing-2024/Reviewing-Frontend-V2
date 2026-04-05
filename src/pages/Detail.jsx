@@ -25,7 +25,7 @@ const Detail = () => {
   const [reviews, setReviews] = useState([]);
   const [createReviewloading, setCreateReviewloading] = useState(false);
 
-  const {logout} = useAuth();
+  const { logout } = useAuth();
   const params = useParams();
   const accessToken = localStorage.getItem("accessToken");
 
@@ -40,27 +40,27 @@ const Detail = () => {
 
 
   //강의 조회
-    const fetchCourses = async () => {
+  const fetchCourses = async () => {
 
-      try {
+    try {
 
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/api/v1/courses/${params.platform}/${params.slug}`
-        );
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/courses/${params.platform}/${params.slug}`
+      );
 
-        setCourses(response.data.data);
+      setCourses(response.data.data);
 
-      } catch (error) {
-        console.error("강의 불러오기 실패:", error);
-      }
+    } catch (error) {
+      console.error("강의 불러오기 실패:", error);
+    }
 
-    };
+  };
 
-    useEffect(() => {
+  useEffect(() => {
 
-      fetchCourses();
+    fetchCourses();
 
-    }, []);
+  }, []);
 
   // 리뷰 작성 폼 함수
   const handleCreateReview = async () => {
@@ -98,64 +98,59 @@ const Detail = () => {
       setNewReview({});
       alert(`소중한 리뷰를 작성해 주셔서 감사합니다! ☺️ \n작성하신 리뷰는 관리자가 신속히 검토하겠습니다! \n진행 상황은 마이페이지에서 확인하실 수 있습니다.`);
     } catch (error) {
-      handleApiError(error, {logout})
+      handleApiError(error, { logout })
     }
   };
 
   //유저 리뷰 조회
-  useEffect(() => {
-    if (!courses?.id) return;
-
-    const fetchRivew = async () => {
-
-      try {
-
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/reviews/${courses.id}`, {
+  const fetchReview = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/reviews/${courses.id}`,
+        {
           params: {
             sort: current_category,
             page: 0,
             size: 10,
-          }
-        });
+          },
+        }
+      );
 
-        setReviews(response.data.data.content);
+      setReviews(response.data.data.content);
+    } catch (error) {
+      console.error("리뷰 불러오기 실패:", error);
+    }
+  };
 
-
-      } catch (error) {
-        console.error("강의 불러오기 실패:", error);
-      }
-
-
-    };
-
-    fetchRivew();
-
-  }, [courses?.id, current_category]);
+  useEffect(() => {
+    if (!courses?.id) return;
+    fetchReview();
+  }, [courses?.id, current_category, ]);
 
   //wish 추가 및 삭제
-    const handleWish = async (id, wished) => {
+  const handleWish = async (id, wished) => {
 
     const url = `${import.meta.env.VITE_API_BASE_URL}/api/v1/courses/${id}/wish`;
 
     const config = {
-        headers: { Authorization: accessToken }
+      headers: { Authorization: accessToken }
     };
-    
+
     try {
-         if (wished == false) {
-            await axios.post(url, {}, config);
-        } else {
-            await axios.delete(url, config);
-        }
-        } catch (error) {
+      if (wished == false) {
+        await axios.post(url, {}, config);
+      } else {
+        await axios.delete(url, config);
+      }
+    } catch (error) {
 
-          handleApiError(error, {logout})
-            
-        }
+      handleApiError(error, { logout })
 
-        fetchCourses();
+    }
 
-    }; 
+    fetchCourses();
+
+  };
 
   return (
     <section id='detail'>
@@ -168,27 +163,27 @@ const Detail = () => {
             <span className='information-platform'>{courses.platform}</span>
             <h1>{courses.title}</h1>
             <p>{courses.teacher}</p>
-              <div className="information-stars">
-                {[...Array(5)].map((_, index) => (
-                  <FaStar
-                    key={index}
-                  />
-                ))}
-                <div className='information-rating'> {courses.rating}</div>
-              </div>
+            <div className="information-stars">
+              {[...Array(5)].map((_, index) => (
+                <FaStar
+                  key={index}
+                />
+              ))}
+              <div className='information-rating'> {courses.rating}</div>
+            </div>
           </div>
           <div className='information-container-btn'>
-            <button 
-              className='detail-btn' 
-              onClick={() => { handleOpenNewTab(courses.url); }} 
+            <button
+              className='detail-btn'
+              onClick={() => { handleOpenNewTab(courses.url); }}
             >
               강의 페이지로 이동 <FiExternalLink />
             </button>
-            <button 
+            <button
               className={courses.wished ? 'active' : 'detail-wish-btn'}
-              onClick={()=>{handleWish(courses.id, courses.wished)}}
+              onClick={() => { handleWish(courses.id, courses.wished) }}
             >
-              {courses.wished ? <FaHeart/> : <FaRegHeart />}
+              {courses.wished ? <FaHeart /> : <FaRegHeart />}
             </button>
           </div>
         </div>
@@ -223,6 +218,7 @@ const Detail = () => {
             <ReviewCard
               key={review.id}
               review={review}
+              onAction={fetchReview}
             />
           ))}
         </div>
