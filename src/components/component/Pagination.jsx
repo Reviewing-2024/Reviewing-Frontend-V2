@@ -9,7 +9,7 @@ const Pagination = ({
   const maxVisible = 5;
 
   let startPage = Math.floor(
-    (currentPage - 1) / maxVisible) * maxVisible + 1;
+    (currentPage) / maxVisible) * maxVisible + 1;
 
   let endPage = startPage + maxVisible - 1;
 

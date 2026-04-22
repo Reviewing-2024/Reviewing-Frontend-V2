@@ -113,6 +113,7 @@ const Detail = () => {
             page: 0,
             size: 10,
           },
+          headers: { Authorization: accessToken }
         }
       );
 

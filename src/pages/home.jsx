@@ -22,6 +22,7 @@ const Home = () => {
   const {logout} = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const dropdownRef = useRef(null);
+  const accessToken = localStorage.getItem("accessToken");
 
   const [courses, setCourses] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -37,7 +38,7 @@ const Home = () => {
   const [recommend_modal, setRecommend_modal] = useState(false);
   
   const page = Number(searchParams.get('page')) || 1;
-  const ITEMS_PER_PAGE = 12;
+  const ITEMS_PER_PAGE = 20;
 
   //스크롤 사이트 상단으로 올리기 
   useEffect(() => {
@@ -204,9 +205,10 @@ const Home = () => {
             ...(selectedCategory && { category: selectedCategory }),
             ...(selectedSubCategory.length > 0 && { subCategories: selectedSubCategory }),
             sort: current_category.sort,
-            page: page,
+            page: page - 1,
             size: ITEMS_PER_PAGE,
-          }
+          },
+          headers: { Authorization: accessToken }
         });
 
         setCourses(response.data.data.content);
@@ -383,7 +385,7 @@ const Home = () => {
 
         <Pagination
           currentPage={page}
-          totalPages={totalPages - 1}
+          totalPages={totalPages}
           onPageChange={(p) => {
             const newParams = new URLSearchParams(searchParams);
 

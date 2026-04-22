@@ -26,7 +26,7 @@ const Wish = () => {
   const { logout } = useAuth();
   const accessToken = localStorage.getItem("accessToken");
   const page = Number(searchParams.get('page')) || 1;
-  const ITEMS_PER_PAGE = 12;
+  const ITEMS_PER_PAGE = 20;
 
   useEffect(() => {
     if (sortCategory) {
@@ -43,7 +43,10 @@ const Wish = () => {
 
       const response = await axios.get(
         `${import.meta.env.VITE_API_BASE_URL}/api/v1/members/me/wishes`,
-        { headers: { Authorization: accessToken } }
+        { 
+          params: {page: page - 1, size: ITEMS_PER_PAGE},
+          headers: { Authorization: accessToken } 
+        }
       );
 
       setCourses(response.data.data.content);
