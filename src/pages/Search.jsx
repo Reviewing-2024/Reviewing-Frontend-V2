@@ -24,7 +24,7 @@ const Search = () => {
 
     const {logout} = useAuth();
     const page = Number(searchParams.get('page')) || 1;
-    const ITEMS_PER_PAGE = 12;
+    const ITEMS_PER_PAGE = 20;
 
     //스크롤 사이트 상단으로 올리기 
     useEffect(() => {

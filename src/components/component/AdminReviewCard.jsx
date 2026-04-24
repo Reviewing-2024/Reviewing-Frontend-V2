@@ -6,9 +6,11 @@ import { FaCheck } from "react-icons/fa6";
 import { IoMdClose } from "react-icons/io";
 
 import RejectModal from "./RejectModal";
+import ImgModal from "./ImgModal";
 
 const AdminReviewCard = ({ review, onApprove, onReject, current_category }) => {
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+  const [isImgModalOpen, setIsImgModalOpen] = useState(false);
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("ko-KR");
@@ -46,10 +48,25 @@ const AdminReviewCard = ({ review, onApprove, onReject, current_category }) => {
               <img
                 src={`${BASE_URL}${review.certificaton}`}
                 alt="인증 이미지"
+                onClick={() => setIsImgModalOpen(true)}
               />
             </div>
           )}
+          {review.rejectionReason && (
+            <div className="review-rejectionReason">
+              <p>거절 이유</p> 
+              <p>{review.rejectionReason}</p>
+            </div>
+          )}
         </div>
+        {isImgModalOpen && (
+          <ImgModal 
+            imgsrc={`${BASE_URL}${review.certificaton}`}
+            onClose={() => setIsImgModalOpen(false)}
+          />
+        )
+
+        }
 
         <div className="review-card-right">
           {current_category === "PENDING" ? (

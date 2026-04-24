@@ -45,7 +45,7 @@ const Wish = () => {
         `${import.meta.env.VITE_API_BASE_URL}/api/v1/members/me/wishes`,
         { 
           params: {page: page - 1, size: ITEMS_PER_PAGE},
-          headers: { Authorization: accessToken } 
+          headers: { Authorization: accessToken }
         }
       );
 
@@ -63,7 +63,7 @@ const Wish = () => {
 
     fetchCourses();
 
-  }, [accessToken]);
+  }, [accessToken, page]);
 
 
   return (
