@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import axios from 'axios';
 
 import { mypage_Sort_Category } from '../data/mypagedata.js'
 import { CiCamera } from "react-icons/ci";
@@ -8,8 +9,10 @@ import '../asserts/scss/section/_profile.scss'
 const Profile = () => {
   const { sortCategory } = useParams()
   const [current_category, setCurrent_category] = useState('profile')
-
+  const accessToken = localStorage.getItem("accessToken");
   const username = localStorage.getItem('username')
+  const [nickname, setNickname] = useState(username);
+
 
   useEffect(() => {
     if (sortCategory) 
@@ -17,6 +20,31 @@ const Profile = () => {
     else 
       setCurrent_category('profile')
   }, [sortCategory])
+
+  const  EditNickname = async () => {
+    if (nickname === username) return;
+
+      try {
+
+        const res = await axios.patch(
+          `${import.meta.env.VITE_API_BASE_URL}/api/v1/members/me/nickname`,
+          {
+            nickname: nickname
+          },
+          {
+            headers: { Authorization: accessToken }
+          }
+        );
+
+        console.log(res)
+
+
+      } catch (error) {
+
+
+      }
+
+    };
 
   return (
     <div id="profile" role="profile" className="profile-page">
@@ -50,7 +78,11 @@ const Profile = () => {
                 사진 변경
               </button>
             </div>
-            <form className="profile-form" onSubmit={(e) => e.preventDefault()}>
+            <form 
+              className="profile-form" 
+              onSubmit={(e) => {
+                e.preventDefault();
+            }}>
               <div className="field">
                 <label className="field__label" htmlFor="nickname">
                   닉네임
@@ -60,7 +92,8 @@ const Profile = () => {
                   className="field__input"
                   type="text"
                   placeholder="닉네임을 입력하세요"
-                  defaultValue={username}
+                  value={nickname}
+                  onChange={(e) => setNickname(e.target.value)}
                 />
               </div>
 
@@ -79,7 +112,9 @@ const Profile = () => {
               </div>
 
               <div className="form-actions">
-                <button type="submit" className="btn btn--primary">
+                <button type="submit" className="btn btn--primary"
+                        onClick={EditNickname}
+                >
                   저장하기
                 </button>
               </div>
