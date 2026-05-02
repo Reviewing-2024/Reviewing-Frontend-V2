@@ -97,20 +97,6 @@ const Profile = () => {
                 />
               </div>
 
-              <div className="field">
-                <label className="field__label" htmlFor="email">
-                  이메일
-                </label>
-                <input
-                  id="email"
-                  className="field__input"
-                  type="email"
-                  defaultValue="이메일"
-                  disabled
-                />
-                <p className="field__help">이메일은 변경할 수 없습니다.</p>
-              </div>
-
               <div className="form-actions">
                 <button type="submit" className="btn btn--primary"
                         onClick={EditNickname}
