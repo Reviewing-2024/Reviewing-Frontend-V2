@@ -8,7 +8,7 @@ import { useAuth } from "../../context/AuthContext";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
 const Header = () => {
-  const { isLogin, username, logout } = useAuth();
+  const { isLogin, username, logout, profileImage } = useAuth();
   const navigate = useNavigate();
 
   const [loginModalOpen, setLoginModalOpen] = useState(false);
@@ -63,7 +63,7 @@ const Header = () => {
                 aria-expanded={userMenuOpen}
               >
                 <div className="avatar" aria-hidden="true">
-                  <span className="avatar__text">S</span>
+                  <img src={`${import.meta.env.VITE_API_BASE_URL}${profileImage}`} alt="profileImage" />
                 </div>
 
                 <span className="userbtn-name">{username}</span>

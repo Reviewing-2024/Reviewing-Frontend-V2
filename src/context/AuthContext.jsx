@@ -7,25 +7,30 @@ export const AuthProvider = ({ children }) => {
 
   const [isLogin, setIsLogin] = useState(false);
   const [username, setUsername] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
 
   useEffect(() => {
 
     const token = localStorage.getItem("accessToken");
     const savedUsername = localStorage.getItem("username");
+    const savedProfileImage = localStorage.getItem("profileImage");
 
     setIsLogin(!!token);
     setUsername(savedUsername);
+    setProfileImage(savedProfileImage);
 
   }, []);
 
 
-  const login = (token, username) => {
+  const login = (token, username, profileImage) => {
 
     localStorage.setItem("accessToken", token);
     localStorage.setItem("username", username);
+    localStorage.setItem("profileImage", profileImage);
 
     setIsLogin(true);
     setUsername(username);
+    setProfileImage(profileImage);
 
   };
 
@@ -62,6 +67,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={{
       isLogin,
       username,
+      profileImage,
       login,
       logout
     }}>

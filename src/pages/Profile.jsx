@@ -10,7 +10,8 @@ const Profile = () => {
   const { sortCategory } = useParams()
   const [current_category, setCurrent_category] = useState('profile')
   const accessToken = localStorage.getItem("accessToken");
-  const username = localStorage.getItem('username')
+  const username = localStorage.getItem('username');
+  const profileImage = localStorage.getItem('profileImage');
   const [nickname, setNickname] = useState(username);
 
 
@@ -69,7 +70,7 @@ const Profile = () => {
           <div className="profile-card__inner">
             <div className="profile-side">
               <div className="avatar">
-                <span className="avatar__text">S</span>
+                <img src={`${import.meta.env.VITE_API_BASE_URL}${profileImage}`} alt="profileImage" />
                 <button type="button" className="avatar__camera" aria-label="사진 변경">
                   <CiCamera />
                 </button>
