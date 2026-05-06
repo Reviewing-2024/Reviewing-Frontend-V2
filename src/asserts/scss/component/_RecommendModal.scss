@@ -17,14 +17,46 @@
         border-radius: 20px 20px 0 0;
         padding: 20px;
         animation: slideUp 0.6s ease;
+
+        display: flex;
+        flex-direction: column;
+
+        .recommend_modal-countainer {
+            flex-shrink: 0;
+            margin-bottom: 8px;
+
+            h2 {
+                font-size: 2rem;
+                font-weight: 700;
+                margin-bottom: 5px;
+            }
+
+            span {
+                color: #62748E;
+            }
+
+            .recommend_modal-searchKeyword {
+                color: var(--blue);
+                font-weight: 700;
+            }
+        }
+
+        .item__card {
+            flex: 1;
+            overflow-y: auto;
+
+            &::-webkit-scrollbar {
+                width: 4px;
+            }
+            &::-webkit-scrollbar-thumb {
+                background-color: #d1d5db;
+                border-radius: 4px;
+            }
+        }
     }
 
     @keyframes slideUp {
-        from {
-            transform: translateY(100%);
-        }
-        to {
-            transform: translateY(0);
-        }
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
     }
 }

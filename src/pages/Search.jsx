@@ -82,15 +82,7 @@ const Search = () => {
             <div className='home__banner'>
                 <img className='banner' src="/img/banner.png" alt="banner" />
             </div>
-            <div className='search-bar'>
                 <SearchBar />
-                <button className='recommand-btn' onClick={()=> setRecommend_modal(true)} >
-                    ✨ 강의 추천받기
-                </button>
-            </div>
-            {recommend_modal && (
-                <RecommendModal  onClose={() => setRecommend_modal(false)} />
-            )}
             <div className="search__item">
                 {scrollLoading
                     ?

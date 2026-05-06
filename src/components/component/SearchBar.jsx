@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import '../../asserts/scss/section/_main.scss'
 
 import { IoIosSearch } from 'react-icons/io';
 
-const Search = () => {
+import RecommendModal from '../component/RecommendModal'
+
+const Search = ( ) => {
   const [searchParams] = useSearchParams();
   const [searchKeyword, setSearchKeyword] = useState(searchParams.get("s") ?? "");
+  const [recommend_modal, setRecommend_modal] = useState(false);
   const navigate = useNavigate();
 
 
@@ -19,25 +22,35 @@ const Search = () => {
     navigate(`/search?s=${searchKeyword}`);
   };
 
+
   return (
     <div id='search'>
-      <div className='search-Input'>
-        <img className='search-icon' src="/img/Logo.png" alt="search-icon" />
-        <input
-          className='searchinput'
-          type='search'
-          placeholder='강의 제목, 강사, 플랫폼을 검색해보세요'
-          value={searchKeyword}
-          onChange={e => setSearchKeyword(e.target.value)}
-          onKeyDown={e => {
-            if (e.key === 'Enter') {
-              handleSearch();
-            }
-          }}
-        />
-        <button className='search-btn' onClick={handleSearch}><IoIosSearch /></button>
+      <div className='search-bar'>
+        <div className='search-Input'>
+          <img className='search-icon' src="/img/Logo.png" alt="search-icon" />
+          <input
+            className='searchinput'
+            type='search'
+            placeholder='강의 제목, 강사, 플랫폼을 검색해보세요'
+            value={searchKeyword}
+            onChange={e => setSearchKeyword(e.target.value)}
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                handleSearch();
+              }
+            }}
+          />
+          <button className='search-btn' onClick={handleSearch}><IoIosSearch /></button>
+        </div>
       </div>
+      <button className='recommand-btn' onClick={() => setRecommend_modal(true)} >
+        ✨ 강의 추천받기
+      </button>
+      {recommend_modal && (
+              <RecommendModal onClose={() => setRecommend_modal(false)} searchKeyword={searchKeyword}  />
+            )}
     </div>
+    
   )
 }
 
