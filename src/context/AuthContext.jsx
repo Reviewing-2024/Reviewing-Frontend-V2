@@ -54,6 +54,7 @@ export const AuthProvider = ({ children }) => {
 
       localStorage.removeItem("accessToken");
       localStorage.removeItem("username");
+      localStorage.removeItem("profileImage");
 
       setIsLogin(false);
       setUsername(null);

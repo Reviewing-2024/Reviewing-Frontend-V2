@@ -14,6 +14,7 @@ const Search = ( ) => {
   const navigate = useNavigate();
 
 
+  //검색 페이지 이동
   const handleSearch = (e) => {
     if (!searchKeyword) {
       alert('검색어를 입력해주세요.')

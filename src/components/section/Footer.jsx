@@ -11,24 +11,14 @@ const Footer = () => {
                 <div className='footer-title'>
                     <h4>Reviewing</h4>
                     <p>모든 강의를 한 곳에서 비교하고 선택하세요.</p>
+                    
+                    <div className='footer-contact'>
+                        <span className='footer-contact-fwBold'>Contact:</span> <span>seoyeon.park.dev@gmail.com</span> 
+                    </div>
+
                 </div>
                 <div className='footer-menu'>
                     <ul>
-                        <li>
-                            <Link>
-                                서비스 소개
-                            </Link>
-                        </li>
-                        <li>
-                            <Link>
-                                Contact
-                            </Link>
-                        </li>
-                        <li>
-                            <Link>
-                                GitHub
-                            </Link>
-                        </li>
                         <li>
                             <Link>
                                 이용약관

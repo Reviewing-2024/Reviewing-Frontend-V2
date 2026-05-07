@@ -33,7 +33,7 @@ const Detail = () => {
     window.scrollTo(0, 0);
   }, [])
 
-  //강의 url이동
+  //실제 강의 url이동
   const handleOpenNewTab = (url) => {
     window.open(url, "_blank", "noopener, noreferrer");
   };
@@ -51,7 +51,9 @@ const Detail = () => {
       setCourses(response.data.data);
 
     } catch (error) {
-      console.error("강의 불러오기 실패:", error);
+
+      handleApiError(error, { logout })
+
     }
 
   };
@@ -98,7 +100,9 @@ const Detail = () => {
       setNewReview({});
       alert(`소중한 리뷰를 작성해 주셔서 감사합니다! ☺️ \n작성하신 리뷰는 관리자가 신속히 검토하겠습니다! \n진행 상황은 마이페이지에서 확인하실 수 있습니다.`);
     } catch (error) {
+
       handleApiError(error, { logout })
+      
     }
   };
 
@@ -119,7 +123,9 @@ const Detail = () => {
 
       setReviews(response.data.data.content);
     } catch (error) {
-      console.error("리뷰 불러오기 실패:", error);
+
+      handleApiError(error, { logout })
+
     }
   };
 

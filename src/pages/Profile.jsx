@@ -3,16 +3,21 @@ import { Link, useParams } from 'react-router-dom'
 import axios from 'axios';
 
 import { mypage_Sort_Category } from '../data/mypagedata.js'
+import { handleApiError } from '../data/apierror.js'
+import { useAuth } from "../context/AuthContext";
+
 import { CiCamera } from "react-icons/ci";
 import '../asserts/scss/section/_profile.scss'
 
 const Profile = () => {
   const { sortCategory } = useParams()
   const [current_category, setCurrent_category] = useState('profile')
+  const [nickname, setNickname] = useState(username);
+  const { logout } = useAuth();
+
   const accessToken = localStorage.getItem("accessToken");
   const username = localStorage.getItem('username');
   const profileImage = localStorage.getItem('profileImage');
-  const [nickname, setNickname] = useState(username);
 
 
   useEffect(() => {
@@ -22,6 +27,7 @@ const Profile = () => {
       setCurrent_category('profile')
   }, [sortCategory])
 
+  //닉네임 변경
   const  EditNickname = async () => {
     if (nickname === username) return;
 
@@ -37,11 +43,9 @@ const Profile = () => {
           }
         );
 
-        console.log(res)
-
-
       } catch (error) {
 
+        handleApiError(error, { logout })
 
       }
 

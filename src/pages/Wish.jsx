@@ -54,7 +54,9 @@ const Wish = () => {
       setTotalPages(response.data.data.page.totalPages);
 
     } catch (error) {
+
       handleApiError(error, { logout });
+      
     }
 
   };
