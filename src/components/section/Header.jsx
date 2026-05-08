@@ -16,6 +16,7 @@ const Header = () => {
 
   const menuRef = useRef(null);
 
+  //유저 토글
   useEffect(() => {
     if (!userMenuOpen) return;
 
@@ -37,6 +38,7 @@ const Header = () => {
     };
   }, [userMenuOpen]);
 
+  //로그아웃
   const handleLogout = () => {
     setUserMenuOpen(false);
     logout();

@@ -20,12 +20,12 @@ const Footer = () => {
                 <div className='footer-menu'>
                     <ul>
                         <li>
-                            <Link>
+                            <Link to={'/policies/terms-and-conditions'}>
                                 이용약관
                             </Link>
                         </li>
                         <li>
-                            <Link>
+                            <Link to={'/policies/privacy-policy'}>
                                 개인정보처리방침
                             </Link>
                         </li>

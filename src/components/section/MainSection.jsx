@@ -6,7 +6,7 @@ import '../../asserts/scss/section/_layout.scss'
 const MainSection = (props) => {
 
   const location = useLocation();
-  const isMyPage = ['/mypage', '/admin'].some(path =>
+  const isMyPage = ['/mypage', '/admin', '/policies/terms-and-conditions', '/policies/privacy-policy'].some(path =>
     location.pathname.startsWith(path)
   );
 

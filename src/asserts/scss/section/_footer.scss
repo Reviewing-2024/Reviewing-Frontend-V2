@@ -54,22 +54,8 @@
     }
 
     @media (max-width: 1024px) {
-        padding: 42px 32px 0 32px;
-        .footer_container {
-            .footer-menu {
-                ul {
-
-                    a {
-                        display: block;
-                        max-width: 60px;
-                        white-space: normal;
-                        line-height: 1.4;
-                        text-align: center;
-                    }
-
-                }
-            }
-
+        #footer {
+            padding: 42px 32px 0 32px;
         }
     }
 

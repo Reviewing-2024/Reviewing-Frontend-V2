@@ -1,11 +1,4 @@
 #admin {
-    background: var(--white200);
-    min-height: 100vh;
-    padding: 0 32px 32px 32px;
-
-    @media (max-width: 768px) {
-         padding: 0 0 32px 0;
-    }
 
     .admin-title {
         padding: 40px 0 32px 0;

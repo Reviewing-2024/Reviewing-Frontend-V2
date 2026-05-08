@@ -13,7 +13,6 @@ const Mypage = () => {
   const { sortCategory } = useParams();
 
   const [current_category, setCurrent_category] = useState('review');
-
   const [review_current_category, setReview_current_category] = useState('전체 리뷰');
 
 

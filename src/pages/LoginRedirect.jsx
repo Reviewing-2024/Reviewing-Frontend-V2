@@ -25,7 +25,7 @@ const LoginRedirect = () => {
 
 
       if (!accessToken) {
-        alert("access token을 받지 못했어요. 백엔드 응답 형식을 확인해주세요.");
+        alert("access token을 받지 못했어요.");
         navigate("/");
         return;
       }

@@ -48,6 +48,14 @@
                 border-radius: 10px;
                 padding: 8px;
             }
+
+            .recommend_modal-cursor {
+                display: inline-block;
+                margin-left: 1px;
+                font-weight: 300;
+                color: var(--black);
+                animation: blink 0.7s step-end infinite;
+            }
         }
 
         .item__card {
@@ -67,5 +75,10 @@
     @keyframes slideUp {
         from { transform: translateY(100%); }
         to { transform: translateY(0); }
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50%       { opacity: 0; }
     }
 }

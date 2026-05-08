@@ -12,12 +12,13 @@ import '../asserts/scss/section/_profile.scss'
 const Profile = () => {
   const { sortCategory } = useParams()
   const [current_category, setCurrent_category] = useState('profile')
-  const [nickname, setNickname] = useState(username);
   const { logout } = useAuth();
 
   const accessToken = localStorage.getItem("accessToken");
   const username = localStorage.getItem('username');
   const profileImage = localStorage.getItem('profileImage');
+
+  const [nickname, setNickname] = useState(username);
 
 
   useEffect(() => {

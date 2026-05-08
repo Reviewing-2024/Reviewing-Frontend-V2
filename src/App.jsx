@@ -5,6 +5,9 @@ import Header from './components/section/Header';
 import Main from './components/section/MainSection'
 import Footer from './components/section/Footer';
 
+import Terms_and_conditions from './pages/policies/terms-and-conditions';
+import Privacy_policy from './pages/policies/privacy-policy';
+
 import Home from './pages/home';
 import Search from './pages/Search';
 import Detail from './pages/Detail';
@@ -30,6 +33,8 @@ const App = () => {
                   <Route path='/search' element={<Search />} />
                   <Route path="/login/redirect" element={<LoginRedirect />} />
                   <Route path='/admin' element={<Admin />} />
+                  <Route path='/policies/terms-and-conditions' element={<Terms_and_conditions />} />
+                  <Route path='/policies/privacy-policy' element={<Privacy_policy />} />
                 </Routes>
               </Main>
             <Footer />
