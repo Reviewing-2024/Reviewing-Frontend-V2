@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import '../../asserts/scss/section/_admin.scss'
 
 import { FiExternalLink } from "react-icons/fi";
+import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { FaCheck } from "react-icons/fa6";
 import { IoMdClose } from "react-icons/io";
 
@@ -54,8 +55,11 @@ const AdminReviewCard = ({ review, onApprove, onReject, current_category }) => {
           )}
           {review.rejectionReason && (
             <div className="review-rejectionReason">
-              <p>거절 이유</p> 
-              <p>{review.rejectionReason}</p>
+              <AiOutlineExclamationCircle />
+              <div>
+                <p> 거절 사유</p> 
+                <p className="reason">{review.rejectionReason}</p>
+              </div>
             </div>
           )}
         </div>

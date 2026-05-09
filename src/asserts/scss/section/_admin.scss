@@ -121,7 +121,7 @@
                     @media (max-width: 768px) {
                         align-items: flex-start;
                         flex-direction: column;
-                        
+
                         button {
                             margin: 4px 0 8px 0;
                         }
@@ -161,11 +161,50 @@
                 .review-image img {
                     width: 120px;
                     border-radius: 8px;
+                    margin-bottom: 8px;
                     transition: 0.5s;
                     cursor: pointer;
 
                     &:hover {
                         transform: scale(1.1);
+                    }
+                }
+
+                .review-rejectionReason {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 6px;
+                    background-color: #FFF5F5;
+                    border: 1.5px solid #F5A0A0;
+                    border-radius: 8px;
+                    padding: 10px;
+
+                    svg {
+                        color: #E53E3E;
+                        font-size: 16px;
+                        margin-top: 1px;
+                        flex-shrink: 0;
+                    }
+
+                    div {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 2px;
+
+                        p {
+                            margin: 0;
+
+                            &:first-child {
+                                color: #C53030;
+                                font-size: 1.5rem;
+                                font-weight: 700;
+                            }
+                        }
+                    }
+
+                    .reason {
+                        color: #742A2A;
+                        line-height: 1.6;
                     }
                 }
 
@@ -188,13 +227,13 @@
                     align-items: center;
                     justify-content: center;
                     gap: 6px;
-                    
+
                     font-weight: 700;
                     padding: 8px 12px;
                     border-radius: 8px;
 
                     svg {
-                        vertical-align:middle;
+                        vertical-align: middle;
                     }
                 }
 
@@ -202,15 +241,15 @@
                     background: var(--blue);
                     color: var(--white);
                     border: none;
-                    
-        
+
+
                 }
 
                 .reject-btn {
                     background: var(--white);
                     border: 1px solid var(--white100);
 
-     
+
                 }
 
                 .review-APPROVED {
