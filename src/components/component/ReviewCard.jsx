@@ -13,6 +13,7 @@ const ReviewCard = ({ review, onAction }) => {
   const accessToken = localStorage.getItem("accessToken");
   const {logout} = useAuth();
 
+  //시간 한국시간 기준으로
   const formatDate = (dateString) => {
     const date = new Date(dateString);
 

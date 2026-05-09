@@ -16,8 +16,6 @@ const AdminReviewCard = ({ review, onApprove, onReject, current_category }) => {
     return new Date(dateString).toLocaleDateString("ko-KR");
   };
 
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
   // 거절 확정 시 호출: reason은 선택/입력된 사유 문자열
   const handleRejectConfirm = (reason) => {
     onReject(review.id, reason);
@@ -46,7 +44,7 @@ const AdminReviewCard = ({ review, onApprove, onReject, current_category }) => {
           {review.certificaton && (
             <div className="review-image">
               <img
-                src={`${BASE_URL}${review.certificaton}`}
+                src={`${import.meta.env.VITE_API_BASE_URL}${review.certificaton}`}
                 alt="인증 이미지"
                 onClick={() => setIsImgModalOpen(true)}
               />
@@ -61,12 +59,10 @@ const AdminReviewCard = ({ review, onApprove, onReject, current_category }) => {
         </div>
         {isImgModalOpen && (
           <ImgModal 
-            imgsrc={`${BASE_URL}${review.certificaton}`}
+            imgsrc={`${import.meta.env.VITE_API_BASE_URL}${review.certification}`}
             onClose={() => setIsImgModalOpen(false)}
           />
-        )
-
-        }
+        )}
 
         <div className="review-card-right">
           {current_category === "PENDING" ? (

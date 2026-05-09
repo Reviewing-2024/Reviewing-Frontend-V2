@@ -17,4 +17,11 @@
         background-color: var(--blue);
         color: var(--black);
     }
+     
+    @media (max-width: 768px) {
+        button {
+            padding: 6px 11px;
+            margin: 1px;
+        }
+    }
 }
