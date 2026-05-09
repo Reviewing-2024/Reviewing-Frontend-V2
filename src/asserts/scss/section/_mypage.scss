@@ -20,8 +20,6 @@
             gap: 8px;
 
             li {
-
-
                 a {
                     display: inline-flex;
                     padding: 8px 16px;
@@ -48,9 +46,7 @@
                     box-shadow: 0 3px 6px -1px var(--boxshadow-blue), 0 2px 4px -2px var(--boxshadow-blue);
                 }
             }
-
         }
-
     }
 
     .review-category {
@@ -61,11 +57,7 @@
         ul {
             display: flex;
 
-
             li {
-
-
-
                 button {
                     position: relative;
                     overflow: visible;
@@ -91,96 +83,230 @@
                     color: var(--black);
                 }
 
-
                 .active {
                     font-weight: 600;
                     color: var(--blue);
                 }
-
             }
-
         }
-
     }
 
     .user_review {
 
         .user_review_container {
             display: flex;
+            flex-direction: column;
             margin-bottom: 10px;
             background: var(--white);
-            padding: 16px 20px;
-            gap: 16px;
             border-radius: 10px;
+            overflow: hidden;
             width: 100%;
 
-            .course_img {
-                width: 80px;
-                min-height: 60px;
-                flex-shrink: 0;
-
-                img {
-                    width: 100%;
-                    height: 100%;
-                    border-radius: 10px;
-                    object-fit: cover;
-                    
-                }
-
+            .review_body {
+                display: flex;
+                flex-direction: column;
+                padding: 16px 20px;
+                gap: 8px;
             }
 
-            .course_information {
+            .review_top {
                 display: flex;
-                justify-content: space-between;
-                width: 100%;
+                align-items: flex-start;
+                gap: 12px;
 
-                .course_text {
-                    display: flex;
-                    gap: 6px;
+                .course_img {
+                    width: 72px;
+                    height: 54px;
+                    flex-shrink: 0;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 8px;
+                        object-fit: cover;
+                    }
+                }
+
+                .course_information {
                     flex: 1;
                     min-width: 0;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 4px;
 
-                    span {
-                        height: 20px;
-                        padding: 2px 8px;
-                        border-radius: 8px;
-                        color: var(--black100);
-                        font-size: 1rem;
-                        line-height: 15px;
-                        letter-spacing: 0.117px;
-                        gap: 4px;
-                        border: 1px solid var(--black100);
-                        white-space: nowrap
+                    .course_header {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+
+                        .course_platform {
+                            height: 20px;
+                            padding: 2px 8px;
+                            border-radius: 8px;
+                            color: var(--black100);
+                            font-size: 1rem;
+                            line-height: 15px;
+                            letter-spacing: 0.117px;
+                            border: 1px solid var(--black100);
+                            white-space: nowrap;
+                            flex-shrink: 0;
+                        }
+
+                        .course_title {
+                            font-weight: 700;
+                            font-size: 1.4rem;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            min-width: 0;
+                        }
                     }
 
-                    h3 {
-                        font-weight: 700;
-                        white-space: nowrap;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
+                    .review_date {
+                        font-size: 1.1rem;
+                        color: var(--gray200);
+                        margin: 0;
                     }
-
                 }
 
                 .review_management {
                     display: flex;
-                    margin-left: auto;
-                    gap: 10px;
+                    align-items: center;
+                    gap: 8px;
                     flex-shrink: 0;
 
-                    span {
+                    .status_badge {
                         height: 20px;
                         padding: 2px 8px;
                         border-radius: 8px;
-                        color: var(--black100);
                         font-size: 1rem;
                         line-height: 15px;
                         letter-spacing: 0.117px;
-                        gap: 4px;
-                        border: 1px solid var(--black100);
+                        color: var(--black100);
+                        background-color: #F1F5F9;
+                        white-space: nowrap;
+
+                        &.approved {
+                            color: #155DFC;
+                            background-color: #EFF6FF;
+
+                        }
+
+                        &.reject {
+                            color: #E7000B;
+                            background-color: #FEF2F2;
+                        }
+                    }
+
+                    .dots_icon {
+                        font-size: 1.6rem;
+                        color: var(--gray200);
+                        cursor: pointer;
+                        flex-shrink: 0;
+                    }
+                }
+            }
+
+            .review_content {
+                font-size: 1.3rem;
+                color: var(--gray200);
+                line-height: 1.6;
+
+                p {
+                    white-space: pre-wrap;
+                    margin: 0;
+                }
+            }
+            .toggle_row {
+                display: flex;
+                justify-content: flex-end;
+
+                .toggle_btn {
+                    font-size: 1.2rem;
+                    color: var(--blue);
+                    cursor: pointer;
+                    background: none;
+                    border: none;
+                    padding: 0;
+
+                    &:hover {
+                        opacity: 0.75;
+                    }
+                }
+            }
+
+            .certificate_section {
+                border-top: 1px solid var(--white100);
+                background: var(--white200, #f8f9fa);
+                padding: 16px 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                .certificate_label {
+                    font-size: 1.2rem;
+                    font-weight: 600;
+                    color: var(--black);
+                    margin: 0;
+                }
+
+                .certificate_image {
+                    width: 120px;
+                    border-radius: 8px;
+                    transition: 0.5s;
+                    cursor: pointer;
+
+                    &:hover {
+                        transform: scale(1.1);
                     }
                 }
 
+                .certificate_file_card {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 10px 14px;
+                    background: var(--white);
+                    border: 1px solid var(--white100);
+                    border-radius: 8px;
+                    cursor: pointer;
+                    width: fit-content;
+                    transition: box-shadow 0.2s;
+
+                    &:hover {
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+                    }
+
+                    .file_icon {
+                        font-size: 1.6rem;
+                    }
+
+                    .file_name {
+                        font-size: 1.2rem;
+                        color: var(--black);
+                    }
+                }
+            }
+        }
+    }
+
+    .modal_overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+
+        .modal_content {
+            img {
+                max-width: 80vw;
+                max-height: 80vh;
+                border-radius: 10px;
             }
         }
     }
