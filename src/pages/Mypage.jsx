@@ -163,8 +163,8 @@ const Mypage = () => {
                       }
                     >
                       {openReviewId === review.reviewId
-                        ? '접기 ▴'
-                        : '자세히 보기 ▾'}
+                        ? '접기 ▲'
+                        : '자세히 보기 ▼'}
                     </button>
                   </div>
                 </div>

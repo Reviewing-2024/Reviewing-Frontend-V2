@@ -49,6 +49,7 @@ const Detail = () => {
       );
 
       setCourses(response.data.data);
+      console.log(response.data.data)
 
     } catch (error) {
 
@@ -122,6 +123,7 @@ const Detail = () => {
       );
 
       setReviews(response.data.data.content);
+      
     } catch (error) {
 
       handleApiError(error, { logout })
@@ -190,7 +192,7 @@ const Detail = () => {
               className={courses.wished ? 'active' : 'detail-wish-btn'}
               onClick={() => { handleWish(courses.id, courses.wished) }}
             >
-              {courses.wished ? <FaHeart /> : <FaRegHeart />}
+              {courses.wished ? <FaHeart /> : <FaRegHeart /> }
             </button>
           </div>
         </div>

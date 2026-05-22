@@ -98,9 +98,15 @@
             flex-direction: column;
             margin-bottom: 10px;
             background: var(--white);
+            border: 1px solid var(--white300);
             border-radius: 10px;
             overflow: hidden;
             width: 100%;
+            
+           &:hover {
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            }
+
 
             .review_body {
                 display: flex;
@@ -237,7 +243,7 @@
 
             .certificate_section {
                 border-top: 1px solid var(--white100);
-                background: var(--white200, #f8f9fa);
+                background: var(--white);
                 padding: 16px 20px;
                 display: flex;
                 flex-direction: column;
