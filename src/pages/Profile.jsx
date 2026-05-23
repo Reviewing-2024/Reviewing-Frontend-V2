@@ -28,29 +28,45 @@ const Profile = () => {
       setCurrent_category('profile')
   }, [sortCategory])
 
-  //닉네임 변경
-  const  EditNickname = async () => {
+  const EditNickname = async () => {
     if (nickname === username) return;
 
-      try {
+    try {
 
-        const res = await axios.patch(
-          `${import.meta.env.VITE_API_BASE_URL}/api/v1/members/me/nickname`,
-          {
-            nickname: nickname
-          },
-          {
-            headers: { Authorization: accessToken }
+      await axios.patch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/members/me/nickname`,
+        {
+          nickname: nickname
+        },
+        {
+          headers: {
+            Authorization: accessToken
           }
-        );
+        }
+      );
 
-      } catch (error) {
+      const tokenRes = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/access`,
+        {},
+        {
+          withCredentials: true
+        }
+      );
 
-        handleApiError(error, { logout })
+      const newAccessToken = tokenRes.headers.authorization;
 
-      }
+      localStorage.setItem("accessToken", newAccessToken);
+      localStorage.setItem("username", nickname);
 
-    };
+      setNickname(nickname);
+      window.location.reload();
+
+    } catch (error) {
+
+      handleApiError(error, { logout });
+
+    }
+  };
 
   return (
     <div id="profile" role="profile" className="profile-page">
