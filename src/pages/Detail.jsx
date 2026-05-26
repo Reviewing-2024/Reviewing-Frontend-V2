@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
 
@@ -10,6 +10,7 @@ import { useAuth } from "../context/AuthContext";
 
 import StarRatingInput from '../components/component/StarRatingInput'
 import Image from '../components/component/Image';
+import Toast from '../components/component/Toast.jsx';
 
 import { FaHeart, FaRegHeart, FaThumbsDown, FaThumbsUp, FaXmark } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa";
@@ -24,7 +25,9 @@ const Detail = () => {
   const [courses, setCourses] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [createReviewloading, setCreateReviewloading] = useState(false);
+  const [toast, setToast] = useState(null)
 
+  const toastTimer = useRef(null)
   const { logout } = useAuth();
   const params = useParams();
   const accessToken = localStorage.getItem("accessToken");
@@ -45,7 +48,11 @@ const Detail = () => {
     try {
 
       const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/courses/${params.platform}/${params.slug}`
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/courses/${params.platform}/${params.slug}`,{
+          headers: {
+            Authorization: accessToken
+          }
+        }
       );
 
       setCourses(response.data.data);
@@ -147,9 +154,14 @@ const Detail = () => {
     try {
       if (wished == false) {
         await axios.post(url, {}, config);
+        setToast('add')
       } else {
         await axios.delete(url, config);
+        setToast('remove')
       }
+
+      clearTimeout(toastTimer.current);
+      toastTimer.current = setTimeout(() => { setToast(null) }, 3000);
     } catch (error) {
 
       handleApiError(error, { logout })
@@ -157,6 +169,7 @@ const Detail = () => {
     }
 
     fetchCourses();
+    
 
   };
 
@@ -314,6 +327,7 @@ const Detail = () => {
           </div>
         </div>
       )}
+      {toast && <Toast type={toast} />}
     </section>
   )
 }
