@@ -69,7 +69,7 @@ const Profile = () => {
   };
 
   return (
-    <div id="profile" role="profile" className="profile-page">
+    <div id="profile" role="profile">
       <div className="profile-container">
         <h2 className="mypage-title">마이페이지</h2>
         <nav className="sort-category" aria-label="마이페이지 메뉴">

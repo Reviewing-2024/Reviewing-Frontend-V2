@@ -14,7 +14,7 @@
 }
 
 #main {
-    max-width: 1920px;
+    max-width: 1200px;
     min-height: 100vh;
     margin: 0 auto;
     padding: 65px 32px 32px 32px;
@@ -25,14 +25,8 @@
 }
 
 #mypage_main {
-    max-width: 1920px;
     min-height: 100vh;
-    padding: 65px 32px 32px 32px;
     background: var(--white200);
-
-    @media (max-width: 768px) {
-            padding: 65px 0 32px 0;
-        }
 }
 
 

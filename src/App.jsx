@@ -5,7 +5,7 @@ import Header from './components/section/Header';
 import Main from './components/section/MainSection'
 import Footer from './components/section/Footer';
 
-import Terms_and_conditions from './pages/policies/terms-and-conditions';
+import Terms_and_conditions from './pages/policies/TermsOfService';
 import Privacy_policy from './pages/policies/privacy-policy';
 
 import Home from './pages/home';

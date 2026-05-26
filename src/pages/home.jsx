@@ -18,7 +18,7 @@ import { handleApiError } from '../data/apierror.js'
 
 const Home = () => {
   const params = useParams();
-  const {logout} = useAuth();
+  const { logout } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const dropdownRef = useRef(null);
   const accessToken = localStorage.getItem("accessToken");
@@ -32,9 +32,9 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [scrollLoading, setScrollLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [current_category, setCurrent_category] = useState( {title: "추천순", sort: 'createdAt'});
+  const [current_category, setCurrent_category] = useState({ title: "추천순", sort: 'createdAt' });
   const [sort_category_open, setSort_category_open] = useState(false);
-  
+
   const page = Number(searchParams.get('page')) || 1;
   const ITEMS_PER_PAGE = 20;
 
@@ -42,30 +42,30 @@ const Home = () => {
   useEffect(() => {
     setScrollLoading(true);
 
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'smooth'
-      });
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
 
-      const timer = setTimeout(() => {
-        setScrollLoading(false);
-      }, 600);
+    const timer = setTimeout(() => {
+      setScrollLoading(false);
+    }, 600);
 
-      return () => clearTimeout(timer);
-    }, [page])
+    return () => clearTimeout(timer);
+  }, [page])
 
-    //플랫폼, 카테고리 선택시 스켈레톤ui 
-    useEffect(() => {
+  //플랫폼, 카테고리 선택시 스켈레톤ui 
+  useEffect(() => {
     setScrollLoading(true);
 
-      const timer = setTimeout(() => {
-        setScrollLoading(false);
-      }, 300);
+    const timer = setTimeout(() => {
+      setScrollLoading(false);
+    }, 300);
 
-      return () => clearTimeout(timer);
-    }, [platform, category, subCategory, current_category.sort])
-  
+    return () => clearTimeout(timer);
+  }, [platform, category, subCategory, current_category.sort])
+
   //플랫폼 및 카테고리 헤더 선택 영역
   const platformTitle = platform.map(p => p.englishName);
   const categoryTitle = category.map(c => c.slug);
@@ -86,7 +86,7 @@ const Home = () => {
 
   const selectedSubCategory =
     searchParams.getAll('sub')
-    .filter(sub => subCategoryTitle.includes(sub));
+      .filter(sub => subCategoryTitle.includes(sub));
 
 
 
@@ -193,31 +193,31 @@ const Home = () => {
 
 
   //강의 요청
-    const fetchCourses = async () => {
+  const fetchCourses = async () => {
 
-      try {
+    try {
 
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/courses`, {
-          params: {
-            ...(selectedPlatform && { platform: selectedPlatform }),
-            ...(selectedCategory && { category: selectedCategory }),
-            ...(selectedSubCategory.length > 0 && { subCategories: selectedSubCategory }),
-            sort: current_category.sort,
-            page: page - 1,
-            size: ITEMS_PER_PAGE,
-          },
-          headers: { Authorization: accessToken }
-        });
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/courses`, {
+        params: {
+          ...(selectedPlatform && { platform: selectedPlatform }),
+          ...(selectedCategory && { category: selectedCategory }),
+          ...(selectedSubCategory.length > 0 && { subCategories: selectedSubCategory }),
+          sort: current_category.sort,
+          page: page - 1,
+          size: ITEMS_PER_PAGE,
+        },
+        headers: { Authorization: accessToken }
+      });
 
-        setCourses(response.data.data.content);
-        setTotalItems(response.data.data.page.totalElements);
-        setTotalPages(response.data.data.page.totalPages);
-      } catch (error) {
-        
-        handleApiError(error,{logout});
-      }
-      
-    };
+      setCourses(response.data.data.content);
+      setTotalItems(response.data.data.page.totalElements);
+      setTotalPages(response.data.data.page.totalPages);
+    } catch (error) {
+
+      handleApiError(error, { logout });
+    }
+
+  };
 
   useEffect(() => {
 
@@ -228,23 +228,23 @@ const Home = () => {
 
   //서브 카테고리 다중선택 토글
   const handleSubToggle = (slug) => {
-  const prev = searchParams.getAll("sub");
+    const prev = searchParams.getAll("sub");
 
-  let next;
+    let next;
 
-  if (prev.includes(slug)) {
-    next = prev.filter(s => s !== slug);
-  } else {
-    next = [...prev, slug];
-  }
+    if (prev.includes(slug)) {
+      next = prev.filter(s => s !== slug);
+    } else {
+      next = [...prev, slug];
+    }
 
-  const params = new URLSearchParams(searchParams);
-  params.delete("sub");
+    const params = new URLSearchParams(searchParams);
+    params.delete("sub");
 
-  next.forEach(s => params.append("sub", s));
+    next.forEach(s => params.append("sub", s));
 
-  setSearchParams(params);
-};
+    setSearchParams(params);
+  };
 
   if (error) return <div>에러가 발생했습니다</div>;
 
@@ -254,7 +254,7 @@ const Home = () => {
       <div className='home__banner'>
         <img className='banner' src="/img/banner.png" alt="banner" />
       </div>
-        <SearchBar />
+      <SearchBar />
       <nav className='home__platform'>
         <ul className='platform_container'>
           <li>
@@ -332,58 +332,59 @@ const Home = () => {
           </ul>
         )}
       </nav>
-      <div className='home__item'>
-        <div className="sort-category-dropdown" ref={dropdownRef}>
-          <button
-            className="dropdown-button"
-            onClick={() => setSort_category_open(!sort_category_open)}
-          >
-            {current_category.title}
-            <RiArrowDropDownLine />
-          </button>
+      <div className='home_item_section'>
+        <div className='home__item'>
+          <div className="sort-category-dropdown" ref={dropdownRef}>
+            <button
+              className="dropdown-button"
+              onClick={() => setSort_category_open(!sort_category_open)}
+            >
+              {current_category.title}
+              <RiArrowDropDownLine />
+            </button>
 
-          {sort_category_open && (
-            <ul className="dropdown-menu">
-              {main_Sort_Category.map((sort_category) => (
-                <li
-                  key={sort_category.sort}
-                  onClick={() => {
-                    setCurrent_category(sort_category);
-                    setSort_category_open(false);
-                  }}
-                  className={`home-dropdown__item ${
-                    current_category.sort === sort_category.sort ? "active" : ""
-                  }`}
-                >
-                  {sort_category.title}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-        {scrollLoading
-          ? 
-          <SkeletonList /> 
-          : 
-          <div className='item__card'>
-            {courses.map(course => (
-              <CourseCard course={course} key={course.id} onAction={fetchCourses} />
-                
-            ))}
+            {sort_category_open && (
+              <ul className="dropdown-menu">
+                {main_Sort_Category.map((sort_category) => (
+                  <li
+                    key={sort_category.sort}
+                    onClick={() => {
+                      setCurrent_category(sort_category);
+                      setSort_category_open(false);
+                    }}
+                    className={`home-dropdown__item ${current_category.sort === sort_category.sort ? "active" : ""
+                      }`}
+                  >
+                    {sort_category.title}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
-        }
+          {scrollLoading
+            ?
+            <SkeletonList />
+            :
+            <div className='item__card'>
+              {courses.map(course => (
+                <CourseCard course={course} key={course.id} onAction={fetchCourses} />
 
-        <Pagination
-          currentPage={page}
-          totalPages={totalPages}
-          onPageChange={(p) => {
-            const newParams = new URLSearchParams(searchParams);
+              ))}
+            </div>
+          }
 
-            newParams.set("page", p);
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={(p) => {
+              const newParams = new URLSearchParams(searchParams);
 
-            setSearchParams(newParams);
-          }}
-        />
+              newParams.set("page", p);
+
+              setSearchParams(newParams);
+            }}
+          />
+        </div>
       </div>
     </div>
   )
