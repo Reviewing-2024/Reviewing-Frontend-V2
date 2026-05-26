@@ -32,7 +32,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [scrollLoading, setScrollLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [current_category, setCurrent_category] = useState({ title: "추천순", sort: 'createdAt' });
+  const [current_category, setCurrent_category] = useState({ title: "기본순", sort: 'createdAt' });
   const [sort_category_open, setSort_category_open] = useState(false);
 
   const page = Number(searchParams.get('page')) || 1;
