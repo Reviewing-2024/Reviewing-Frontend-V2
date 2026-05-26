@@ -16,7 +16,7 @@ export const Sort_Category = [
 
 export const main_Sort_Category = [
     {
-        title: "추천순",
+        title: "기본순",
         sort: 'createdAt'
     },
     {
