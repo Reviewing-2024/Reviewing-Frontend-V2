@@ -9,7 +9,7 @@ const Pagination = ({
   const maxVisible = 5;
 
   let startPage = Math.floor(
-    (currentPage) / maxVisible) * maxVisible + 1;
+    (currentPage - 1) / maxVisible) * maxVisible + 1;
 
   let endPage = startPage + maxVisible - 1;
 
@@ -33,8 +33,8 @@ const Pagination = ({
       </button>
 
       <button
-        onClick={() => onPageChange(startPage - 5)}
-        disabled={currentPage === 1}
+        onClick={() => onPageChange(Math.max(1, startPage - 1))}
+        disabled={startPage === 1}
       >
         ◀
       </button>
@@ -54,8 +54,8 @@ const Pagination = ({
       ))}
 
       <button
-        onClick={() => onPageChange(endPage + 1)}
-        disabled={currentPage === totalPages}
+        onClick={() => onPageChange(Math.min(totalPages, endPage + 1))}
+        disabled={endPage === totalPages}
       >
         ▶
       </button>
