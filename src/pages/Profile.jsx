@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
 import { mypage_Sort_Category } from '../data/mypagedata.js'
@@ -13,6 +13,7 @@ const Profile = () => {
   const { sortCategory } = useParams()
   const [current_category, setCurrent_category] = useState('profile')
   const { logout } = useAuth();
+  const navigate = useNavigate();
 
   const accessToken = localStorage.getItem("accessToken");
   const username = localStorage.getItem('username');
@@ -28,6 +29,12 @@ const Profile = () => {
       setCurrent_category('profile')
   }, [sortCategory])
 
+  //access토큰 없으면 메인페이지로
+  if(!accessToken) {
+    navigate('/');
+  }
+
+  //닉네임 변경
   const EditNickname = async () => {
     if (nickname === username) return;
 

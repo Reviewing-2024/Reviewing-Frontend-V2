@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { mypage_Sort_Category, mypage_Review_Category } from '../data/mypagedata'
@@ -12,6 +12,7 @@ import '../asserts/scss/section/_mypage.scss'
 const Mypage = () => {
   const accessToken = localStorage.getItem("accessToken");
   const { sortCategory } = useParams();
+  const navigate = useNavigate();
 
   const [current_category, setCurrent_category] = useState('review');
   const [review_current_category, setReview_current_category] = useState('전체 리뷰');
@@ -30,6 +31,11 @@ const Mypage = () => {
       setCurrent_category('review');
     }
   }, [sortCategory]);
+
+  //access토큰 없으면 메인페이지로
+  if(!accessToken) {
+    navigate('/');
+  }
 
   //시간 한국시간 기준으로
   const formatDate = (dateString) => {

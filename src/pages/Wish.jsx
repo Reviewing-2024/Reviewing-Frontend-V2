@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import CourseCard from '../components/component/CourseCard';
@@ -18,16 +18,18 @@ import { handleApiError } from '../data/apierror.js'
 const Wish = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { sortCategory } = useParams();
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
   const [courses, setCourses] = useState([]);
   const [courseCount, setCourseCount] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [current_category, setCurrent_category] = useState('wish');
 
-  const { logout } = useAuth();
   const accessToken = localStorage.getItem("accessToken");
   const page = Number(searchParams.get('page')) || 1;
   const ITEMS_PER_PAGE = 20;
-
+  
   useEffect(() => {
     if (sortCategory) {
       setCurrent_category(sortCategory);
@@ -35,6 +37,11 @@ const Wish = () => {
       setCurrent_category('wish');
     }
   }, [sortCategory]);
+
+  //access토큰 없으면 메인페이지로
+  if(!accessToken) {
+    navigate('/');
+  }
 
   //강의 조회
   const fetchCourses = async () => {
