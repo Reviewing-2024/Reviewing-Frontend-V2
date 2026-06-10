@@ -94,6 +94,12 @@
                     position: relative;
                     border: 1px solid var(--blue100);
 
+                    img {
+                        width: 120px;
+                        height: 120px;
+                        border-radius: 999px;
+                    }
+
                     .avatar__text {
                         font-size: 40px;
                         font-weight: 800;

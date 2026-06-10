@@ -28,10 +28,9 @@ const CourseCard = ({ course, onAction }) => {
         try {
             if (wished == false) {
                 await axios.post(url, {}, config);
-                setToast('add')
+                setToast(true)
             } else {
                 await axios.delete(url, config);
-                setToast('remove')
             }
 
             clearTimeout(toastTimer.current);
@@ -86,7 +85,7 @@ const CourseCard = ({ course, onAction }) => {
                     </div>
                 </div>
             </Link>
-            {toast && <Toast type={toast} />}
+            {toast && <Toast />}
         </div>
     )
 }

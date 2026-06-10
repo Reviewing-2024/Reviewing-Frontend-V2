@@ -81,6 +81,12 @@
                     place-items: center;
                     border: 1px solid var(--blue100);
 
+                    img{
+                        width: 25px;
+                        height: 25px;
+                        border-radius: 999px;
+                    }
+
                     .avatar__text {
                         font-size: 1.1rem;
                         font-weight: 800;

@@ -65,7 +65,7 @@ const Header = () => {
                 aria-expanded={userMenuOpen}
               >
                 <div className="avatar" aria-hidden="true">
-                  <img src={`${import.meta.env.VITE_API_BASE_URL}${profileImage}`} alt="profileImage" />
+                  <img src={`${import.meta.env.VITE_API_BASE_URL}${profileImage}`} />
                 </div>
 
                 <span className="userbtn-name">{username}</span>

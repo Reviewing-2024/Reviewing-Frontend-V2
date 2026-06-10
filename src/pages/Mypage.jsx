@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { mypage_Sort_Category, mypage_Review_Category } from '../data/mypagedata'
 import { PiDotsThreeOutlineFill } from "react-icons/pi";
-
 import ImgModal from '../components/component/ImgModal';
-
 import '../asserts/scss/section/_mypage.scss'
 
 const Mypage = () => {
@@ -16,67 +14,82 @@ const Mypage = () => {
 
   const [current_category, setCurrent_category] = useState('review');
   const [review_current_category, setReview_current_category] = useState('전체 리뷰');
-
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  const [Certificate_sectionOpen, setCertificate_sectionOpen] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(0);
   const [isImgModalOpen, setIsImgModalOpen] = useState(false);
   const [openReviewId, setOpenReviewId] = useState(null);
 
   useEffect(() => {
-    if (sortCategory) {
-      setCurrent_category(sortCategory);
-    } else {
-      setCurrent_category('review');
-    }
+    setCurrent_category(sortCategory ?? 'review');
   }, [sortCategory]);
 
-  //access토큰 없으면 메인페이지로
-  if(!accessToken) {
-    navigate('/');
-  }
+  if (!accessToken) navigate('/');
 
-  //시간 한국시간 기준으로
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("ko-KR");
   };
 
-  const fetchReviews = async (state = '') => {
+  const getState = (category) => {
+    if (category === '검토중') return 'PENDING';
+    if (category === '승인됨') return 'APPROVED';
+    if (category === '거절됨') return 'REJECTED';
+    return '';
+  }
+
+  const fetchReviews = async (pageNum = 0) => {
+    if (loading) return;
+    if (pageNum > 0 && !hasMore) return;
     setLoading(true);
+
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_API_BASE_URL}/api/v1/members/me/reviews`,
         {
           params: {
-            state: state,
-            page: 0,
-            size: 10
+            state: getState(review_current_category),
+            page: pageNum,
+            size: 3
           },
-          headers: {
-            Authorization: accessToken
-          }
+          headers: { Authorization: accessToken }
         }
       );
 
-      setReviews(response.data.data.content);
+      const data = response.data.data;
+
+      setReviews(prev =>
+        pageNum === 0 ? data.content : [...prev, ...data.content]
+      );
+      setHasMore(data.content.length > 0 && !data.last);
+      setPage(pageNum);
 
     } catch (error) {
-
     } finally {
       setLoading(false);
     }
   };
 
+  // 카테고리 바뀌면 초기화
   useEffect(() => {
-    let state = '';
-
-    if (review_current_category === '검토중') state = 'PENDING';
-    if (review_current_category === '승인됨') state = 'APPROVED';
-    if (review_current_category === '거절됨') state = 'REJECTED';
-
-    fetchReviews(state);
+    setHasMore(true);
+    setPage(0);
+    fetchReviews(0);
   }, [review_current_category]);
+
+  // 스크롤 감지
+  const handleScroll = useCallback(() => {
+    if (loading || !hasMore) return;
+    const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
+    if (scrollHeight - scrollTop - clientHeight < 100) {
+      fetchReviews(page + 1);
+    }
+  }, [loading, hasMore, page]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
 
   return (
     <div id='mypage' role='mypage'>
@@ -119,38 +132,29 @@ const Mypage = () => {
         </div>
 
         <div className='user_review'>
-
-          {loading && <p>로딩중...</p>}
-
-          {!loading && reviews.map((review) => {
+          {reviews.map((review) => {
             const status =
               review.state === 'PENDING' ? '검토중'
                 : review.state === 'APPROVED' ? '승인됨'
                   : '거절됨';
 
-
             return (
               <div className='user_review_container' key={review.reviewId}>
-
                 <div className="review_body">
                   <div className="review_top">
                     <div className='course_img'>
                       <img src={review.courseThumbnailImage} alt={review.courseTitle} />
                     </div>
-
                     <div className='course_information'>
                       <div className="course_header">
                         <span className="course_platform">{review.coursePlatform}</span>
                         <h3 className="course_title">{review.courseTitle}</h3>
                       </div>
-                      <p className="review_date">
-                        {formatDate(review.createdAt)}
-                      </p>
+                      <p className="review_date">{formatDate(review.createdAt)}</p>
                       <div className="review_content">
                         <p>{review.content}</p>
                       </div>
                     </div>
-
                     <div className='review_management'>
                       <span className={`status_badge ${status === '거절됨' ? 'reject' : status === '검토중' ? 'pending' : 'approved'}`}>
                         {status}
@@ -158,7 +162,6 @@ const Mypage = () => {
                       <PiDotsThreeOutlineFill className="dots_icon" />
                     </div>
                   </div>
-
                   <div className="toggle_row">
                     <button
                       className="toggle_btn"
@@ -168,16 +171,14 @@ const Mypage = () => {
                         )
                       }
                     >
-                      {openReviewId === review.reviewId
-                        ? '접기 ▲'
-                        : '자세히 보기 ▼'}
+                      {openReviewId === review.reviewId ? '접기 ▲' : '자세히 보기 ▼'}
                     </button>
                   </div>
                 </div>
+
                 {openReviewId === review.reviewId && (
                   <div className="certificate_section">
                     <p className="certificate_label">제출한 증빙 자료</p>
-
                     <div className="certificate_image">
                       <img
                         src={`${import.meta.env.VITE_API_BASE_URL}${review.certification}`}
@@ -186,19 +187,18 @@ const Mypage = () => {
                       />
                     </div>
                     {isImgModalOpen && (
-                  <ImgModal 
-                    imgsrc={`${import.meta.env.VITE_API_BASE_URL}${review.certification}`}
-                    onClose={() => setIsImgModalOpen(false)}
-                  />
-                )}
+                      <ImgModal
+                        imgsrc={`${import.meta.env.VITE_API_BASE_URL}${review.certification}`}
+                        onClose={() => setIsImgModalOpen(false)}
+                      />
+                    )}
                   </div>
-                  
                 )}
-        
               </div>
             );
           })}
 
+          {loading && <p>로딩중...</p>}
         </div>
       </div>
     </div>

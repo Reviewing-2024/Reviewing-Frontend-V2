@@ -27,9 +27,9 @@ const Detail = () => {
   const [createReviewloading, setCreateReviewloading] = useState(false);
   const [toast, setToast] = useState(null)
 
-  const toastTimer = useRef(null)
   const { logout } = useAuth();
   const params = useParams();
+  const toastTimer = useRef(null)
   const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
@@ -154,14 +154,14 @@ const Detail = () => {
     try {
       if (wished == false) {
         await axios.post(url, {}, config);
-        setToast('add')
+        setToast(true)
       } else {
         await axios.delete(url, config);
-        setToast('remove')
       }
 
       clearTimeout(toastTimer.current);
       toastTimer.current = setTimeout(() => { setToast(null) }, 3000);
+      
     } catch (error) {
 
       handleApiError(error, { logout })
