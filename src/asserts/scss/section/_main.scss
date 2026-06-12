@@ -167,7 +167,8 @@
             li {
 
 
-                button,a {
+                button,
+                a {
                     display: flex;
                     min-width: 40px;
                     height: 38px;
@@ -183,7 +184,8 @@
                     transition: 0.4s;
                 }
 
-                button:hover,a:hover {
+                button:hover,
+                a:hover {
                     border: 1px solid var(--black100);
                 }
 
@@ -197,11 +199,12 @@
 
     }
 
-    .home_item_section {
+    .home_item_section,
+    .search_item_section {
         background-color: var(--white200);
         width: 100vw;
         min-height: 50vh;
-        
+
 
         .home__item,
         .search__item {
@@ -252,8 +255,33 @@
                 font-weight: 700;
             }
 
-            .home-dropdown__item:hover, .home-dropdown__item.active {
+            .home-dropdown__item:hover,
+            .home-dropdown__item.active {
                 background: rgba(0, 0, 0, 0.05);
+            }
+
+            .empty-result {
+                width: 100%;
+                min-height: 200px;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                text-align: center;
+
+                h3 {
+                    font-size: 2.4rem;
+                    font-weight: 700;
+                    margin-bottom: 12px;
+                    color: #222;
+                }
+
+                p {
+                    font-size: 1.5rem;
+                    color: #888;
+                }
             }
 
         }
@@ -344,7 +372,7 @@
                 }
 
                 .active {
-                    
+
                     svg {
                         color: var(--blue);
                     }
@@ -352,9 +380,9 @@
 
                 .course-wishes:active,
                 .active:active {
-                transform: scale(0.85);
+                    transform: scale(0.85);
                 }
-                
+
 
 
             }
@@ -407,10 +435,11 @@
 
 
                     .rating-container {
-                        
+
                         span {
                             gap: 10px;
                         }
+
                         .rating {
                             display: inline-flex;
                             align-items: center;
@@ -437,7 +466,7 @@
                                 letter-spacing: -0.15px;
                             }
 
-                           
+
                         }
                     }
 
@@ -448,7 +477,7 @@
                     }
 
                     .wish {
-                       span {
+                        span {
                             display: inline-flex;
                             align-items: center;
                             gap: 5px;

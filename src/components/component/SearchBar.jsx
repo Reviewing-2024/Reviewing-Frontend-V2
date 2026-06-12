@@ -23,6 +23,17 @@ const Search = ( ) => {
     navigate(`/search?s=${searchKeyword}`);
   };
 
+  //강의 추천 모달 오픈
+  const handelRecommendModal = () => {
+    if (!searchKeyword) {
+      alert('검색어를 입력해주세요.')
+      return;
+    }
+    else {
+      setRecommend_modal(true)
+    }
+  }
+
 
   return (
     <div id='search'>
@@ -44,7 +55,7 @@ const Search = ( ) => {
           <button className='search-btn' onClick={handleSearch}><IoIosSearch /></button>
         </div>
       </div>
-      <button className='recommand-btn' onClick={() => setRecommend_modal(true)} >
+      <button className='recommand-btn' onClick={handelRecommendModal} >
         ✨ 강의 추천받기
       </button>
       {recommend_modal && (

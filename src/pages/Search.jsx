@@ -23,7 +23,7 @@ const Search = () => {
     const [error, setError] = useState(null);
     const [recommend_modal, setRecommend_modal] = useState(false);
 
-    const {logout} = useAuth();
+    const { logout } = useAuth();
     const page = Number(searchParams.get('page')) || 1;
     const ITEMS_PER_PAGE = 20;
 
@@ -48,6 +48,7 @@ const Search = () => {
     //강의 조회
     const fetchCourse = async () => {
         try {
+            setScrollLoading(true);
             setError(null);
 
             const res = await axios.get(
@@ -65,8 +66,10 @@ const Search = () => {
 
         } catch (error) {
 
-            handleApiError(error,{logout});
-            
+            handleApiError(error, { logout });
+
+        } finally {
+            setScrollLoading(false);
         }
 
     };
@@ -76,6 +79,10 @@ const Search = () => {
     }, [search_keyword, page]);
 
 
+    if (setCourse.length === 0) {
+        <div className='search__item'>없다</div>
+    }
+
 
     return (
 
@@ -83,30 +90,38 @@ const Search = () => {
             <div className='home__banner'>
                 <img className='banner' src="/img/banner.png" alt="banner" />
             </div>
-                <SearchBar />
-            <div className="search__item">
-                {scrollLoading
-                    ?
-                    <SkeletonList />
-                    :
-                    <div className='item__card'>
-                        {course.map(course => (
-                            <CourseCard course={course} key={course.id} />
+            <SearchBar />
+            <div className='search_item_section'>
+                <div className="search__item">
+                    {scrollLoading ? (
+                        <SkeletonList />
+                    ) : course.length === 0 ? (
+                        <div className='empty-result'>
+                           <h3>[{search_keyword}]에 대한 강의를 찾지 못했어요.</h3>
+                            <p>다른 검색어로 다시 시도해 보세요.</p>
+                        </div>
+                    ) : (
+                        <div className='item__card'>
+                            {course.map(course => (
+                                <CourseCard
+                                    course={course}
+                                    key={course.id}
+                                />
+                            ))}
+                        </div>
+                    )}
+                    <Pagination
+                        currentPage={page}
+                        totalPages={totalPages - 1}
+                        onPageChange={(p) => {
+                            const newParams = new URLSearchParams(searchParams);
 
-                        ))}
-                    </div>
-                }
-                <Pagination
-                    currentPage={page}
-                    totalPages={totalPages - 1}
-                    onPageChange={(p) => {
-                        const newParams = new URLSearchParams(searchParams);
+                            newParams.set("page", p);
 
-                        newParams.set("page", p);
-
-                        setSearchParams(newParams);
-                    }}
-                />
+                            setSearchParams(newParams);
+                        }}
+                    />
+                </div>
             </div>
 
         </section>
