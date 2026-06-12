@@ -56,7 +56,7 @@ const Search = () => {
                 {
                     params: {
                         keyword: search_keyword,
-                        page: page,
+                        page: page - 1,
                         size: ITEMS_PER_PAGE
                     }
                 }
@@ -77,11 +77,6 @@ const Search = () => {
     useEffect(() => {
         fetchCourse();
     }, [search_keyword, page]);
-
-
-    if (setCourse.length === 0) {
-        <div className='search__item'>없다</div>
-    }
 
 
     return (
@@ -110,17 +105,20 @@ const Search = () => {
                             ))}
                         </div>
                     )}
-                    <Pagination
-                        currentPage={page}
-                        totalPages={totalPages - 1}
-                        onPageChange={(p) => {
-                            const newParams = new URLSearchParams(searchParams);
 
-                            newParams.set("page", p);
+                    {totalPages > 0 && (
+                        <Pagination
+                            currentPage={page}
+                            totalPages={totalPages}
+                            onPageChange={(p) => {
+                                const newParams = new URLSearchParams(searchParams);
 
-                            setSearchParams(newParams);
-                        }}
-                    />
+                                newParams.set("page", p);
+
+                                setSearchParams(newParams);
+                            }}
+                        />
+                    )}
                 </div>
             </div>
 

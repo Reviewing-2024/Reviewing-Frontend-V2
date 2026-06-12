@@ -373,17 +373,19 @@ const Home = () => {
             </div>
           }
 
-          <Pagination
-            currentPage={page}
-            totalPages={totalPages}
-            onPageChange={(p) => {
-              const newParams = new URLSearchParams(searchParams);
+          {totalPages > 0 && (
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              onPageChange={(p) => {
+                const newParams = new URLSearchParams(searchParams);
 
-              newParams.set("page", p);
+                newParams.set("page", p);
 
-              setSearchParams(newParams);
-            }}
-          />
+                setSearchParams(newParams);
+              }}
+            />
+          )}
         </div>
       </div>
     </div>
