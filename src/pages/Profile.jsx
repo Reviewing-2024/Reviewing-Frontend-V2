@@ -126,11 +126,6 @@ const Profile = () => {
   };
 
 
-  console.log(profileImage);
-console.log(
-  `${import.meta.env.VITE_API_BASE_URL}${profileImage}`
-);
-
   return (
     <div id="profile" role="profile">
       <div className="profile-container">
@@ -191,14 +186,6 @@ console.log(
                   }
                 }}
               />
-
-              <button
-                type="button"
-                className="btn btn--ghost"
-                onClick={() => fileInputRef.current?.click()}
-              >
-                사진 변경
-              </button>
 
             </div>
 
