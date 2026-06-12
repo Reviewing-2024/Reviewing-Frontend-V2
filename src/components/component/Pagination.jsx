@@ -62,7 +62,7 @@ const Pagination = ({
 
       <button
         onClick={() => onPageChange(totalPages)}
-        disabled={currentPage === totalPages}
+        disabled={totalPages === 0 || currentPage === totalPages}
       >
         ⏭
       </button>
