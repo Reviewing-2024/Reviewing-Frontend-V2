@@ -12,7 +12,7 @@ import StarRatingInput from '../components/component/StarRatingInput'
 import Image from '../components/component/Image';
 import Toast from '../components/component/Toast.jsx';
 
-import { FaHeart, FaRegHeart, FaThumbsDown, FaThumbsUp, FaXmark } from "react-icons/fa6";
+import { FaHeart, FaRegHeart, FaXmark } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa";
 import { FiUpload, FiExternalLink } from "react-icons/fi";
 import ReviewCard from '../components/component/ReviewCard';
@@ -32,6 +32,9 @@ const Detail = () => {
   const toastTimer = useRef(null)
   const accessToken = localStorage.getItem("accessToken");
 
+  // 유효성 검사
+  const isReviewValid = newReview.rating > 0 && !!newReview.contents?.trim() && !!newReview.file
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [])
@@ -44,36 +47,24 @@ const Detail = () => {
 
   //강의 조회
   const fetchCourses = async () => {
-
     try {
-
       const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/courses/${params.platform}/${params.slug}`,{
-          headers: {
-            Authorization: accessToken
-          }
-        }
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/courses/${params.platform}/${params.slug}`,
+        { headers: { Authorization: accessToken } }
       );
-
       setCourses(response.data.data);
-
     } catch (error) {
-
       handleApiError(error, { logout })
-
     }
-
   };
 
   useEffect(() => {
-
     fetchCourses();
-
   }, []);
+
 
   // 리뷰 작성 폼 함수
   const handleCreateReview = async () => {
-
     setCreateReviewloading(true);
 
     const formData = new FormData();
@@ -107,11 +98,10 @@ const Detail = () => {
       setNewReview({});
       alert(`소중한 리뷰를 작성해 주셔서 감사합니다! ☺️ \n작성하신 리뷰는 관리자가 신속히 검토하겠습니다! \n진행 상황은 마이페이지에서 확인하실 수 있습니다.`);
     } catch (error) {
-
       handleApiError(error, { logout })
-      
     }
   };
+
 
   //유저 리뷰 조회
   const fetchReview = async () => {
@@ -119,37 +109,26 @@ const Detail = () => {
       const response = await axios.get(
         `${import.meta.env.VITE_API_BASE_URL}/api/v1/reviews/${courses.id}`,
         {
-          params: {
-            sort: current_category,
-            page: 0,
-            size: 10,
-          },
+          params: { sort: current_category, page: 0, size: 10 },
           headers: { Authorization: accessToken }
         }
       );
-
       setReviews(response.data.data.content);
-      
     } catch (error) {
-
       handleApiError(error, { logout })
-
     }
   };
 
   useEffect(() => {
     if (!courses?.id) return;
     fetchReview();
-  }, [courses?.id, current_category, ]);
+  }, [courses?.id, current_category]);
+
 
   //wish 추가 및 삭제
   const handleWish = async (id, wished) => {
-
     const url = `${import.meta.env.VITE_API_BASE_URL}/api/v1/courses/${id}/wish`;
-
-    const config = {
-      headers: { Authorization: accessToken }
-    };
+    const config = { headers: { Authorization: accessToken } };
 
     try {
       if (wished == false) {
@@ -161,16 +140,11 @@ const Detail = () => {
 
       clearTimeout(toastTimer.current);
       toastTimer.current = setTimeout(() => { setToast(null) }, 3000);
-      
     } catch (error) {
-
       handleApiError(error, { logout })
-
     }
 
     fetchCourses();
-    
-
   };
 
   return (
@@ -186,35 +160,31 @@ const Detail = () => {
             <p>{courses.teacher}</p>
             <div className="information-stars">
               {[...Array(5)].map((_, index) => (
-                <FaStar
-                  key={index}
-                />
+                <FaStar key={index} />
               ))}
-              <div className='information-rating'> {courses.rating}</div>
+              <div className='information-rating'>{courses.rating}</div>
             </div>
           </div>
           <div className='information-container-btn'>
             <button
               className='detail-btn'
-              onClick={() => { handleOpenNewTab(courses.url); }}
+              onClick={() => handleOpenNewTab(courses.url)}
             >
               강의 페이지로 이동 <FiExternalLink />
             </button>
             <button
               className={courses.wished ? 'active' : 'detail-wish-btn'}
-              onClick={() => { handleWish(courses.id, courses.wished) }}
+              onClick={() => handleWish(courses.id, courses.wished)}
             >
-              {courses.wished ? <FaHeart /> : <FaRegHeart /> }
+              {courses.wished ? <FaHeart /> : <FaRegHeart />}
             </button>
           </div>
         </div>
       </div>
+
       <div className='review-container'>
         <div className='review-header'>
-
           <h2>수강생 리뷰</h2>
-
-
           <div className='sort-category'>
             <ul>
               {Sort_Category.map((sort_category, key) => (
@@ -244,6 +214,7 @@ const Detail = () => {
           ))}
         </div>
       </div>
+
       {showReviewModal && (
         <div className="review-modal" onClick={() => setShowReviewModal(false)}>
           <div className="review-modal-content" onClick={(e) => e.stopPropagation()}>
@@ -277,7 +248,7 @@ const Detail = () => {
                   onChange={(e) =>
                     setNewReview((prev) => ({ ...prev, contents: e.target.value }))
                   }
-                  placeholder={`강의의 장점, 단점, 추천 대상 등 자유롭게 작성해주세요.`}
+                  placeholder="강의의 장점, 단점, 추천 대상 등 자유롭게 작성해주세요."
                 />
               </div>
 
@@ -320,14 +291,19 @@ const Detail = () => {
               >
                 취소
               </button>
-              <button className="btn-submit" onClick={handleCreateReview} type="button">
+              <button
+                className="btn-submit"
+                onClick={handleCreateReview}
+                type="button"
+                disabled={!isReviewValid}
+              >
                 등록하기
               </button>
             </div>
           </div>
         </div>
       )}
-      {toast && <Toast type={toast} />}
+      {toast && <Toast />}
     </section>
   )
 }

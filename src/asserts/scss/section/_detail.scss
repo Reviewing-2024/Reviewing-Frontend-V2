@@ -453,12 +453,17 @@
         }
 
         .btn-submit {
-            background: #78aefb;
+            background: #0066FF;
             border: 0;
             color: var(--white);
 
             &:hover {
                 filter: brightness(0.97);
+            }
+
+             &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
             }
         }
     }

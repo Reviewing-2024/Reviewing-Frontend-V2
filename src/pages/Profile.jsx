@@ -33,76 +33,45 @@ const Profile = () => {
       setCurrent_category('profile');
   }, [sortCategory]);
 
-
   useEffect(() => {
-    if (!accessToken) {
-      navigate('/');
-    }
+    if (!accessToken) navigate('/');
   }, [accessToken, navigate]);
 
-  // 닉네임 변경
-  const updateNickname = async () => {
-    if (nickname === username) return;
-
-    await axios.patch(
-      `${import.meta.env.VITE_API_BASE_URL}/api/v1/members/me/nickname`,
-      {
-        nickname
-      },
-      {
-        headers: {
-          Authorization: accessToken
-        }
-      }
-    );
-  };
-
-  // 프로필 이미지 변경
-  const updateProfileImage = async () => {
-    if (!selectedFile) return;
-
-    const formData = new FormData();
-
-    formData.append("file", selectedFile);
-
-    await axios.patch(
-      `${import.meta.env.VITE_API_BASE_URL}/api/v1/members/me/profile-image`,
-      formData,
-      {
-        headers: {
-          Authorization: accessToken
-        }
-      }
-    );
-  };
-
-  // 저장 버튼
   const handleSave = async () => {
+    const nicknameChanged = nickname !== username;
+    const imageChanged = !!selectedFile;
+
+    // 둘 다 변경 없으면 요청 안 보냄
+    if (!nicknameChanged && !imageChanged) return;
+
     try {
+      const formData = new FormData();
 
-      const requests = [];
-
-      if (nickname !== username) {
-        requests.push(updateNickname());
+      // 변경된 것만 담아서 요청
+      if (nicknameChanged) {
+        formData.append('nickname', nickname);
       }
 
-      if (selectedFile) {
-        requests.push(updateProfileImage());
+      if (imageChanged) {
+        formData.append('file', selectedFile);
       }
 
-      if (requests.length === 0) {
-        return;
-      }
-
-      await Promise.all(requests);
+      await axios.patch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/members/me/profile`,
+        formData,
+        {
+          headers: {
+            Authorization: accessToken,
+            'Content-Type': 'multipart/form-data',
+          }
+        }
+      );
 
       // 새 AccessToken 발급
       const tokenRes = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/access`,
         {},
-        {
-          withCredentials: true
-        }
+        { withCredentials: true }
       );
 
       const newAccessToken = tokenRes.headers.authorization;
@@ -111,20 +80,16 @@ const Profile = () => {
         localStorage.setItem("accessToken", newAccessToken);
       }
 
-      localStorage.setItem("accessToken", newAccessToken);
-      localStorage.setItem("username", nickname);
-      localStorage.setItem("profileImage", payload.profileImage)
+      if (nicknameChanged) {
+        localStorage.setItem("username", nickname);
+      }
 
       window.location.reload();
 
-
     } catch (error) {
-
       handleApiError(error, { logout });
-
     }
   };
-
 
   return (
     <div id="profile" role="profile">
@@ -151,9 +116,7 @@ const Profile = () => {
           <div className="profile-card__inner">
 
             <div className="profile-side">
-
               <div className="avatar">
-
                 <img
                   src={
                     selectedFile
@@ -161,7 +124,6 @@ const Profile = () => {
                       : `${import.meta.env.VITE_API_BASE_URL}${profileImage}`
                   }
                 />
-
                 <button
                   type="button"
                   className="avatar__camera"
@@ -170,7 +132,6 @@ const Profile = () => {
                 >
                   <CiCamera />
                 </button>
-
               </div>
 
               <input
@@ -180,13 +141,9 @@ const Profile = () => {
                 style={{ display: 'none' }}
                 onChange={(e) => {
                   const file = e.target.files?.[0];
-
-                  if (file) {
-                    setSelectedFile(file);
-                  }
+                  if (file) setSelectedFile(file);
                 }}
               />
-
             </div>
 
             <form
@@ -196,15 +153,10 @@ const Profile = () => {
                 handleSave();
               }}
             >
-
               <div className="field">
-                <label
-                  className="field__label"
-                  htmlFor="nickname"
-                >
+                <label className="field__label" htmlFor="nickname">
                   닉네임
                 </label>
-
                 <input
                   id="nickname"
                   className="field__input"
@@ -216,14 +168,10 @@ const Profile = () => {
               </div>
 
               <div className="form-actions">
-                <button
-                  type="submit"
-                  className="btn btn--primary"
-                >
+                <button type="submit" className="btn btn--primary">
                   저장하기
                 </button>
               </div>
-
             </form>
 
           </div>
