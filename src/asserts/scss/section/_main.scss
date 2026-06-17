@@ -103,6 +103,40 @@
         .recommand-btn:hover {
             transform: scale(1.03);
         }
+
+        .search-guide {
+            display: flex;
+            align-items: flex-start;
+            width: 90%;
+            gap: 6px;
+            background-color: #FFF5F5;
+            border: 1.5px solid #F5A0A0;
+            border-radius: 8px;
+            padding: 10px;
+
+            svg {
+                color: #E53E3E;
+                font-size: 16px;
+                margin-top: 1px;
+                flex-shrink: 0;
+            }
+
+            div {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+
+                p {
+                    margin: 0;
+
+                    &:first-child {
+                        color: #C53030;
+                        font-size: 1.5rem;
+                        font-weight: 700;
+                    }
+                }
+            }
+        }
     }
 
 
@@ -211,6 +245,7 @@
             display: flex;
             flex-direction: column;
             max-width: 1200px;
+            min-height: 50vw;
             padding: 32px;
             margin: 0 auto;
 

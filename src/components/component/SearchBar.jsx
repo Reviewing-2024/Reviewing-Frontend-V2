@@ -4,20 +4,22 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import '../../asserts/scss/section/_main.scss'
 
 import { IoIosSearch } from 'react-icons/io';
+import { AiOutlineExclamationCircle } from "react-icons/ai";
 
 import RecommendModal from '../component/RecommendModal'
 
-const Search = ( ) => {
+const Search = () => {
   const [searchParams] = useSearchParams();
   const [searchKeyword, setSearchKeyword] = useState(searchParams.get("s") ?? "");
   const [recommend_modal, setRecommend_modal] = useState(false);
+  const [nosearch_modal, setNosearch_modal] = useState(false);
   const navigate = useNavigate();
 
 
   //검색 페이지 이동
   const handleSearch = (e) => {
     if (!searchKeyword) {
-      alert('검색어를 입력해주세요.')
+      setNosearch_modal(true)
       return;
     }
     navigate(`/search?s=${searchKeyword}`);
@@ -26,7 +28,7 @@ const Search = ( ) => {
   //강의 추천 모달 오픈
   const handelRecommendModal = () => {
     if (!searchKeyword) {
-      alert('검색어를 입력해주세요.')
+      setNosearch_modal(true)
       return;
     }
     else {
@@ -55,14 +57,26 @@ const Search = ( ) => {
           <button className='search-btn' onClick={handleSearch}><IoIosSearch /></button>
         </div>
       </div>
-      <button className='recommand-btn' onClick={handelRecommendModal} >
-        ✨ 강의 추천받기
+      <div>
+          <button className='recommand-btn' onClick={handelRecommendModal} >
+          ✨ 강의 추천받기
       </button>
+      </div>
       {recommend_modal && (
-              <RecommendModal onClose={() => setRecommend_modal(false)} searchKeyword={searchKeyword}  />
-            )}
+        <RecommendModal onClose={() => setRecommend_modal(false)} searchKeyword={searchKeyword} />
+      )}
+
+      {nosearch_modal && (
+        <div className="search-guide">
+          <AiOutlineExclamationCircle />
+          <div>
+            <p> 검색어를 입력하면 결과가 표시돼요.</p>
+          </div>
+        </div>
+      )}
     </div>
-    
+
+
   )
 }
 
