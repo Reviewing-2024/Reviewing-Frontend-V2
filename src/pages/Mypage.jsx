@@ -70,6 +70,7 @@ const Mypage = () => {
     }
   };
 
+
   // 카테고리 바뀌면 초기화
   useEffect(() => {
     setHasMore(true);
@@ -148,7 +149,7 @@ const Mypage = () => {
                     <div className='course_information'>
                       <div className="course_header">
                         <span className="course_platform">{review.coursePlatform}</span>
-                        <h3 className="course_title">{review.courseTitle}</h3>
+                        <h3 className="course_title" >{review.courseTitle}</h3>
                       </div>
                       <p className="review_date">{formatDate(review.createdAt)}</p>
                       <div className="review_content">

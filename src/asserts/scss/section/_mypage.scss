@@ -111,9 +111,13 @@
             border-radius: 10px;
             overflow: hidden;
             width: 100%;
+
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+            transition: box-shadow 0.2s ease;
+            
             
            &:hover {
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.09);
             }
 
 
@@ -127,7 +131,7 @@
             .review_top {
                 display: flex;
                 align-items: flex-start;
-                gap: 12px;
+                gap: 18px;
 
                 .course_img {
                     width: 72px;

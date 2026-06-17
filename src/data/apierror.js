@@ -3,31 +3,42 @@ import axios from "axios";
 export const handleApiError = (error, {logout}) => {
 
 
-  const code = error.response.status;
-  const message = error.response.data?.error?.message;
+  const code = error.response?.data?.error?.code;
+  console.log(code)
+  const message = error.response?.data?.error?.message;
 
-  const error_401 = async () => {
+  ///api/v1/auth/reissue 호출 (refresh 쿠키 자동 전송) 했을때 401error가 나타날때
+  const reissueToken = async () => {
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/reissue`,
+      {},
+      {
+        withCredentials: true
+      }
+    );
 
+    const newAccessToken =
+      response.headers.Authorization;
 
-    try {
-      await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/access`,
-        {}
-      );
+    localStorage.setItem(
+      "accessToken",
+      newAccessToken
+    );
 
     } catch (error) {
 
-      const code = error.response.status;
+      const code = error.response?.data?.error?.code;
       const message = error.response.data?.error?.message;
 
       switch (code) {
 
-        case 401: 
+        case "AUTH_401_EXPIRED_REFRESH": 
           alert(message);
           logout();
           break;
         
-        case 404: 
+        case "COMMON_404_NOT_FOUND": 
           alert(message);
           break;
 
@@ -41,9 +52,9 @@ export const handleApiError = (error, {logout}) => {
   }
 
   switch (code) {
-
-    case 401:
-        error_401();
+    
+    case "AUTH_401_EXPIRED_ACCESS":
+        reissueToken();
         break;
 
     default:
