@@ -29,7 +29,7 @@ const Wish = () => {
   const accessToken = localStorage.getItem("accessToken");
   const page = Number(searchParams.get('page')) || 1;
   const ITEMS_PER_PAGE = 20;
-  
+
   useEffect(() => {
     if (sortCategory) {
       setCurrent_category(sortCategory);
@@ -39,9 +39,10 @@ const Wish = () => {
   }, [sortCategory]);
 
   //access토큰 없으면 메인페이지로
-  if(!accessToken) {
-    navigate('/');
-  }
+  if (!accessToken) {
+    navigate('/')
+    alert("로그인이 필요합니다.");
+  };
 
   //강의 조회
   const fetchCourses = async () => {
@@ -50,8 +51,8 @@ const Wish = () => {
 
       const response = await axios.get(
         `${import.meta.env.VITE_API_BASE_URL}/api/v1/members/me/wishes`,
-        { 
-          params: {page: page - 1, size: ITEMS_PER_PAGE},
+        {
+          params: { page: page - 1, size: ITEMS_PER_PAGE },
           headers: { Authorization: accessToken }
         }
       );
@@ -63,7 +64,7 @@ const Wish = () => {
     } catch (error) {
 
       handleApiError(error, { logout });
-      
+
     }
 
   };
@@ -98,25 +99,38 @@ const Wish = () => {
         </div>
 
         <div className='home__item'>
-          <div className='item__card'>
-            {courses.map(course => (
-              <CourseCard course={course} key={course.id} />
-            ))}
-          </div>
+          {courses.length === 0 ? (
+            <div className='empty-result'>
+              <h3>찜한 강의가 없습니다.</h3>
+              <p>강의를 찜해 여기에서 확인해보세요!</p>
+            </div>
+          ) : (
+            <div className='item__card'>
+              {courses.map(course => (
+                <CourseCard
+                  course={course}
+                  key={course.id}
+                  onAction={fetchCourses}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
       </div>
-      <Pagination
-        currentPage={page}
-        totalPages={totalPages}
-        onPageChange={(p) => {
-          const newParams = new URLSearchParams(searchParams);
+      {totalPages > 0 && (
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={(p) => {
+            const newParams = new URLSearchParams(searchParams);
 
-          newParams.set("page", p);
+            newParams.set("page", p);
 
-          setSearchParams(newParams);
-        }}
-      />
+            setSearchParams(newParams);
+          }}
+        />
+      )}
     </div>
 
   )

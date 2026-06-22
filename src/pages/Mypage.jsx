@@ -25,7 +25,12 @@ const Mypage = () => {
     setCurrent_category(sortCategory ?? 'review');
   }, [sortCategory]);
 
-  if (!accessToken) navigate('/');
+
+  //accessToken없으면 메인화면으로
+  if (!accessToken) {
+    navigate('/')
+    alert("로그인이 필요합니다.");
+  };
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("ko-KR");

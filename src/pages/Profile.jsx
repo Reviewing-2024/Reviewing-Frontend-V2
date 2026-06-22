@@ -33,8 +33,12 @@ const Profile = () => {
       setCurrent_category('profile');
   }, [sortCategory]);
 
+  //accessToken없으면 메인화면으로
   useEffect(() => {
-    if (!accessToken) navigate('/');
+    if (!accessToken) {
+      navigate('/')
+      alert("로그인이 필요합니다.");
+    };
   }, [accessToken, navigate]);
 
   const handleSave = async () => {
