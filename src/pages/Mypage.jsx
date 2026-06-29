@@ -3,8 +3,9 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { mypage_Sort_Category, mypage_Review_Category } from '../data/mypagedata'
-import { PiDotsThreeOutlineFill } from "react-icons/pi";
 import ImgModal from '../components/component/ImgModal';
+import ReviewDropdown from '../components/component/ReviewDropdown';
+import DeleteReviewModal from '../components/component/DeleteReviewModal';
 import '../asserts/scss/section/_mypage.scss'
 
 const Mypage = () => {
@@ -20,6 +21,10 @@ const Mypage = () => {
   const [page, setPage] = useState(0);
   const [isImgModalOpen, setIsImgModalOpen] = useState(false);
   const [openReviewId, setOpenReviewId] = useState(null);
+
+  const [openDropdownId, setOpenDropdownId] = useState(null);
+  const [selectedReviewId, setSelectedReviewId] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   useEffect(() => {
     setCurrent_category(sortCategory ?? 'review');
@@ -43,6 +48,7 @@ const Mypage = () => {
     return '';
   }
 
+  //리뷰 요청
   const fetchReviews = async (pageNum = 0) => {
     if (loading) return;
     if (pageNum > 0 && !hasMore) return;
@@ -72,6 +78,34 @@ const Mypage = () => {
     } catch (error) {
     } finally {
       setLoading(false);
+    }
+  };
+
+
+  //리뷰 삭제
+  const deleteReview = async () => {
+    try {
+
+      await axios.delete(
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/reviews/${selectedReviewId}`,
+        {
+          headers: {
+            Authorization: accessToken
+          }
+        }
+      );
+
+      setReviews(prev =>
+        prev.filter(review => review.reviewId !== selectedReviewId)
+      );
+
+      setIsDeleteModalOpen(false);
+      setSelectedReviewId(null);
+
+      alert("리뷰가 삭제되었습니다.");
+
+    } catch (error) {
+      alert("리뷰 삭제에 실패했습니다.");
     }
   };
 
@@ -164,7 +198,7 @@ const Mypage = () => {
                       <div className='course_information'>
                         <div className="course_header">
                           <span className="course_platform">{review.coursePlatform}</span>
-                          <h3 className="course_title" onClick={() => {navigate(`/courses/${review.coursePlatform}/${review.courseSlug}`)}}>{review.courseTitle}</h3>
+                          <h3 className="course_title" onClick={() => { navigate(`/courses/${review.coursePlatform}/${review.courseSlug}`) }}>{review.courseTitle}</h3>
                         </div>
 
                         <p className="review_date">{formatDate(review.createdAt)}</p>
@@ -179,7 +213,14 @@ const Mypage = () => {
                           {status}
                         </span>
 
-                        <PiDotsThreeOutlineFill className="dots_icon" />
+                        <ReviewDropdown
+                          reviewId={review.reviewId}
+                          openDropdownId={openDropdownId}
+                          setOpenDropdownId={setOpenDropdownId}
+                          setSelectedReviewId={setSelectedReviewId}
+                          setIsDeleteModalOpen={setIsDeleteModalOpen}
+                        />
+
                       </div>
                     </div>
 
@@ -223,6 +264,15 @@ const Mypage = () => {
           )}
 
           {loading && <p>로딩중...</p>}
+          {isDeleteModalOpen && (
+            <DeleteReviewModal
+              onClose={() => {
+                setIsDeleteModalOpen(false);
+                setSelectedReviewId(null);
+              }}
+              onDelete={deleteReview}
+            />
+          )}
 
         </div>
       </div>

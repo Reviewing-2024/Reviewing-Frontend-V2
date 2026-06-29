@@ -101,6 +101,30 @@
     }
 
     .user_review {
+        
+        .empty-result {
+                width: 100%;
+                min-height: 200px;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                text-align: center;
+
+                h3 {
+                    font-size: 2rem;
+                    font-weight: 700;
+                    margin-bottom: 12px;
+                    color: #45556C;
+                }
+
+                p {
+                    font-size: 1.5rem;
+                    color: #888;
+                }
+            }
 
         .user_review_container {
             display: flex;
