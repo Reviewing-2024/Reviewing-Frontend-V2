@@ -97,6 +97,8 @@ const Mypage = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
+  console.log(reviews)
+
   return (
     <div id='mypage' role='mypage'>
       <p className='mypage-title'>마이페이지</p>
@@ -162,7 +164,7 @@ const Mypage = () => {
                       <div className='course_information'>
                         <div className="course_header">
                           <span className="course_platform">{review.coursePlatform}</span>
-                          <h3 className="course_title">{review.courseTitle}</h3>
+                          <h3 className="course_title" onClick={() => {navigate(`/courses/${review.coursePlatform}/${review.courseSlug}`)}}>{review.courseTitle}</h3>
                         </div>
 
                         <p className="review_date">{formatDate(review.createdAt)}</p>
