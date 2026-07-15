@@ -19,7 +19,7 @@ export const handleApiError = (error, {logout}) => {
     );
 
     const newAccessToken =
-      response.headers.Authorization;
+      response.headers.authorization;
 
     localStorage.setItem(
       "accessToken",
@@ -40,10 +40,16 @@ export const handleApiError = (error, {logout}) => {
         
         case "COMMON_404_NOT_FOUND": 
           alert(message);
+          logout();
+          break;
+        
+        case "AUTH_401_EXPIRED_ACCESS":
+          alert(message);
+          logout();
           break;
 
         default:
-          alert("예기치 못한 오류가 발생하였습니다.");
+          alert(message);
           break;
       }
 
