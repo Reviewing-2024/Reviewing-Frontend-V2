@@ -61,7 +61,7 @@ const Mypage = () => {
           params: {
             state: getState(review_current_category),
             page: pageNum,
-            size: 3
+            size: 5
           },
           headers: { Authorization: accessToken }
         }
