@@ -6,6 +6,7 @@ import { mypage_Sort_Category, mypage_Review_Category } from '../data/mypagedata
 import ImgModal from '../components/component/ImgModal';
 import ReviewDropdown from '../components/component/ReviewDropdown';
 import DeleteReviewModal from '../components/component/DeleteReviewModal';
+import MypageUserReviewCard from '../components/component/MypageUserReviewCard';
 import '../asserts/scss/section/_mypage.scss'
 
 const Mypage = () => {
@@ -181,86 +182,20 @@ const Mypage = () => {
               <p>강의를 수강하고 첫 리뷰를 작성해보세요!</p>
             </div>
           ) : (
-            reviews.map((review) => {
-              const status =
-                review.state === 'PENDING' ? '검토중'
-                  : review.state === 'APPROVED' ? '승인됨'
-                    : '거절됨';
-
-              return (
-                <div className='user_review_container' key={review.reviewId}>
-                  <div className="review_body">
-                    <div className="review_top">
-                      <div className='course_img'>
-                        <img src={review.courseThumbnailImage} alt={review.courseTitle} />
-                      </div>
-
-                      <div className='course_information'>
-                        <div className="course_header">
-                          <span className="course_platform">{review.coursePlatform}</span>
-                          <h3 className="course_title" onClick={() => { navigate(`/courses/${review.coursePlatform}/${review.courseSlug}`) }}>{review.courseTitle}</h3>
-                        </div>
-
-                        <p className="review_date">{formatDate(review.createdAt)}</p>
-
-                        <div className="review_content">
-                          <p>{review.content}</p>
-                        </div>
-                      </div>
-
-                      <div className='review_management'>
-                        <span className={`status_badge ${status === '거절됨' ? 'reject' : status === '검토중' ? 'pending' : 'approved'}`}>
-                          {status}
-                        </span>
-
-                        <ReviewDropdown
-                          reviewId={review.reviewId}
-                          openDropdownId={openDropdownId}
-                          setOpenDropdownId={setOpenDropdownId}
-                          setSelectedReviewId={setSelectedReviewId}
-                          setIsDeleteModalOpen={setIsDeleteModalOpen}
-                        />
-
-                      </div>
-                    </div>
-
-                    <div className="toggle_row">
-                      <button
-                        className="toggle_btn"
-                        onClick={() =>
-                          setOpenReviewId(
-                            openReviewId === review.reviewId ? null : review.reviewId
-                          )
-                        }
-                      >
-                        {openReviewId === review.reviewId ? '접기 ▲' : '자세히 보기 ▼'}
-                      </button>
-                    </div>
-                  </div>
-
-                  {openReviewId === review.reviewId && (
-                    <div className="certificate_section">
-                      <p className="certificate_label">제출한 증빙 자료</p>
-
-                      <div className="certificate_image">
-                        <img
-                          src={`${import.meta.env.VITE_API_BASE_URL}${review.certification}`}
-                          alt="인증 이미지"
-                          onClick={() => setIsImgModalOpen(true)}
-                        />
-                      </div>
-
-                      {isImgModalOpen && (
-                        <ImgModal
-                          imgsrc={`${import.meta.env.VITE_API_BASE_URL}${review.certification}`}
-                          onClose={() => setIsImgModalOpen(false)}
-                        />
-                      )}
-                    </div>
-                  )}
-                </div>
-              );
-            })
+            reviews.map((review) => (
+              <MypageUserReviewCard
+                key={review.reviewId}
+                review={review}
+                openReviewId={openReviewId}
+                setOpenReviewId={setOpenReviewId}
+                isImgModalOpen={isImgModalOpen}
+                setIsImgModalOpen={setIsImgModalOpen}
+                openDropdownId={openDropdownId}
+                setOpenDropdownId={setOpenDropdownId}
+                setSelectedReviewId={setSelectedReviewId}
+                setIsDeleteModalOpen={setIsDeleteModalOpen}
+              />
+            ))
           )}
 
           {loading && <p>로딩중...</p>}

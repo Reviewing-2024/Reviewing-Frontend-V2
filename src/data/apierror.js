@@ -50,6 +50,7 @@ export const handleApiError = (error, {logout}) => {
 
         default:
           alert(message);
+           logout();
           break;
       }
 
