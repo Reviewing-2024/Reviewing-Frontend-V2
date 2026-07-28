@@ -7,6 +7,8 @@ import ImgModal from '../components/component/ImgModal';
 import ReviewDropdown from '../components/component/ReviewDropdown';
 import DeleteReviewModal from '../components/component/DeleteReviewModal';
 import MypageUserReviewCard from '../components/component/MypageUserReviewCard';
+import MainSection from '../components/section/MainSection';
+
 import '../asserts/scss/section/_mypage.scss'
 
 const Mypage = () => {
@@ -132,86 +134,90 @@ const Mypage = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
-  console.log(reviews)
 
   return (
-    <div id='mypage' role='mypage'>
-      <p className='mypage-title'>마이페이지</p>
+    <MainSection
+      title="마이페이지"
+      description="마이 페이지입니다.">
 
-      <nav className='sort-category'>
-        <ul>
-          {mypage_Sort_Category.map((categoryItem, key) => (
-            <li key={key}>
-              <Link
-                to={`/mypage${categoryItem.src}`}
-                className={current_category === categoryItem.slug ? 'active' : ''}
-              >
-                {categoryItem.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <div id='mypage' role='mypage'>
+        <p className='mypage-title'>마이페이지</p>
 
-      <div>
-        <div className='review-category'>
+        <nav className='sort-category'>
           <ul>
-            {mypage_Review_Category.map((Review_Category, key) => {
-              const isActive = review_current_category === Review_Category.title;
-              return (
-                <li key={key}>
-                  <button
-                    onClick={() => setReview_current_category(Review_Category.title)}
-                    className={isActive ? 'active' : ''}
-                    disabled={isActive}
-                  >
-                    {Review_Category.title}
-                    {isActive && <div className="underline" />}
-                  </button>
-                </li>
-              )
-            })}
+            {mypage_Sort_Category.map((categoryItem, key) => (
+              <li key={key}>
+                <Link
+                  to={`/mypage${categoryItem.src}`}
+                  className={current_category === categoryItem.slug ? 'active' : ''}
+                >
+                  {categoryItem.title}
+                </Link>
+              </li>
+            ))}
           </ul>
-        </div>
+        </nav>
 
-        <div className='user_review'>
+        <div>
+          <div className='review-category'>
+            <ul>
+              {mypage_Review_Category.map((Review_Category, key) => {
+                const isActive = review_current_category === Review_Category.title;
+                return (
+                  <li key={key}>
+                    <button
+                      onClick={() => setReview_current_category(Review_Category.title)}
+                      className={isActive ? 'active' : ''}
+                      disabled={isActive}
+                    >
+                      {Review_Category.title}
+                      {isActive && <div className="underline" />}
+                    </button>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
 
-          {!loading && reviews.length === 0 ? (
-            <div className='empty-result'>
-              <h3>작성한 리뷰가 없습니다.</h3>
-              <p>강의를 수강하고 첫 리뷰를 작성해보세요!</p>
-            </div>
-          ) : (
-            reviews.map((review) => (
-              <MypageUserReviewCard
-                key={review.reviewId}
-                review={review}
-                openReviewId={openReviewId}
-                setOpenReviewId={setOpenReviewId}
-                isImgModalOpen={isImgModalOpen}
-                setIsImgModalOpen={setIsImgModalOpen}
-                openDropdownId={openDropdownId}
-                setOpenDropdownId={setOpenDropdownId}
-                setSelectedReviewId={setSelectedReviewId}
-                setIsDeleteModalOpen={setIsDeleteModalOpen}
+          <div className='user_review'>
+
+            {!loading && reviews.length === 0 ? (
+              <div className='empty-result'>
+                <h3>작성한 리뷰가 없습니다.</h3>
+                <p>강의를 수강하고 첫 리뷰를 작성해보세요!</p>
+              </div>
+            ) : (
+              reviews.map((review) => (
+                <MypageUserReviewCard
+                  key={review.reviewId}
+                  review={review}
+                  openReviewId={openReviewId}
+                  setOpenReviewId={setOpenReviewId}
+                  isImgModalOpen={isImgModalOpen}
+                  setIsImgModalOpen={setIsImgModalOpen}
+                  openDropdownId={openDropdownId}
+                  setOpenDropdownId={setOpenDropdownId}
+                  setSelectedReviewId={setSelectedReviewId}
+                  setIsDeleteModalOpen={setIsDeleteModalOpen}
+                />
+              ))
+            )}
+
+            {loading && <p>로딩중...</p>}
+            {isDeleteModalOpen && (
+              <DeleteReviewModal
+                onClose={() => {
+                  setIsDeleteModalOpen(false);
+                  setSelectedReviewId(null);
+                }}
+                onDelete={deleteReview}
               />
-            ))
-          )}
+            )}
 
-          {loading && <p>로딩중...</p>}
-          {isDeleteModalOpen && (
-            <DeleteReviewModal
-              onClose={() => {
-                setIsDeleteModalOpen(false);
-                setSelectedReviewId(null);
-              }}
-              onDelete={deleteReview}
-            />
-          )}
-
+          </div>
         </div>
       </div>
-    </div>
+    </MainSection>
   )
 }
 

@@ -6,12 +6,14 @@ import CourseCard from '../components/component/CourseCard';
 import SearchBar from '../components/component/SearchBar';
 import Pagination from '../components/component/Pagination.jsx';
 import SkeletonList from '../components/component/SkeletonCard.jsx';
+import RecommendModal from '../components/component/RecommendModal.jsx';
+import MainSection from '../components/section/MainSection.jsx';
 
 import '../asserts/scss/section/_main.scss'
 
 import { useAuth } from "../context/AuthContext";
 import { handleApiError } from '../data/apierror.js'
-import RecommendModal from '../components/component/RecommendModal.jsx';
+
 
 
 const Search = () => {
@@ -80,50 +82,53 @@ const Search = () => {
 
 
     return (
+        <MainSection
+            title="검색페이지"
+            description="검색 페이지입니다.">
 
-        <section id='searchPage'>
-            <div className='home__banner'>
-                <img className='banner' src="/img/banner.png" alt="banner" />
-            </div>
-            <SearchBar />
-            <div className='search_item_section'>
-                <div className="search__item">
-                    {scrollLoading ? (
-                        <SkeletonList />
-                    ) : course.length === 0 ? (
-                        <div className='empty-result'>
-                           <h3>[{search_keyword}]에 대한 강의를 찾지 못했어요.</h3>
-                            <p>다른 검색어로 다시 시도해 보세요.</p>
-                        </div>
-                    ) : (
-                        <div className='item__card'>
-                            {course.map(course => (
-                                <CourseCard
-                                    course={course}
-                                    key={course.id}
-                                />
-                            ))}
-                        </div>
-                    )}
-
-                    {totalPages > 0 && (
-                        <Pagination
-                            currentPage={page}
-                            totalPages={totalPages}
-                            onPageChange={(p) => {
-                                const newParams = new URLSearchParams(searchParams);
-
-                                newParams.set("page", p);
-
-                                setSearchParams(newParams);
-                            }}
-                        />
-                    )}
+            <section id='searchPage'>
+                <div className='home__banner'>
+                    <img className='banner' src="/img/banner.png" alt="banner" />
                 </div>
-            </div>
+                <SearchBar />
+                <div className='search_item_section'>
+                    <div className="search__item">
+                        {scrollLoading ? (
+                            <SkeletonList />
+                        ) : course.length === 0 ? (
+                            <div className='empty-result'>
+                                <h3>[{search_keyword}]에 대한 강의를 찾지 못했어요.</h3>
+                                <p>다른 검색어로 다시 시도해 보세요.</p>
+                            </div>
+                        ) : (
+                            <div className='item__card'>
+                                {course.map(course => (
+                                    <CourseCard
+                                        course={course}
+                                        key={course.id}
+                                    />
+                                ))}
+                            </div>
+                        )}
 
-        </section>
+                        {totalPages > 0 && (
+                            <Pagination
+                                currentPage={page}
+                                totalPages={totalPages}
+                                onPageChange={(p) => {
+                                    const newParams = new URLSearchParams(searchParams);
 
+                                    newParams.set("page", p);
+
+                                    setSearchParams(newParams);
+                                }}
+                            />
+                        )}
+                    </div>
+                </div>
+
+            </section>
+        </MainSection>
 
     )
 }

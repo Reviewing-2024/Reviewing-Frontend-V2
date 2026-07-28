@@ -10,6 +10,7 @@ import SearchBar from '../components/component/SearchBar';
 import CourseCard from '../components/component/CourseCard';
 import Pagination from '../components/component/Pagination';
 import SkeletonList from '../components/component/SkeletonCard.jsx'
+import MainSection from '../components/section/MainSection.jsx';
 
 import { useAuth } from "../context/AuthContext";
 import { main_Sort_Category } from '../data/platform.js';
@@ -250,145 +251,150 @@ const Home = () => {
 
 
   return (
-    <div id='home' role='home'>
-      <div className='home__banner'>
-        <img className='banner' src="/img/banner.png" alt="banner" />
-      </div>
-      <SearchBar />
-      <nav className='home__platform'>
-        <ul className='platform_container'>
-          <li>
-            <Link
-              to={'/'}
-              className={!selectedPlatform ? 'active' : ''}
-            >
-              전체 플랫폼
-            </Link>
-          </li>
-          {platform.map((platform, key) => (
-            <li key={key}>
-              <Link
-                to={`/${platform.englishName}`}
-                className={selectedPlatform === platform.englishName ? 'active' : ''}
-              >
-                {platform.koreanName}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        {selectedPlatform && (
-          <ul className='category_container'>
+    <MainSection
+      title="메인"
+      description="메인 페이지입니다.">
+
+      <div id='home' role='home'>
+        <div className='home__banner'>
+          <img className='banner' src="/img/banner.png" alt="banner" />
+        </div>
+        <SearchBar />
+        <nav className='home__platform'>
+          <ul className='platform_container'>
             <li>
               <Link
-                to={selectedPlatform ? `/${selectedPlatform}` : `/`}
-                className={!selectedCategory ? 'active' : ''}
+                to={'/'}
+                className={!selectedPlatform ? 'active' : ''}
               >
-                전체 카테고리
+                전체 플랫폼
               </Link>
             </li>
-            {loading ? (
-              <li> </li>
-            ) : (category.map((category, key) => (
+            {platform.map((platform, key) => (
               <li key={key}>
                 <Link
-                  to={selectedPlatform ? `/${selectedPlatform}/${category.slug}` : `${category.slug}`}
-                  className={selectedCategory === category.slug ? 'active' : (params.platform === category.slug ? 'active' : '')}
+                  to={`/${platform.englishName}`}
+                  className={selectedPlatform === platform.englishName ? 'active' : ''}
                 >
-                  {category.name}
+                  {platform.koreanName}
                 </Link>
               </li>
-            ))
-            )}
+            ))}
           </ul>
-        )}
-
-        {selectedCategory && (
-          <ul className='sub_category_container'>
-            <li>
-              <Link
-                to={selectedCategory ? `/${selectedPlatform}/${selectedCategory}` : `/`}
-                className={selectedSubCategory.length === 0 ? 'active' : ''}
-              >
-                전체
-              </Link>
-            </li>
-            {loading ? (
-              <li> </li>
-            ) : (subCategory.map((subCategory, key) => (
-              <li key={key}>
-                <button
-                  type="button"
-                  onClick={() => handleSubToggle(subCategory.slug)}
-                  className={
-                    selectedSubCategory.includes(subCategory.slug)
-                      ? "active" : ""
-                  }
+          {selectedPlatform && (
+            <ul className='category_container'>
+              <li>
+                <Link
+                  to={selectedPlatform ? `/${selectedPlatform}` : `/`}
+                  className={!selectedCategory ? 'active' : ''}
                 >
-                  {subCategory.name}
-                </button>
+                  전체 카테고리
+                </Link>
               </li>
-            ))
-            )}
-          </ul>
-        )}
-      </nav>
-      <div className='home_item_section'>
-        <div className='home__item'>
-          <div className="sort-category-dropdown" ref={dropdownRef}>
-            <button
-              className="dropdown-button"
-              onClick={() => setSort_category_open(!sort_category_open)}
-            >
-              {current_category.title}
-              <RiArrowDropDownLine />
-            </button>
-
-            {sort_category_open && (
-              <ul className="dropdown-menu">
-                {main_Sort_Category.map((sort_category) => (
-                  <li
-                    key={sort_category.sort}
-                    onClick={() => {
-                      setCurrent_category(sort_category);
-                      setSort_category_open(false);
-                    }}
-                    className={`home-dropdown__item ${current_category.sort === sort_category.sort ? "active" : ""
-                      }`}
+              {loading ? (
+                <li> </li>
+              ) : (category.map((category, key) => (
+                <li key={key}>
+                  <Link
+                    to={selectedPlatform ? `/${selectedPlatform}/${category.slug}` : `${category.slug}`}
+                    className={selectedCategory === category.slug ? 'active' : (params.platform === category.slug ? 'active' : '')}
                   >
-                    {sort_category.title}
-                  </li>
+                    {category.name}
+                  </Link>
+                </li>
+              ))
+              )}
+            </ul>
+          )}
+
+          {selectedCategory && (
+            <ul className='sub_category_container'>
+              <li>
+                <Link
+                  to={selectedCategory ? `/${selectedPlatform}/${selectedCategory}` : `/`}
+                  className={selectedSubCategory.length === 0 ? 'active' : ''}
+                >
+                  전체
+                </Link>
+              </li>
+              {loading ? (
+                <li> </li>
+              ) : (subCategory.map((subCategory, key) => (
+                <li key={key}>
+                  <button
+                    type="button"
+                    onClick={() => handleSubToggle(subCategory.slug)}
+                    className={
+                      selectedSubCategory.includes(subCategory.slug)
+                        ? "active" : ""
+                    }
+                  >
+                    {subCategory.name}
+                  </button>
+                </li>
+              ))
+              )}
+            </ul>
+          )}
+        </nav>
+        <div className='home_item_section'>
+          <div className='home__item'>
+            <div className="sort-category-dropdown" ref={dropdownRef}>
+              <button
+                className="dropdown-button"
+                onClick={() => setSort_category_open(!sort_category_open)}
+              >
+                {current_category.title}
+                <RiArrowDropDownLine />
+              </button>
+
+              {sort_category_open && (
+                <ul className="dropdown-menu">
+                  {main_Sort_Category.map((sort_category) => (
+                    <li
+                      key={sort_category.sort}
+                      onClick={() => {
+                        setCurrent_category(sort_category);
+                        setSort_category_open(false);
+                      }}
+                      className={`home-dropdown__item ${current_category.sort === sort_category.sort ? "active" : ""
+                        }`}
+                    >
+                      {sort_category.title}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            {scrollLoading
+              ?
+              <SkeletonList />
+              :
+              <div className='item__card'>
+                {courses.map(course => (
+                  <CourseCard course={course} key={course.id} onAction={fetchCourses} />
+
                 ))}
-              </ul>
+              </div>
+            }
+
+            {totalPages > 0 && (
+              <Pagination
+                currentPage={page}
+                totalPages={totalPages}
+                onPageChange={(p) => {
+                  const newParams = new URLSearchParams(searchParams);
+
+                  newParams.set("page", p);
+
+                  setSearchParams(newParams);
+                }}
+              />
             )}
           </div>
-          {scrollLoading
-            ?
-            <SkeletonList />
-            :
-            <div className='item__card'>
-              {courses.map(course => (
-                <CourseCard course={course} key={course.id} onAction={fetchCourses} />
-
-              ))}
-            </div>
-          }
-
-          {totalPages > 0 && (
-            <Pagination
-              currentPage={page}
-              totalPages={totalPages}
-              onPageChange={(p) => {
-                const newParams = new URLSearchParams(searchParams);
-
-                newParams.set("page", p);
-
-                setSearchParams(newParams);
-              }}
-            />
-          )}
         </div>
       </div>
-    </div>
+    </MainSection>
   )
 }
 

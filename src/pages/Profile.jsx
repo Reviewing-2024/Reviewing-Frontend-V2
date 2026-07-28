@@ -8,6 +8,8 @@ import { useAuth } from "../context/AuthContext";
 
 import { CiCamera } from "react-icons/ci";
 
+import MainSection from '../components/section/MainSection.jsx';
+
 import '../asserts/scss/section/_profile.scss';
 
 const Profile = () => {
@@ -96,93 +98,98 @@ const Profile = () => {
   };
 
   return (
-    <div id="profile" role="profile">
-      <div className="profile-container">
+    <MainSection
+      title="프로필"
+      description="프로필 페이지입니다.">
 
-        <h2 className="mypage-title">마이페이지</h2>
+      <div id="profile" role="profile">
+        <div className="profile-container">
 
-        <nav className="sort-category" aria-label="마이페이지 메뉴">
-          <ul>
-            {mypage_Sort_Category.map((categoryItem, key) => (
-              <li key={key}>
-                <Link
-                  to={`/mypage${categoryItem.src}`}
-                  className={`pill ${current_category === categoryItem.slug ? 'active' : ''}`}
-                >
-                  {categoryItem.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+          <h2 className="mypage-title">마이페이지</h2>
 
-        <section className="profile-card" aria-label="프로필 수정">
-          <div className="profile-card__inner">
+          <nav className="sort-category" aria-label="마이페이지 메뉴">
+            <ul>
+              {mypage_Sort_Category.map((categoryItem, key) => (
+                <li key={key}>
+                  <Link
+                    to={`/mypage${categoryItem.src}`}
+                    className={`pill ${current_category === categoryItem.slug ? 'active' : ''}`}
+                  >
+                    {categoryItem.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-            <div className="profile-side">
-              <div className="avatar">
-                <img
-                  src={
-                    selectedFile
-                      ? URL.createObjectURL(selectedFile)
-                      : `${import.meta.env.VITE_API_BASE_URL}${profileImage}`
-                  }
-                />
-                <button
-                  type="button"
-                  className="avatar__camera"
-                  aria-label="사진 변경"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  <CiCamera />
-                </button>
-              </div>
+          <section className="profile-card" aria-label="프로필 수정">
+            <div className="profile-card__inner">
 
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                style={{ display: 'none' }}
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) setSelectedFile(file);
-                }}
-              />
-            </div>
+              <div className="profile-side">
+                <div className="avatar">
+                  <img
+                    src={
+                      selectedFile
+                        ? URL.createObjectURL(selectedFile)
+                        : `${import.meta.env.VITE_API_BASE_URL}${profileImage}`
+                    }
+                  />
+                  <button
+                    type="button"
+                    className="avatar__camera"
+                    aria-label="사진 변경"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <CiCamera />
+                  </button>
+                </div>
 
-            <form
-              className="profile-form"
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSave();
-              }}
-            >
-              <div className="field">
-                <label className="field__label" htmlFor="nickname">
-                  닉네임
-                </label>
                 <input
-                  id="nickname"
-                  className="field__input"
-                  type="text"
-                  placeholder="닉네임을 입력하세요"
-                  value={nickname}
-                  onChange={(e) => setNickname(e.target.value)}
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) setSelectedFile(file);
+                  }}
                 />
               </div>
 
-              <div className="form-actions">
-                <button type="submit" className="btn btn--primary">
-                  저장하기
-                </button>
-              </div>
-            </form>
+              <form
+                className="profile-form"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSave();
+                }}
+              >
+                <div className="field">
+                  <label className="field__label" htmlFor="nickname">
+                    닉네임
+                  </label>
+                  <input
+                    id="nickname"
+                    className="field__input"
+                    type="text"
+                    placeholder="닉네임을 입력하세요"
+                    value={nickname}
+                    onChange={(e) => setNickname(e.target.value)}
+                  />
+                </div>
 
-          </div>
-        </section>
+                <div className="form-actions">
+                  <button type="submit" className="btn btn--primary">
+                    저장하기
+                  </button>
+                </div>
+              </form>
 
+            </div>
+          </section>
+
+        </div>
       </div>
-    </div>
+    </MainSection >
   );
 };
 

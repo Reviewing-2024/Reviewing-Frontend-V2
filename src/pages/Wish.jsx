@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import CourseCard from '../components/component/CourseCard';
 import Pagination from '../components/component/Pagination';
+import MainSection from '../components/section/MainSection.jsx';
 
 import '../asserts/scss/section/_wish.scss'
 
@@ -77,62 +78,66 @@ const Wish = () => {
 
 
   return (
-    <div id='wish' role='wish'>
-      <p className='mypage-title'>마이페이지</p>
-      <nav className='sort-category'>
-        <ul>
-          {mypage_Sort_Category.map((categoryItem, key) => (
-            <li key={key}>
-              <Link
-                to={`/mypage${categoryItem.src}`}
-                className={current_category === categoryItem.slug ? 'active' : ''}
-              >
-                {categoryItem.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <div>
-        <div className='wishlist_count'>
-          <FaHeart /> <span>찜한 강의</span><span className='courseCount'>{courseCount}개</span>
-        </div>
+    <MainSection
+      title="찜"
+      description="찜 페이지입니다.">
 
-        <div className='home__item'>
-          {courses.length === 0 ? (
-            <div className='empty-result'>
-              <h3>찜한 강의가 없습니다.</h3>
-              <p>강의를 찜해 여기에서 확인해보세요!</p>
-            </div>
-          ) : (
-            <div className='item__card'>
-              {courses.map(course => (
-                <CourseCard
-                  course={course}
-                  key={course.id}
-                  onAction={fetchCourses}
-                />
-              ))}
-            </div>
-          )}
-        </div>
+      <div id='wish' role='wish'>
+        <p className='mypage-title'>마이페이지</p>
+        <nav className='sort-category'>
+          <ul>
+            {mypage_Sort_Category.map((categoryItem, key) => (
+              <li key={key}>
+                <Link
+                  to={`/mypage${categoryItem.src}`}
+                  className={current_category === categoryItem.slug ? 'active' : ''}
+                >
+                  {categoryItem.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div>
+          <div className='wishlist_count'>
+            <FaHeart /> <span>찜한 강의</span><span className='courseCount'>{courseCount}개</span>
+          </div>
 
+          <div className='home__item'>
+            {courses.length === 0 ? (
+              <div className='empty-result'>
+                <h3>찜한 강의가 없습니다.</h3>
+                <p>강의를 찜해 여기에서 확인해보세요!</p>
+              </div>
+            ) : (
+              <div className='item__card'>
+                {courses.map(course => (
+                  <CourseCard
+                    course={course}
+                    key={course.id}
+                    onAction={fetchCourses}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+        </div>
+        {totalPages > 0 && (
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={(p) => {
+              const newParams = new URLSearchParams(searchParams);
+
+              newParams.set("page", p);
+
+              setSearchParams(newParams);
+            }}
+          />
+        )}
       </div>
-      {totalPages > 0 && (
-        <Pagination
-          currentPage={page}
-          totalPages={totalPages}
-          onPageChange={(p) => {
-            const newParams = new URLSearchParams(searchParams);
-
-            newParams.set("page", p);
-
-            setSearchParams(newParams);
-          }}
-        />
-      )}
-    </div>
-
+    </MainSection>
   )
 }
 

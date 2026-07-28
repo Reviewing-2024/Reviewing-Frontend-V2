@@ -1,5 +1,6 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom';
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 import '../../asserts/scss/section/_layout.scss'
 
@@ -11,9 +12,19 @@ const MainSection = (props) => {
   );
 
   return (
-    <main id={isMyPage ? 'mypage_main' : 'main'} role="main">
+    <HelmetProvider>
+      <Helmet
+        titleTemplate="Reviewing | %s"
+        defaultTitle="Reviewing"
+        defer={false}
+      >
+        {props.title && <title>{props.title}</title>}
+        <meta name="description" content={props.description} />
+      </Helmet>
+      <main id={isMyPage ? 'mypage_main' : 'main'} role="main">
         {props.children}
-    </main>
+      </main>
+    </HelmetProvider>
   )
 }
 
