@@ -55,9 +55,6 @@ const Header = () => {
         <div className="header__content__userbtn">
           {isLogin ? (
             <div className="user-menu" ref={menuRef}>
-              <button className="admin-btn"  onClick={() => navigate('/admin')} >
-                관리자
-              </button>
               <button
                 className={`userbtn-login-togle ${userMenuOpen ? "is-open" : ""}`}
                 onClick={() => setUserMenuOpen((v) => !v)}
