@@ -6,7 +6,7 @@ import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { FaCheck } from "react-icons/fa6";
 import { IoMdClose } from "react-icons/io";
 
-import RejectModal from "./RejectModal";
+import RejectModal from "./Rejectmodal";
 import ImgModal from "./ImgModal";
 
 const AdminReviewCard = ({ review, onApprove, onReject, current_category }) => {
