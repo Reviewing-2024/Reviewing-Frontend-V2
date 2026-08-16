@@ -1,5 +1,5 @@
 import React from 'react'
-import noimg from '../../asserts/img/noimage.jpg'
+import noimg from '../../asserts/img/noImage.jpg'
 
 const Image = ( {course} ) => {
     return (
