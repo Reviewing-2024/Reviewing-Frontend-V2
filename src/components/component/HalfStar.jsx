@@ -1,6 +1,6 @@
 import React from "react";
 import { FaStar } from "react-icons/fa";
-import '../../asserts/scss/component/_star_ratinginput.scss';
+import '../../asserts/scss/component/_star_ratingInput.scss';
 
 const HalfStar = ({ fill = 0 }) => (
   <div className="half-star-wrapper">
