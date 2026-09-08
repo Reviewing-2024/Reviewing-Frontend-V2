@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axiosInstance.js';
 
 import { mypage_Sort_Category } from '../data/mypagedata.js';
-import { handleApiError } from '../data/apierror.js';
-import { useAuth } from "../context/AuthContext";
 
 import { CiCamera } from "react-icons/ci";
 
@@ -16,10 +14,8 @@ const Profile = () => {
   const { sortCategory } = useParams();
   const [current_category, setCurrent_category] = useState('profile');
 
-  const { logout } = useAuth();
   const navigate = useNavigate();
-
-  const accessToken = localStorage.getItem("accessToken");
+  
   const username = localStorage.getItem("username");
   const profileImage = localStorage.getItem("profileImage");
 
@@ -36,12 +32,14 @@ const Profile = () => {
   }, [sortCategory]);
 
   //accessToken없으면 메인화면으로
-  useEffect(() => {
-    if (!accessToken) {
-      navigate('/')
-      alert("로그인이 필요합니다.");
-    };
-  }, [accessToken, navigate]);
+   useEffect(() => {
+      const accessToken = localStorage.getItem("accessToken");
+  
+      if (!accessToken) {
+        alert("로그인이 필요합니다.");
+        navigate('/');
+      }
+    }, [navigate]);
 
   const handleSave = async () => {
     const nicknameChanged = nickname !== username;
@@ -62,22 +60,33 @@ const Profile = () => {
         formData.append('file', selectedFile);
       }
 
-      await axios.patch(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/members/me/profile`,
+      await api.patch(
+        '/api/v1/members/me/profile',
         formData,
         {
           headers: {
-            Authorization: accessToken,
             'Content-Type': 'multipart/form-data',
           }
         }
       );
 
+      // 프로필 수정 후 새로운 AccessToken 발급 
+      // 이 요청은 shared api가 아니라 별도의 axios 사용 
+      const authApi = axios.create(
+        { baseURL: import.meta.env.VITE_API_BASE_URL, 
+          withCredentials: true, 
+        }
+      );
+
       // 새 AccessToken 발급
-      const tokenRes = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/access`,
+      const tokenRes = await api.post(
+        '/api/v1/auth/access',
         {},
-        { withCredentials: true }
+        { 
+          headers: { 
+            Accept: 'application/json', 
+          }, 
+        }
       );
 
       const newAccessToken = tokenRes.headers.authorization;
@@ -93,7 +102,8 @@ const Profile = () => {
       window.location.reload();
 
     } catch (error) {
-      handleApiError(error, { logout });
+      console.error("프로필 수정 실패:", error); 
+      alert("프로필 수정에 실패했습니다.");
     }
   };
 

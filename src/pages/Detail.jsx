@@ -1,12 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios';
+import api from '../api/axiosInstance.js';
 
 import '../asserts/scss/section/_detail.scss'
 
 import { Sort_Category } from '../data/platform.js'
-import { handleApiError } from '../data/apierror.js'
-import { useAuth } from "../context/AuthContext";
 
 import StarRatingInput from '../components/component/StarRatingInput'
 import Image from '../components/component/Image';
@@ -29,10 +27,8 @@ const Detail = () => {
   const [createReviewloading, setCreateReviewloading] = useState(false);
   const [toast, setToast] = useState(null)
 
-  const { logout } = useAuth();
   const params = useParams();
   const toastTimer = useRef(null)
-  const accessToken = localStorage.getItem("accessToken");
 
   // 유효성 검사
   const isReviewValid = newReview.rating > 0 && !!newReview.contents?.trim() && !!newReview.file
@@ -50,13 +46,13 @@ const Detail = () => {
   //강의 조회
   const fetchCourses = async () => {
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/courses/${params.platform}/${params.slug}`,
-        { headers: { Authorization: accessToken } }
+      const response = await api.get(
+        `/api/v1/courses/${params.platform}/${params.slug}`
       );
+
       setCourses(response.data.data);
     } catch (error) {
-      handleApiError(error, { logout })
+      console.error(error);
     }
   };
 
@@ -85,22 +81,27 @@ const Detail = () => {
     }
 
     try {
-      await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/reviews/${courses.id}`,
+      await api.post(
+        `/api/v1/reviews/${courses.id}`,
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: accessToken,
           },
-        },
+        }
       );
 
       setShowReviewModal(false);
       setNewReview({});
-      alert(`소중한 리뷰를 작성해 주셔서 감사합니다! ☺️ \n작성하신 리뷰는 관리자가 신속히 검토하겠습니다! \n진행 상황은 마이페이지에서 확인하실 수 있습니다.`);
+
+      alert(
+        `소중한 리뷰를 작성해 주셔서 감사합니다! ☺️ \n작성하신 리뷰는 관리자가 신속히 검토하겠습니다! \n진행 상황은 마이페이지에서 확인하실 수 있습니다.`
+      );
+
     } catch (error) {
-      handleApiError(error, { logout })
+      console.error(error);
+    } finally {
+      setCreateReviewloading(false);
     }
   };
 
@@ -108,16 +109,21 @@ const Detail = () => {
   //유저 리뷰 조회
   const fetchReview = async () => {
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/reviews/${courses.id}`,
+      const response = await api.get(
+        `/api/v1/reviews/${courses.id}`,
         {
-          params: { sort: current_category, page: 0, size: 10 },
-          headers: { Authorization: accessToken }
+          params: {
+            sort: current_category,
+            page: 0,
+            size: 10
+          }
         }
       );
+
       setReviews(response.data.data.content);
+
     } catch (error) {
-      handleApiError(error, { logout })
+      console.error(error);
     }
   };
 
@@ -129,25 +135,26 @@ const Detail = () => {
 
   //wish 추가 및 삭제
   const handleWish = async (id, wished) => {
-    const url = `${import.meta.env.VITE_API_BASE_URL}/api/v1/courses/${id}/wish`;
-    const config = { headers: { Authorization: accessToken } };
-
-    try {
-      if (wished == false) {
-        await axios.post(url, {}, config);
-        setToast(true)
-      } else {
-        await axios.delete(url, config);
-      }
-
-      clearTimeout(toastTimer.current);
-      toastTimer.current = setTimeout(() => { setToast(null) }, 3000);
-    } catch (error) {
-      handleApiError(error, { logout })
+  try {
+    if (wished === false) {
+      await api.post(`/api/v1/courses/${id}/wish`, {});
+      setToast(true);
+    } else {
+      await api.delete(`/api/v1/courses/${id}/wish`);
     }
 
+    clearTimeout(toastTimer.current);
+
+    toastTimer.current = setTimeout(() => {
+      setToast(null);
+    }, 3000);
+
     fetchCourses();
-  };
+
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   return (
     <MainSection

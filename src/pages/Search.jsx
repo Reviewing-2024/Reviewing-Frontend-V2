@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import axios from 'axios';
+import api from '../api/axiosInstance.js';
 
 import CourseCard from '../components/component/CourseCard';
 import SearchBar from '../components/component/SearchBar';
@@ -11,8 +11,6 @@ import MainSection from '../components/section/MainSection.jsx';
 
 import '../asserts/scss/section/_main.scss'
 
-import { useAuth } from "../context/AuthContext";
-import { handleApiError } from '../data/apierror.js'
 
 
 
@@ -25,7 +23,6 @@ const Search = () => {
     const [error, setError] = useState(null);
     const [recommend_modal, setRecommend_modal] = useState(false);
 
-    const { logout } = useAuth();
     const page = Number(searchParams.get('page')) || 1;
     const ITEMS_PER_PAGE = 20;
 
@@ -53,8 +50,8 @@ const Search = () => {
             setScrollLoading(true);
             setError(null);
 
-            const res = await axios.get(
-                `${import.meta.env.VITE_API_BASE_URL}/api/v1/search`,
+            const res = await api.get(
+                '/api/v1/search',
                 {
                     params: {
                         keyword: search_keyword,
@@ -63,12 +60,13 @@ const Search = () => {
                     }
                 }
             );
+
             setCourse(res.data.data.content);
             setTotalPages(res.data.data.page.totalPages);
 
         } catch (error) {
 
-            handleApiError(error, { logout });
+            console.error(error);
 
         } finally {
             setScrollLoading(false);

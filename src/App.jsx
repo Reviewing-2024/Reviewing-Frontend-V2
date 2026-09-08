@@ -1,8 +1,11 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import { useAuth } from './context/AuthContext';
+import { setupInterceptors } from './api/axiosInstance';
 
 import Header from './components/section/Header';
-import Main from './components/section/MainSection'
+import Main from './components/section/MainSection';
 import Footer from './components/section/Footer';
 
 import Terms_and_conditions from './pages/policies/TermsOfService';
@@ -18,28 +21,37 @@ import LoginRedirect from './pages/LoginRedirect';
 import Admin from './pages/Admin';
 
 const App = () => {
-    return (
-        <BrowserRouter>
-            <Header />
-              <Main>
-                <Routes>
-                  <Route path='/' element={<Home />} />
-                  <Route path='/:platform' element={<Home />} />
-                  <Route path='/:platform/:category' element={<Home />} />
-                  <Route path='/courses/:platform/:slug' element={<Detail />} />
-                  <Route path='/mypage/review' element={<Mypage />} />
-                  <Route path='/mypage/wish' element={<Wish />} />
-                  <Route path='/mypage/profile' element={<Profile />} />
-                  <Route path='/search' element={<Search />} />
-                  <Route path="/login/redirect" element={<LoginRedirect />} />
-                  <Route path='/admin' element={<Admin />} />
-                  <Route path='/policies/terms-and-conditions' element={<Terms_and_conditions />} />
-                  <Route path='/policies/privacy-policy' element={<Privacy_policy />} />
-                </Routes>
-              </Main>
-            <Footer />
-        </BrowserRouter >
-    )
+
+  const { logout } = useAuth();
+
+  useEffect(() => {
+    setupInterceptors(logout);
+  }, [logout]);
+
+  return (
+    <BrowserRouter>
+      <Header />
+
+      <Main>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/:platform' element={<Home />} />
+          <Route path='/:platform/:category' element={<Home />} />
+          <Route path='/courses/:platform/:slug' element={<Detail />} />
+          <Route path='/mypage/review' element={<Mypage />} />
+          <Route path='/mypage/wish' element={<Wish />} />
+          <Route path='/mypage/profile' element={<Profile />} />
+          <Route path='/search' element={<Search />} />
+          <Route path="/login/redirect" element={<LoginRedirect />} />
+          <Route path='/admin' element={<Admin />} />
+          <Route path='/policies/terms-and-conditions' element={<Terms_and_conditions />} />
+          <Route path='/policies/privacy-policy' element={<Privacy_policy />} />
+        </Routes>
+      </Main>
+
+      <Footer />
+    </BrowserRouter>
+  )
 }
 
 export default App

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axiosInstance.js';
 
 import { mypage_Sort_Category, mypage_Review_Category } from '../data/mypagedata'
 import ImgModal from '../components/component/ImgModal';
@@ -12,7 +12,6 @@ import MainSection from '../components/section/MainSection';
 import '../asserts/scss/section/_mypage.scss'
 
 const Mypage = () => {
-  const accessToken = localStorage.getItem("accessToken");
   const { sortCategory } = useParams();
   const navigate = useNavigate();
 
@@ -35,10 +34,14 @@ const Mypage = () => {
 
 
   //accessToken없으면 메인화면으로
-  if (!accessToken) {
-    navigate('/')
-    alert("로그인이 필요합니다.");
-  };
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (!accessToken) {
+      alert("로그인이 필요합니다.");
+      navigate('/');
+    }
+  }, [navigate]);
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("ko-KR");
@@ -58,15 +61,14 @@ const Mypage = () => {
     setLoading(true);
 
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/members/me/reviews`,
+      const response = await api.get(
+        '/api/v1/members/me/reviews',
         {
           params: {
             state: getState(review_current_category),
             page: pageNum,
             size: 5
           },
-          headers: { Authorization: accessToken }
         }
       );
 
@@ -79,6 +81,7 @@ const Mypage = () => {
       setPage(pageNum);
 
     } catch (error) {
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -89,13 +92,8 @@ const Mypage = () => {
   const deleteReview = async () => {
     try {
 
-      await axios.delete(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/reviews/${selectedReviewId}`,
-        {
-          headers: {
-            Authorization: accessToken
-          }
-        }
+      await api.delete(
+        `/api/v1/reviews/${selectedReviewId}`
       );
 
       setReviews(prev =>

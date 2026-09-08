@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axiosInstance.js';
 
 import { RiArrowDropDownLine } from "react-icons/ri";
 
@@ -14,7 +14,6 @@ import MainSection from '../components/section/MainSection.jsx';
 
 import { useAuth } from "../context/AuthContext";
 import { main_Sort_Category } from '../data/platform.js';
-import { handleApiError } from '../data/apierror.js'
 
 
 const Home = () => {
@@ -22,7 +21,6 @@ const Home = () => {
   const { logout } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const dropdownRef = useRef(null);
-  const accessToken = localStorage.getItem("accessToken");
 
   const [courses, setCourses] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -99,9 +97,8 @@ const Home = () => {
         setLoading(true);
         setError(null);
 
-        const res = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/api/v1/platforms`
-        );
+        const res = await api.get('/api/v1/platforms');
+
         setPlatform(res.data.data);
 
       } catch (e) {
@@ -130,14 +127,11 @@ const Home = () => {
         setLoading(true);
         setError(null);
 
-        const res = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/api/v1/categories`,
-          {
-            params: {
-              platformName: selectedPlatform
-            }
+       const res = await api.get('/api/v1/categories', {
+          params: {
+            platformName: selectedPlatform
           }
-        );
+        });
 
         setCategory(res.data.data);
 
@@ -165,15 +159,12 @@ const Home = () => {
         setLoading(true);
         setError(null);
 
-        const res = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/api/v1/subcategories`,
-          {
-            params: {
-              platformName: selectedPlatform,
-              ...(selectedCategory && { categorySlug: selectedCategory })
-            }
+        const res = await api.get('/api/v1/subcategories', {
+          params: {
+            platformName: selectedPlatform,
+            ...(selectedCategory && { categorySlug: selectedCategory })
           }
-        );
+        });
 
         const filterRes = res.data.data.filter(
           (sub) => sub.slug !== selectedCategory
@@ -197,25 +188,25 @@ const Home = () => {
   const fetchCourses = async () => {
 
     try {
-
-      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/courses`, {
+      const response = await api.get('/api/v1/courses', {
         params: {
           ...(selectedPlatform && { platform: selectedPlatform }),
           ...(selectedCategory && { category: selectedCategory }),
-          ...(selectedSubCategory.length > 0 && { subCategories: selectedSubCategory }),
+          ...(selectedSubCategory.length > 0 && {
+            subCategories: selectedSubCategory
+          }),
           sort: current_category.sort,
           page: page - 1,
           size: ITEMS_PER_PAGE,
-        },
-        headers: { Authorization: accessToken }
+        }
       });
 
       setCourses(response.data.data.content);
       setTotalItems(response.data.data.page.totalElements);
       setTotalPages(response.data.data.page.totalPages);
-    } catch (error) {
 
-      handleApiError(error, { logout });
+    } catch (error) {
+       setError(error);
     }
 
   };
